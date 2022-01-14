@@ -10369,8 +10369,7 @@ Source: http://www.semiconductors.philips.com/acrobat_download/datasheets/74HC_H
 </packageinstances>
 </package3d>
 <package3d name="SO16" urn="urn:adsk.eagle:package:32218301/2" type="model" library_version="68">
-<description>&lt;b&gt;SO16&lt;/b&gt;&lt;br&gt;
-</description>
+<description>&lt;b&gt;SO16&lt;/b&gt;&lt;br&gt;</description>
 <packageinstances>
 <packageinstance name="SO16"/>
 </packageinstances>
@@ -11090,8 +11089,7 @@ Eagle Ver. 9.x&lt;br&gt;</description>
 </packages>
 <packages3d>
 <package3d name="EC11" urn="urn:adsk.eagle:package:33306160/3" type="model" library_version="45">
-<description>&lt;b&gt;EC11E09244BS&lt;/b&gt;&lt;br&gt;
-</description>
+<description>&lt;b&gt;EC11E09244BS&lt;/b&gt;&lt;br&gt;</description>
 <packageinstances>
 <packageinstance name="EC11"/>
 </packageinstances>
@@ -11459,22 +11457,19 @@ Eagle Ver. 9.x&lt;br&gt;</description>
 </packages>
 <packages3d>
 <package3d name="TSSOP24" urn="urn:adsk.eagle:package:33324059/2" type="model" library_version="39">
-<description>&lt;b&gt;TSSOP24&lt;/b&gt;&lt;br&gt;
-</description>
+<description>&lt;b&gt;TSSOP24&lt;/b&gt;&lt;br&gt;</description>
 <packageinstances>
 <packageinstance name="TSSOP24"/>
 </packageinstances>
 </package3d>
 <package3d name="SO18W" urn="urn:adsk.eagle:package:33327837/3" type="model" library_version="39">
-<description>&lt;b&gt;(SO) - Wide, 7.50 mm (.300 In.) Body [SOIC&lt;/b&gt;&lt;br&gt;
-</description>
+<description>&lt;b&gt;(SO) - Wide, 7.50 mm (.300 In.) Body [SOIC&lt;/b&gt;&lt;br&gt;</description>
 <packageinstances>
 <packageinstance name="SO18W"/>
 </packageinstances>
 </package3d>
 <package3d name="SO24" urn="urn:adsk.eagle:package:33306208/2" type="box" library_version="39">
-<description>&lt;b&gt;SO-24_&lt;/b&gt;&lt;br&gt;
-</description>
+<description>&lt;b&gt;SO-24_&lt;/b&gt;&lt;br&gt;</description>
 <packageinstances>
 <packageinstance name="SO24"/>
 </packageinstances>
@@ -14042,8 +14037,7 @@ Eagle Ver. 9.x&lt;br&gt;</description>
 </packages>
 <packages3d>
 <package3d name="TSSOP16" urn="urn:adsk.eagle:package:33494874/1" type="box" library_version="17">
-<description>&lt;b&gt;PW0016A&lt;/b&gt;&lt;br&gt;
-</description>
+<description>&lt;b&gt;PW0016A&lt;/b&gt;&lt;br&gt;</description>
 <packageinstances>
 <packageinstance name="TSSOP16"/>
 </packageinstances>
@@ -14128,45 +14122,45 @@ HTBLuVA Salzburg&lt;br&gt;
 Schuljahr: 2019-20&lt;br&gt;
 Eagle Ver. 9.x&lt;br&gt;</description>
 <packages>
-<package name="ESP32-AZDEL" urn="urn:adsk.eagle:footprint:33485841/2" library_version="6">
-<pad name="1" x="0" y="0" drill="0.6" shape="long"/>
-<pad name="2" x="0" y="-2.54" drill="0.6" shape="long"/>
-<pad name="3" x="0" y="-5.08" drill="0.6" shape="long"/>
-<pad name="4" x="0" y="-7.62" drill="0.6" shape="long"/>
-<pad name="5" x="0" y="-10.16" drill="0.6" shape="long"/>
-<pad name="6" x="0" y="-12.7" drill="0.6" shape="long"/>
-<pad name="7" x="0" y="-15.24" drill="0.6" shape="long"/>
-<pad name="8" x="0" y="-17.78" drill="0.6" shape="long"/>
-<pad name="9" x="0" y="-20.32" drill="0.6" shape="long"/>
-<pad name="10" x="0" y="-22.86" drill="0.6" shape="long"/>
-<pad name="11" x="0" y="-25.4" drill="0.6" shape="long"/>
-<pad name="12" x="0" y="-27.94" drill="0.6" shape="long"/>
-<pad name="13" x="0" y="-30.48" drill="0.6" shape="long"/>
-<pad name="14" x="0" y="-33.02" drill="0.6" shape="long"/>
-<pad name="15" x="0" y="-35.56" drill="0.6" shape="long"/>
-<pad name="16" x="0" y="-38.1" drill="0.6" shape="long"/>
-<pad name="17" x="0" y="-40.64" drill="0.6" shape="long"/>
-<pad name="18" x="0" y="-43.18" drill="0.6" shape="long"/>
-<pad name="19" x="0" y="-45.72" drill="0.6" shape="long"/>
-<pad name="38" x="25.4" y="0" drill="0.6" shape="long"/>
-<pad name="37" x="25.4" y="-2.54" drill="0.6" shape="long"/>
-<pad name="36" x="25.4" y="-5.08" drill="0.6" shape="long"/>
-<pad name="35" x="25.4" y="-7.62" drill="0.6" shape="long"/>
-<pad name="34" x="25.4" y="-10.16" drill="0.6" shape="long"/>
-<pad name="33" x="25.4" y="-12.7" drill="0.6" shape="long"/>
-<pad name="32" x="25.4" y="-15.24" drill="0.6" shape="long"/>
-<pad name="31" x="25.4" y="-17.78" drill="0.6" shape="long"/>
-<pad name="30" x="25.4" y="-20.32" drill="0.6" shape="long"/>
-<pad name="29" x="25.4" y="-22.86" drill="0.6" shape="long"/>
-<pad name="28" x="25.4" y="-25.4" drill="0.6" shape="long"/>
-<pad name="27" x="25.4" y="-27.94" drill="0.6" shape="long"/>
-<pad name="26" x="25.4" y="-30.48" drill="0.6" shape="long"/>
-<pad name="25" x="25.4" y="-33.02" drill="0.6" shape="long"/>
-<pad name="24" x="25.4" y="-35.56" drill="0.6" shape="long"/>
-<pad name="23" x="25.4" y="-38.1" drill="0.6" shape="long"/>
-<pad name="22" x="25.4" y="-40.64" drill="0.6" shape="long"/>
-<pad name="21" x="25.4" y="-43.18" drill="0.6" shape="long"/>
-<pad name="20" x="25.4" y="-45.72" drill="0.6" shape="long"/>
+<package name="ESP32-AZDEL" urn="urn:adsk.eagle:footprint:33485841/3" library_version="7">
+<pad name="1" x="0" y="0" drill="1" shape="long"/>
+<pad name="2" x="0" y="-2.54" drill="1" shape="long"/>
+<pad name="3" x="0" y="-5.08" drill="1" shape="long"/>
+<pad name="4" x="0" y="-7.62" drill="1" shape="long"/>
+<pad name="5" x="0" y="-10.16" drill="1" shape="long"/>
+<pad name="6" x="0" y="-12.7" drill="1" shape="long"/>
+<pad name="7" x="0" y="-15.24" drill="1" shape="long"/>
+<pad name="8" x="0" y="-17.78" drill="1" shape="long"/>
+<pad name="9" x="0" y="-20.32" drill="1" shape="long"/>
+<pad name="10" x="0" y="-22.86" drill="1" shape="long"/>
+<pad name="11" x="0" y="-25.4" drill="1" shape="long"/>
+<pad name="12" x="0" y="-27.94" drill="1" shape="long"/>
+<pad name="13" x="0" y="-30.48" drill="1" shape="long"/>
+<pad name="14" x="0" y="-33.02" drill="1" shape="long"/>
+<pad name="15" x="0" y="-35.56" drill="1" shape="long"/>
+<pad name="16" x="0" y="-38.1" drill="1" shape="long"/>
+<pad name="17" x="0" y="-40.64" drill="1" shape="long"/>
+<pad name="18" x="0" y="-43.18" drill="1" shape="long"/>
+<pad name="19" x="0" y="-45.72" drill="1" shape="long"/>
+<pad name="38" x="25.4" y="0" drill="1" shape="long"/>
+<pad name="37" x="25.4" y="-2.54" drill="1" shape="long"/>
+<pad name="36" x="25.4" y="-5.08" drill="1" shape="long"/>
+<pad name="35" x="25.4" y="-7.62" drill="1" shape="long"/>
+<pad name="34" x="25.4" y="-10.16" drill="1" shape="long"/>
+<pad name="33" x="25.4" y="-12.7" drill="1" shape="long"/>
+<pad name="32" x="25.4" y="-15.24" drill="1" shape="long"/>
+<pad name="31" x="25.4" y="-17.78" drill="1" shape="long"/>
+<pad name="30" x="25.4" y="-20.32" drill="1" shape="long"/>
+<pad name="29" x="25.4" y="-22.86" drill="1" shape="long"/>
+<pad name="28" x="25.4" y="-25.4" drill="1" shape="long"/>
+<pad name="27" x="25.4" y="-27.94" drill="1" shape="long"/>
+<pad name="26" x="25.4" y="-30.48" drill="1" shape="long"/>
+<pad name="25" x="25.4" y="-33.02" drill="1" shape="long"/>
+<pad name="24" x="25.4" y="-35.56" drill="1" shape="long"/>
+<pad name="23" x="25.4" y="-38.1" drill="1" shape="long"/>
+<pad name="22" x="25.4" y="-40.64" drill="1" shape="long"/>
+<pad name="21" x="25.4" y="-43.18" drill="1" shape="long"/>
+<pad name="20" x="25.4" y="-45.72" drill="1" shape="long"/>
 <wire x1="-1.27" y1="-46.99" x2="1.27" y2="-46.99" width="0.1524" layer="21"/>
 <wire x1="1.27" y1="-46.99" x2="1.27" y2="-44.704" width="0.1524" layer="21"/>
 <wire x1="1.27" y1="-44.704" x2="1.016" y2="-44.45" width="0.1524" layer="21"/>
@@ -14936,7 +14930,7 @@ Eagle Ver. 9.x&lt;br&gt;</description>
 </package>
 </packages>
 <packages3d>
-<package3d name="ESP32-AZDEL" urn="urn:adsk.eagle:package:33485844/4" type="model" library_version="6">
+<package3d name="ESP32-AZDEL" urn="urn:adsk.eagle:package:33485844/5" type="model" library_version="7">
 <packageinstances>
 <packageinstance name="ESP32-AZDEL"/>
 </packageinstances>
@@ -14991,7 +14985,7 @@ Eagle Ver. 9.x&lt;br&gt;</description>
 </symbol>
 </symbols>
 <devicesets>
-<deviceset name="ESP32" urn="urn:adsk.eagle:component:33513175/2" prefix="X" library_version="6">
+<deviceset name="ESP32" urn="urn:adsk.eagle:component:33513175/3" prefix="X" library_version="7">
 <gates>
 <gate name="G$1" symbol="ESP32" x="0" y="0"/>
 </gates>
@@ -15038,7 +15032,7 @@ Eagle Ver. 9.x&lt;br&gt;</description>
 <connect gate="G$1" pin="SP" pad="3"/>
 </connects>
 <package3dinstances>
-<package3dinstance package3d_urn="urn:adsk.eagle:package:33485844/4"/>
+<package3dinstance package3d_urn="urn:adsk.eagle:package:33485844/5"/>
 </package3dinstances>
 <technologies>
 <technology name=""/>
@@ -15608,12 +15602,20 @@ Eagle Ver. 9.x&lt;br&gt;</description>
 </part>
 <part name="GND78" library="supply_GruS" library_urn="urn:adsk.eagle:library:13579815" deviceset="GND" device=""/>
 <part name="+3V55" library="supply_GruS" library_urn="urn:adsk.eagle:library:13579815" deviceset="+3V3" device=""/>
-<part name="D1" library="74xx_GruS" library_urn="urn:adsk.eagle:library:13569359" deviceset="74*138" device="N" package3d_urn="urn:adsk.eagle:package:33482861/2" technology="AHC"/>
-<part name="X1" library="modul_GruS" library_urn="urn:adsk.eagle:library:13580331" deviceset="ESP32" device="-AZDEL" package3d_urn="urn:adsk.eagle:package:33485844/4"/>
+<part name="D1" library="74xx_GruS" library_urn="urn:adsk.eagle:library:13569359" deviceset="74*138" device="N" package3d_urn="urn:adsk.eagle:package:33482861/2" technology="AHC">
+<attribute name="CATEGORY" value="13"/>
+</part>
+<part name="X1" library="modul_GruS" library_urn="urn:adsk.eagle:library:13580331" deviceset="ESP32" device="-AZDEL" package3d_urn="urn:adsk.eagle:package:33485844/5">
+<attribute name="CATEGORY" value="18"/>
+</part>
 <part name="+3V10" library="supply_GruS" library_urn="urn:adsk.eagle:library:13579815" deviceset="+3V3" device=""/>
 <part name="GND25" library="supply_GruS" library_urn="urn:adsk.eagle:library:13579815" deviceset="GND" device=""/>
-<part name="C1" library="rcl_GruS" library_urn="urn:adsk.eagle:library:13572313" deviceset="C-EU" device="C0805" package3d_urn="urn:adsk.eagle:package:23617/2" value="1u"/>
-<part name="D4" library="74xx_GruS" library_urn="urn:adsk.eagle:library:13569359" deviceset="74*1G125" device="DBV" package3d_urn="urn:adsk.eagle:package:33442082/1" technology="AHC"/>
+<part name="C1" library="rcl_GruS" library_urn="urn:adsk.eagle:library:13572313" deviceset="C-EU" device="C0805" package3d_urn="urn:adsk.eagle:package:23617/2" value="1u">
+<attribute name="CATEGORY" value="2"/>
+</part>
+<part name="D4" library="74xx_GruS" library_urn="urn:adsk.eagle:library:13569359" deviceset="74*1G125" device="DBV" package3d_urn="urn:adsk.eagle:package:33442082/1" technology="AHC">
+<attribute name="CATEGORY" value="13"/>
+</part>
 <part name="+3V17" library="supply_GruS" library_urn="urn:adsk.eagle:library:13579815" deviceset="+3V3" device=""/>
 <part name="GND26" library="supply_GruS" library_urn="urn:adsk.eagle:library:13579815" deviceset="GND" device=""/>
 <part name="R2" library="rcl_GruS" library_urn="urn:adsk.eagle:library:13572313" deviceset="R-EUS" device="R0805" package3d_urn="urn:adsk.eagle:package:18365371/1" value="10k"/>
@@ -15624,8 +15626,12 @@ Eagle Ver. 9.x&lt;br&gt;</description>
 <part name="+3V56" library="supply_GruS" library_urn="urn:adsk.eagle:library:13579815" deviceset="+3V3" device=""/>
 <part name="R46" library="rcl_GruS" library_urn="urn:adsk.eagle:library:13572313" deviceset="R-EUS" device="R0805" package3d_urn="urn:adsk.eagle:package:18365371/1" value="10k"/>
 <part name="+3V57" library="supply_GruS" library_urn="urn:adsk.eagle:library:13579815" deviceset="+3V3" device=""/>
-<part name="D16" library="74xx_GruS" library_urn="urn:adsk.eagle:library:13569359" deviceset="74*1G04" device="DBV" package3d_urn="urn:adsk.eagle:package:33442082/1" technology="AHC"/>
-<part name="D14" library="74xx_GruS" library_urn="urn:adsk.eagle:library:13569359" deviceset="74*1G04" device="DBV" package3d_urn="urn:adsk.eagle:package:33442082/1" technology="AHC"/>
+<part name="D16" library="74xx_GruS" library_urn="urn:adsk.eagle:library:13569359" deviceset="74*1G04" device="DBV" package3d_urn="urn:adsk.eagle:package:33442082/1" technology="AHC">
+<attribute name="CATEGORY" value="13"/>
+</part>
+<part name="D14" library="74xx_GruS" library_urn="urn:adsk.eagle:library:13569359" deviceset="74*1G04" device="DBV" package3d_urn="urn:adsk.eagle:package:33442082/1" technology="AHC">
+<attribute name="CATEGORY" value="13"/>
+</part>
 <part name="C16" library="rcl_GruS" library_urn="urn:adsk.eagle:library:13572313" deviceset="C-EU" device="C0805" package3d_urn="urn:adsk.eagle:package:23617/2" value="100n">
 <attribute name="CATEGORY" value="2"/>
 </part>
@@ -15775,10 +15781,12 @@ HW Adr: 00</text>
 <instance part="D1" gate="G$1" x="45.72" y="233.68" smashed="yes">
 <attribute name="NAME" x="59.69" y="238.76" size="1.6764" layer="95" font="vector" align="bottom-center"/>
 <attribute name="VALUE" x="59.69" y="236.982" size="1.27" layer="96" font="vector" align="bottom-center"/>
+<attribute name="CATEGORY" x="45.72" y="233.68" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="X1" gate="G$1" x="91.44" y="187.96" smashed="yes">
 <attribute name="NAME" x="119.38" y="193.04" size="1.6764" layer="95" font="vector" align="bottom-center"/>
 <attribute name="VALUE" x="119.38" y="191.262" size="1.27" layer="96" font="vector" align="bottom-center"/>
+<attribute name="CATEGORY" x="91.44" y="187.96" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="+3V10" gate="G$1" x="40.64" y="238.76" smashed="yes">
 <attribute name="VALUE" x="40.64" y="239.522" size="1.27" layer="96" font="vector" align="bottom-center"/>
@@ -15789,10 +15797,12 @@ HW Adr: 00</text>
 <instance part="C1" gate="G$1" x="78.74" y="218.44" smashed="yes">
 <attribute name="NAME" x="77.724" y="217.9066" size="1.6764" layer="95" font="vector" align="bottom-right"/>
 <attribute name="VALUE" x="77.724" y="215.1126" size="1.27" layer="96" font="vector" align="bottom-right"/>
+<attribute name="CATEGORY" x="78.74" y="218.44" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="D4" gate="G$1" x="35.56" y="101.6" smashed="yes" rot="R180">
 <attribute name="NAME" x="35.56" y="109.22" size="1.6764" layer="95" font="vector" align="bottom-center"/>
 <attribute name="VALUE" x="35.56" y="107.442" size="1.27" layer="96" font="vector" align="bottom-center"/>
+<attribute name="CATEGORY" x="35.56" y="101.6" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="D4" gate="P" x="121.92" y="243.84" smashed="yes">
 <attribute name="NAME" x="121.92" y="243.078" size="1.6764" layer="95" font="vector" align="bottom-center"/>
@@ -19612,6 +19622,7 @@ PL-9823-F5 LEDs</description>
 <instance part="D16" gate="G$1" x="48.26" y="68.58" smashed="yes">
 <attribute name="NAME" x="48.26" y="76.835" size="1.6764" layer="95" font="vector" align="bottom-center"/>
 <attribute name="VALUE" x="48.26" y="74.422" size="1.27" layer="96" font="vector" align="bottom-center"/>
+<attribute name="CATEGORY" x="48.26" y="68.58" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="D16" gate="G$2" x="165.1" y="71.12" smashed="yes">
 <attribute name="NAME" x="165.1" y="70.358" size="1.6764" layer="95" font="vector" align="bottom-center"/>
@@ -19619,6 +19630,7 @@ PL-9823-F5 LEDs</description>
 <instance part="D14" gate="G$1" x="48.26" y="182.88" smashed="yes">
 <attribute name="NAME" x="48.26" y="191.135" size="1.6764" layer="95" font="vector" align="bottom-center"/>
 <attribute name="VALUE" x="48.26" y="188.722" size="1.27" layer="96" font="vector" align="bottom-center"/>
+<attribute name="CATEGORY" x="48.26" y="182.88" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="D14" gate="G$2" x="149.86" y="187.96" smashed="yes">
 <attribute name="NAME" x="149.86" y="187.198" size="1.6764" layer="95" font="vector" align="bottom-center"/>
