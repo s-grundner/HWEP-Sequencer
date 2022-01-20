@@ -4082,14 +4082,14 @@ und speichern die Design Rules unter einem neuen Namen ab.&lt;br&gt;
 <contactref element="D9" pad="1"/>
 <contactref element="D9" pad="3"/>
 <polygon width="0.4064" layer="1" isolate="0.4064">
-<vertex x="0" y="95.25"/>
-<vertex x="251.46" y="95.25"/>
+<vertex x="0" y="93.98"/>
+<vertex x="251.46" y="93.98"/>
 <vertex x="251.46" y="0"/>
 <vertex x="0" y="0"/>
 </polygon>
 <polygon width="0.4064" layer="16" isolate="0.4064">
-<vertex x="0" y="96.52"/>
-<vertex x="251.46" y="96.52"/>
+<vertex x="0" y="93.98"/>
+<vertex x="251.46" y="93.98"/>
 <vertex x="251.46" y="0"/>
 <vertex x="0" y="0"/>
 </polygon>
