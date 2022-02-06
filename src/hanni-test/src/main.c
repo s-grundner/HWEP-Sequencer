@@ -30,7 +30,7 @@
 
 static const char* TAG = "i2s_example";
 
-static void setup_triangle_sine_waves(int bits)
+void setup_triangle_sine_waves(int bits)
 {
     int *samples_data = malloc(((bits+8)/16)*SAMPLE_PER_CYCLE*4);
     unsigned int i, sample_val;
