@@ -12,25 +12,22 @@
 #define APP_MODE_BPM 0x00	// Set Beats per Minute
 	// HEX:		shows BPM
 	// Rotary:	changes BPM on Rotation
-	// KeyRegister:	Default Key Register
-	// Event:	-
+	// Event:	+SHIFT Rotary: 
+	//		+SHIFT HEX: Shows Selected Waveform
 	// Index/Cur:	Index
 #define APP_MODE_KEY 0x01	// Key Settings
 	// HEX:		shows Current Key
 	// Rotary:	Change Key (Shift Key Register)
-	// KeyRegister:	Default Key Register
 	// Event:	+SHIFT Rotary: Change Mode
 	// Index/Cur:	Index
 #define APP_MODE_ENR 0x02	// Enable at Index and Resets
 	// HEX:		-
 	// Rotary:	Moves Cursor
-	// KeyRegister:	Default Key Register
 	// Event:	Toggles On/Off State at Cursor -> Lights EN Led
 	// Index/Cur.:	Cursor
-#define APP_MODE_TSP 0x04	// Transpose in Key
+#define APP_MODE_TSP 0x03	// Transpose in Key
 	// HEX:		Transposition amount
 	// Rotary:	Transpose +/- 1 ST
-	// KeyRegister:	Shows Current Key in Register
 	// Event:	+SHIFT Rotary: Transpose Octave (+/- 12 ST)
 	// Index/Cur.:	Index
 // ------------------------------------------------------------
