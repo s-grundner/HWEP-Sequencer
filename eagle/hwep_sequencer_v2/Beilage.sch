@@ -10851,8 +10851,7 @@ Eagle Ver. 9.x&lt;br&gt;</description>
 </packages>
 <packages3d>
 <package3d name="EC11" urn="urn:adsk.eagle:package:33306160/3" type="model" library_version="45">
-<description>&lt;b&gt;EC11E09244BS&lt;/b&gt;&lt;br&gt;
-</description>
+<description>&lt;b&gt;EC11E09244BS&lt;/b&gt;&lt;br&gt;</description>
 <packageinstances>
 <packageinstance name="EC11"/>
 </packageinstances>
@@ -11082,7 +11081,7 @@ HTBLuVA Salzburg&lt;br&gt;
 Schuljahr: 2019-20&lt;br&gt;
 Eagle Ver. 9.x&lt;br&gt;</description>
 <packages>
-<package name="TSSOP24" urn="urn:adsk.eagle:footprint:33324057/1" library_version="39">
+<package name="TSSOP24" urn="urn:adsk.eagle:footprint:33324057/1" library_version="42">
 <description>&lt;b&gt;TSSOP24&lt;/b&gt;&lt;br&gt;
 </description>
 <smd name="1" x="-2.925" y="3.575" dx="1.45" dy="0.45" layer="1"/>
@@ -11126,7 +11125,7 @@ Eagle Ver. 9.x&lt;br&gt;</description>
 <wire x1="-1.85" y1="-3.9" x2="-1.85" y2="3.9" width="0.2" layer="21"/>
 <wire x1="-3.65" y1="4.15" x2="-2.2" y2="4.15" width="0.2" layer="21"/>
 </package>
-<package name="SO18W" urn="urn:adsk.eagle:footprint:33327835/2" library_version="39">
+<package name="SO18W" urn="urn:adsk.eagle:footprint:33327835/2" library_version="42">
 <description>&lt;b&gt;(SO) - Wide, 7.50 mm (.300 In.) Body [SOIC&lt;/b&gt;&lt;br&gt;
 </description>
 <smd name="1" x="-4.675" y="5.08" dx="1.85" dy="0.65" layer="1"/>
@@ -11173,7 +11172,7 @@ Eagle Ver. 9.x&lt;br&gt;</description>
 <rectangle x1="-4.6228" y1="-4.4831" x2="-4.2164" y2="-3.1369" layer="51" rot="R270"/>
 <rectangle x1="-4.6228" y1="-5.7531" x2="-4.2164" y2="-4.4069" layer="51" rot="R270"/>
 </package>
-<package name="SO24" urn="urn:adsk.eagle:footprint:33306206/2" library_version="39">
+<package name="SO24" urn="urn:adsk.eagle:footprint:33306206/2" library_version="42">
 <description>&lt;b&gt;SO-24_&lt;/b&gt;&lt;br&gt;
 </description>
 <smd name="1" x="-4.712" y="6.985" dx="1.925" dy="0.7" layer="1"/>
@@ -11217,27 +11216,84 @@ Eagle Ver. 9.x&lt;br&gt;</description>
 <wire x1="-3.4" y1="-7.7" x2="-3.4" y2="7.7" width="0.2" layer="21"/>
 <wire x1="-5.675" y1="7.685" x2="-3.75" y2="7.685" width="0.2" layer="21"/>
 </package>
+<package name="SSOP20" urn="urn:adsk.eagle:footprint:20073/1" library_version="42">
+<description>&lt;b&gt;plastic shrink small outline package&lt;/b&gt; 20 leads; body width 4.4 mm SOT266-1&lt;p&gt;
+Source: http://www.semiconductors.philips.com/acrobat_download/datasheets/PCF8574_4.pdf</description>
+<wire x1="3.16" y1="-2.1" x2="-3.16" y2="-2.1" width="0.2032" layer="51"/>
+<wire x1="-3.16" y1="-2.1" x2="-3.16" y2="-1.6" width="0.2032" layer="51"/>
+<wire x1="-3.16" y1="-1.6" x2="-3.16" y2="2.1" width="0.2032" layer="51"/>
+<wire x1="-3.16" y1="2.1" x2="3.16" y2="2.1" width="0.2032" layer="51"/>
+<wire x1="3.16" y1="-1.6" x2="-3.16" y2="-1.6" width="0.2032" layer="51"/>
+<wire x1="3.16" y1="2.1" x2="3.16" y2="-1.6" width="0.2032" layer="51"/>
+<wire x1="3.16" y1="-1.6" x2="3.16" y2="-2.1" width="0.2032" layer="51"/>
+<smd name="1" x="-2.925" y="-2.85" dx="0.35" dy="1.2" layer="1"/>
+<smd name="2" x="-2.275" y="-2.85" dx="0.35" dy="1.2" layer="1"/>
+<smd name="3" x="-1.625" y="-2.85" dx="0.35" dy="1.2" layer="1"/>
+<smd name="4" x="-0.975" y="-2.85" dx="0.35" dy="1.2" layer="1"/>
+<smd name="5" x="-0.325" y="-2.85" dx="0.35" dy="1.2" layer="1"/>
+<smd name="6" x="0.325" y="-2.85" dx="0.35" dy="1.2" layer="1"/>
+<smd name="7" x="0.975" y="-2.85" dx="0.35" dy="1.2" layer="1"/>
+<smd name="8" x="1.625" y="-2.85" dx="0.35" dy="1.2" layer="1"/>
+<smd name="9" x="2.275" y="-2.85" dx="0.35" dy="1.2" layer="1"/>
+<smd name="10" x="2.925" y="-2.85" dx="0.35" dy="1.2" layer="1"/>
+<smd name="11" x="2.925" y="2.85" dx="0.35" dy="1.2" layer="1" rot="R180"/>
+<smd name="12" x="2.275" y="2.85" dx="0.35" dy="1.2" layer="1" rot="R180"/>
+<smd name="13" x="1.625" y="2.85" dx="0.35" dy="1.2" layer="1" rot="R180"/>
+<smd name="14" x="0.975" y="2.85" dx="0.35" dy="1.2" layer="1" rot="R180"/>
+<smd name="15" x="0.325" y="2.85" dx="0.35" dy="1.2" layer="1" rot="R180"/>
+<smd name="16" x="-0.325" y="2.85" dx="0.35" dy="1.2" layer="1" rot="R180"/>
+<smd name="17" x="-0.975" y="2.85" dx="0.35" dy="1.2" layer="1" rot="R180"/>
+<smd name="18" x="-1.625" y="2.85" dx="0.35" dy="1.2" layer="1" rot="R180"/>
+<smd name="19" x="-2.275" y="2.85" dx="0.35" dy="1.2" layer="1" rot="R180"/>
+<smd name="20" x="-2.925" y="2.85" dx="0.35" dy="1.2" layer="1" rot="R180"/>
+<text x="-3.81" y="-1.905" size="1.27" layer="25" rot="R90">&gt;NAME</text>
+<text x="-2.54" y="-0.635" size="1.27" layer="27">&gt;VALUE</text>
+<rectangle x1="-3.075" y1="-3.3" x2="-2.775" y2="-2.2" layer="51"/>
+<rectangle x1="-2.425" y1="-3.3" x2="-2.125" y2="-2.2" layer="51"/>
+<rectangle x1="-1.775" y1="-3.3" x2="-1.475" y2="-2.2" layer="51"/>
+<rectangle x1="-1.125" y1="-3.3" x2="-0.825" y2="-2.2" layer="51"/>
+<rectangle x1="-0.475" y1="-3.3" x2="-0.175" y2="-2.2" layer="51"/>
+<rectangle x1="0.175" y1="-3.3" x2="0.475" y2="-2.2" layer="51"/>
+<rectangle x1="0.825" y1="-3.3" x2="1.125" y2="-2.2" layer="51"/>
+<rectangle x1="1.475" y1="-3.3" x2="1.775" y2="-2.2" layer="51"/>
+<rectangle x1="2.125" y1="-3.3" x2="2.425" y2="-2.2" layer="51"/>
+<rectangle x1="2.775" y1="-3.3" x2="3.075" y2="-2.2" layer="51"/>
+<rectangle x1="2.775" y1="2.2" x2="3.075" y2="3.3" layer="51" rot="R180"/>
+<rectangle x1="2.125" y1="2.2" x2="2.425" y2="3.3" layer="51" rot="R180"/>
+<rectangle x1="1.475" y1="2.2" x2="1.775" y2="3.3" layer="51" rot="R180"/>
+<rectangle x1="0.825" y1="2.2" x2="1.125" y2="3.3" layer="51" rot="R180"/>
+<rectangle x1="0.175" y1="2.2" x2="0.475" y2="3.3" layer="51" rot="R180"/>
+<rectangle x1="-0.475" y1="2.2" x2="-0.175" y2="3.3" layer="51" rot="R180"/>
+<rectangle x1="-1.125" y1="2.2" x2="-0.825" y2="3.3" layer="51" rot="R180"/>
+<rectangle x1="-1.775" y1="2.2" x2="-1.475" y2="3.3" layer="51" rot="R180"/>
+<rectangle x1="-2.425" y1="2.2" x2="-2.125" y2="3.3" layer="51" rot="R180"/>
+<rectangle x1="-3.075" y1="2.2" x2="-2.775" y2="3.3" layer="51" rot="R180"/>
+</package>
 </packages>
 <packages3d>
-<package3d name="TSSOP24" urn="urn:adsk.eagle:package:33324059/2" type="model" library_version="39">
-<description>&lt;b&gt;TSSOP24&lt;/b&gt;&lt;br&gt;
-</description>
+<package3d name="TSSOP24" urn="urn:adsk.eagle:package:33324059/2" type="model" library_version="42">
+<description>&lt;b&gt;TSSOP24&lt;/b&gt;&lt;br&gt;</description>
 <packageinstances>
 <packageinstance name="TSSOP24"/>
 </packageinstances>
 </package3d>
-<package3d name="SO18W" urn="urn:adsk.eagle:package:33327837/3" type="model" library_version="39">
-<description>&lt;b&gt;(SO) - Wide, 7.50 mm (.300 In.) Body [SOIC&lt;/b&gt;&lt;br&gt;
-</description>
+<package3d name="SO18W" urn="urn:adsk.eagle:package:33327837/3" type="model" library_version="42">
+<description>&lt;b&gt;(SO) - Wide, 7.50 mm (.300 In.) Body [SOIC&lt;/b&gt;&lt;br&gt;</description>
 <packageinstances>
 <packageinstance name="SO18W"/>
 </packageinstances>
 </package3d>
-<package3d name="SO24" urn="urn:adsk.eagle:package:33306208/2" type="box" library_version="39">
-<description>&lt;b&gt;SO-24_&lt;/b&gt;&lt;br&gt;
-</description>
+<package3d name="SO24" urn="urn:adsk.eagle:package:33306208/2" type="box" library_version="42">
+<description>&lt;b&gt;SO-24_&lt;/b&gt;&lt;br&gt;</description>
 <packageinstances>
 <packageinstance name="SO24"/>
+</packageinstances>
+</package3d>
+<package3d name="SSOP20" urn="urn:adsk.eagle:package:33748008/1" type="box" library_version="42">
+<description>plastic shrink small outline package 20 leads; body width 4.4 mm SOT266-1
+Source: http://www.semiconductors.philips.com/acrobat_download/datasheets/PCF8574_4.pdf</description>
+<packageinstances>
+<packageinstance name="SSOP20"/>
 </packageinstances>
 </package3d>
 </packages3d>
@@ -11302,7 +11358,7 @@ Eagle Ver. 9.x&lt;br&gt;</description>
 </symbol>
 </symbols>
 <devicesets>
-<deviceset name="STP16CP05" urn="urn:adsk.eagle:component:33306209/7" prefix="D" library_version="39">
+<deviceset name="STP16CP05" urn="urn:adsk.eagle:component:33306209/7" prefix="D" library_version="42">
 <description>&lt;b&gt;STP16CP05&lt;/b&gt;&lt;p&gt;
 Source: &lt;a href="http://www.st.com/st-web-ui/static/active/en/resource/technical/document/datasheet/CD00126634.pdf"&gt; Datasheet &lt;/a&gt;</description>
 <gates>
@@ -11388,7 +11444,7 @@ Source: &lt;a href="http://www.st.com/st-web-ui/static/active/en/resource/techni
 </device>
 </devices>
 </deviceset>
-<deviceset name="MCP23S08" urn="urn:adsk.eagle:component:33327838/5" prefix="D" library_version="39">
+<deviceset name="MCP23S08" urn="urn:adsk.eagle:component:33327838/8" prefix="D" library_version="42">
 <description>&lt;b&gt;8-bit I/O Expander,SPI,MCP23S08-E/SO&lt;/b&gt;&lt;p&gt;
 Source: &lt;a href="https://datasheet.datasheetarchive.com/originals/distributors/SFDatasheet-4/sf-00090055.pdf"&gt; Datasheet &lt;/a&gt;</description>
 <gates>
@@ -11430,6 +11486,34 @@ Source: &lt;a href="https://datasheet.datasheetarchive.com/originals/distributor
 <attribute name="MOUSER_PART_NUMBER" value="579-MCP23S08-E/SO" constant="no"/>
 <attribute name="MOUSER_PRICE-STOCK" value="https://www.mouser.co.uk/ProductDetail/Microchip-Technology/MCP23S08-E-SO?qs=Sez7gRs8XSXMFunLZ5Ve%2FA%3D%3D" constant="no"/>
 </technology>
+</technologies>
+</device>
+<device name="SS" package="SSOP20">
+<connects>
+<connect gate="G$1" pin="!CS" pad="7"/>
+<connect gate="G$1" pin="!RESET" pad="6"/>
+<connect gate="G$1" pin="A0" pad="5"/>
+<connect gate="G$1" pin="A1" pad="4"/>
+<connect gate="G$1" pin="GP0" pad="12"/>
+<connect gate="G$1" pin="GP1" pad="13"/>
+<connect gate="G$1" pin="GP2" pad="14"/>
+<connect gate="G$1" pin="GP3" pad="15"/>
+<connect gate="G$1" pin="GP4" pad="16"/>
+<connect gate="G$1" pin="GP5" pad="17"/>
+<connect gate="G$1" pin="GP6" pad="18"/>
+<connect gate="G$1" pin="GP7" pad="19"/>
+<connect gate="G$1" pin="INT" pad="8"/>
+<connect gate="G$1" pin="SCK" pad="1"/>
+<connect gate="G$1" pin="SI" pad="2"/>
+<connect gate="G$1" pin="SO" pad="3"/>
+<connect gate="G$1" pin="VDD" pad="20"/>
+<connect gate="G$1" pin="VSS" pad="9"/>
+</connects>
+<package3dinstances>
+<package3dinstance package3d_urn="urn:adsk.eagle:package:33748008/1"/>
+</package3dinstances>
+<technologies>
+<technology name=""/>
 </technologies>
 </device>
 </devices>
@@ -13808,8 +13892,7 @@ Eagle Ver. 9.x&lt;br&gt;</description>
 </packages>
 <packages3d>
 <package3d name="TSSOP16" urn="urn:adsk.eagle:package:33494874/1" type="box" library_version="17">
-<description>&lt;b&gt;PW0016A&lt;/b&gt;&lt;br&gt;
-</description>
+<description>&lt;b&gt;PW0016A&lt;/b&gt;&lt;br&gt;</description>
 <packageinstances>
 <packageinstance name="TSSOP16"/>
 </packageinstances>
@@ -15001,8 +15084,8 @@ Eagle Ver. 9.x&lt;br&gt;</description>
 </libraries>
 <attributes>
 <attribute name="ABTEILUNG" value="Technische Informatik"/>
-<attribute name="BEARBEITER" value="Simon Grundner"/>
-<attribute name="DATUM" value="2021//"/>
+<attribute name="BEARBEITER" value="Ihninger, Grundner"/>
+<attribute name="DATUM" value="07/02/2022"/>
 <attribute name="DOKUMENTART" value="Schaltplan"/>
 <attribute name="GEZ" value="GruS"/>
 <attribute name="ID" value="4AHEL"/>
@@ -15468,15 +15551,21 @@ Eagle Ver. 9.x&lt;br&gt;</description>
 <part name="GND10" library="supply_GruS" library_urn="urn:adsk.eagle:library:13579815" deviceset="AGND" device=""/>
 <part name="GND11" library="supply_GruS" library_urn="urn:adsk.eagle:library:13579815" deviceset="AGND" device=""/>
 <part name="GND12" library="supply_GruS" library_urn="urn:adsk.eagle:library:13579815" deviceset="AGND" device=""/>
-<part name="X4" library="con_GruS" library_urn="urn:adsk.eagle:library:13569504" deviceset="JUMPSMD1FACH-1" device="" package3d_urn="urn:adsk.eagle:package:33704775/1"/>
-<part name="X3" library="con_GruS" library_urn="urn:adsk.eagle:library:13569504" deviceset="JUMPSMD1FACH-1" device="" package3d_urn="urn:adsk.eagle:package:33704775/1"/>
+<part name="X4" library="con_GruS" library_urn="urn:adsk.eagle:library:13569504" deviceset="JUMPSMD1FACH-1" device="" package3d_urn="urn:adsk.eagle:package:33704775/1">
+<attribute name="CATEGORY" value="18"/>
+</part>
+<part name="X3" library="con_GruS" library_urn="urn:adsk.eagle:library:13569504" deviceset="JUMPSMD1FACH-1" device="" package3d_urn="urn:adsk.eagle:package:33704775/1">
+<attribute name="CATEGORY" value="18"/>
+</part>
 <part name="U$10" library="supply_GruS" library_urn="urn:adsk.eagle:library:13579815" deviceset="VREF" device=""/>
 <part name="+5V25" library="supply_GruS" library_urn="urn:adsk.eagle:library:13579815" deviceset="+5V" device=""/>
 <part name="GND56" library="supply_GruS" library_urn="urn:adsk.eagle:library:13579815" deviceset="GND" device=""/>
 <part name="GND62" library="supply_GruS" library_urn="urn:adsk.eagle:library:13579815" deviceset="AGND" device=""/>
 <part name="GND75" library="supply_GruS" library_urn="urn:adsk.eagle:library:13579815" deviceset="AGND" device=""/>
 <part name="U$11" library="supply_GruS" library_urn="urn:adsk.eagle:library:13579815" deviceset="VREF" device=""/>
-<part name="C4" library="rcl_GruS" library_urn="urn:adsk.eagle:library:13572313" deviceset="C-EU" device="C0805" package3d_urn="urn:adsk.eagle:package:23617/2" value="4u7"/>
+<part name="C4" library="rcl_GruS" library_urn="urn:adsk.eagle:library:13572313" deviceset="C-EU" device="C0805" package3d_urn="urn:adsk.eagle:package:23617/2" value="4u7">
+<attribute name="CATEGORY" value="2"/>
+</part>
 <part name="GND76" library="supply_GruS" library_urn="urn:adsk.eagle:library:13579815" deviceset="GND" device=""/>
 </parts>
 <sheets>
@@ -16534,10 +16623,12 @@ EC-11</description>
 <instance part="X4" gate="1" x="25.4" y="114.3" smashed="yes" rot="R180">
 <attribute name="NAME" x="24.13" y="116.078" size="1.6764" layer="95" rot="R180"/>
 <attribute name="VALUE" x="29.464" y="114.808" size="1.27" layer="96"/>
+<attribute name="CATEGORY" x="25.4" y="114.3" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="X3" gate="1" x="38.1" y="127" smashed="yes">
 <attribute name="NAME" x="34.29" y="128.778" size="1.6764" layer="95" rot="R180"/>
 <attribute name="VALUE" x="34.036" y="126.492" size="1.27" layer="96" rot="R180"/>
+<attribute name="CATEGORY" x="38.1" y="127" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="U$10" gate="G$1" x="22.86" y="129.54" smashed="yes" rot="MR0">
 <attribute name="VALUE" x="22.86" y="130.302" size="1.27" layer="96" font="vector" rot="MR0" align="bottom-center"/>
@@ -16560,6 +16651,7 @@ EC-11</description>
 <instance part="C4" gate="G$1" x="15.24" y="121.92" smashed="yes">
 <attribute name="NAME" x="14.224" y="121.3866" size="1.6764" layer="95" font="vector" align="bottom-right"/>
 <attribute name="VALUE" x="14.224" y="118.5926" size="1.27" layer="96" font="vector" align="bottom-right"/>
+<attribute name="CATEGORY" x="15.24" y="121.92" size="1.778" layer="96" display="off"/>
 </instance>
 </instances>
 <busses>
@@ -17217,9 +17309,6 @@ EC-11</description>
 <wire x1="162.56" y1="203.2" x2="25.4" y2="203.2" width="0.1524" layer="97" style="dashdot"/>
 <wire x1="25.4" y1="114.3" x2="25.4" y2="203.2" width="0.1524" layer="97" style="dashdot"/>
 <text x="93.98" y="198.12" size="1.778" layer="97" font="vector" align="bottom-center">Prescaler Input Encoder</text>
-<text x="25.4" y="208.28" size="1.778" layer="150">Prescaler
-4-bit encoded data
-priority on BPM Divider Inputs</text>
 </plain>
 <instances>
 <instance part="FRAMES3" gate="G$1" x="0" y="0" smashed="yes">
