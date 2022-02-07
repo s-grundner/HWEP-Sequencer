@@ -21,20 +21,14 @@
 	// KeyRegister:	Default Key Register
 	// Event:	+SHIFT Rotary: Change Mode
 	// Index/Cur:	Index
-#define APP_MODE_ENI 0x02	// Enable at Index
+#define APP_MODE_ENR 0x02	// Enable at Index and Resets
 	// HEX:		-
 	// Rotary:	Moves Cursor
 	// KeyRegister:	Default Key Register
 	// Event:	Toggles On/Off State at Cursor -> Lights EN Led
 	// Index/Cur.:	Cursor
-#define APP_MODE_RST 0x03	// Resets at Cursor Location
-	// HEX:		-
-	// Rotary:	Moves Cursor
-	// KeyRegister:	-
-	// Event:	-
-	// Index/Cur.:	Cursor
 #define APP_MODE_TSP 0x04	// Transpose in Key
-	// HEX:		-
+	// HEX:		Transposition amount
 	// Rotary:	Transpose +/- 1 ST
 	// KeyRegister:	Shows Current Key in Register
 	// Event:	+SHIFT Rotary: Transpose Octave (+/- 12 ST)

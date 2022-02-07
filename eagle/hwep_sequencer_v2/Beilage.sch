@@ -18833,7 +18833,7 @@ PL-9823-F5 LEDs</description>
 <wire x1="182.88" y1="48.26" x2="5.08" y2="48.26" width="0.1524" layer="97" style="dashdot"/>
 <wire x1="5.08" y1="48.26" x2="5.08" y2="154.94" width="0.1524" layer="97" style="dashdot"/>
 <text x="93.98" y="261.62" size="1.778" layer="97" font="vector" align="bottom-center">Key Register Bar Interface</text>
-<text x="48.26" y="149.86" size="1.778" layer="97" font="vector" align="bottom-center">Select</text>
+<text x="48.26" y="149.86" size="1.778" layer="97" font="vector" align="bottom-center">Index/Cursor</text>
 <text x="142.24" y="149.86" size="1.778" layer="97" font="vector" align="bottom-center">Enable</text>
 <wire x1="83.82" y1="144.78" x2="83.82" y2="147.32" width="0.1524" layer="97"/>
 <wire x1="12.7" y1="144.78" x2="12.7" y2="147.32" width="0.1524" layer="97"/>
