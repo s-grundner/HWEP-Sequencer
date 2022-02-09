@@ -13,14 +13,6 @@ float *square = NULL;
 float *tri = NULL;
 float *silence = NULL;
 
-struct oscillatorT
-{
-    float **waveForm;
-    float *dest;
-    uint32_t samplePos;
-};
-
-
 void init_wavetables(void)
 {
 	sine = (float *)malloc(sizeof(float) * WAVEFORM_CNT);
