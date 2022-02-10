@@ -23,8 +23,8 @@ Der Sequencer wird mit dem ESP32 32-bit Microcontroller betrieben. Der Digitale 
  - 8 EN-LED’s:
    - zeigen an, welcher Ton spielen wird oder stummgeschalten ist (LED aus)
  - 8 Index/Cursor-LED’s:
-   - Index: zeigen an, welcher Ton gerade spielt
-   - Cursor: bzw. dient zum Anzeigen eines Cursors
+   - **Index:** zeigen an, welcher Ton gerade spielt
+   - **Cursor:** bzw. dient zum Anzeigen eines Cursors
 3. 3x 7-Segent Display:
  - nützen zur Anzeige von Parametern
  - werden mit einem MCP23S08 via die SPI Schnittstelle seriell angesteuert
@@ -35,37 +35,37 @@ Der Sequencer wird mit dem ESP32 32-bit Microcontroller betrieben. Der Digitale 
  
 5. Taster: 
 > Jeder Taster wird mittels eines MCP23S08 via SPI eingelesen.
- - Pause: pausiert den Zyklus
- - Reset: setzt den Zyklus asynchron zurück
- - Reset Key Register: setzt die Tonleitereinstellungen auf Default Settings (C4 Moll)
- - Event: zum Einstellen der Parameter der verschiedenen Modi
- - Prescaler: einstellen von zwei verschiedenen Prescalern für Gate und Takt
+ - **Pause:** pausiert den Zyklus
+ - **Reset:** setzt den Zyklus asynchron zurück
+ - **Reset Key Register:** setzt die Tonleitereinstellungen auf Default Settings (C4 Moll)
+ - **Event:** zum Einstellen der Parameter der verschiedenen Modi
+ - **Prescaler:** einstellen von zwei verschiedenen Prescalern für Gate und Takt
    - 5 Taster für jeden Prescaler
  
 6. 4 Modi
 > Jeder Modus verändert die Anzeigen an den Status LED’s und Displays bzw. die Funktionalität verschiedener Eingaben. Nach wechseln eines Modus wird der aktuelle Modus am 7-Segment Display angezeigt, bis die Anzeige benötigt wird, um einen Parameter anzuzeigen.
  
  - BPM:
-   - 7-Segment Display: zeigt die eingestellten BPM an und die Wellenform
-   - Index/Cursor: zeigt den Index an
-   - Drehencoder: zum Verändern der BPM
-   - Event Taster: Drehencoder verändert die Wellenform
+   - **7-Segment Display:** zeigt die eingestellten BPM an und die Wellenform
+   - **Index/Cursor:** zeigt den Index an
+   - **Drehencoder:** zum Verändern der BPM
+   - **Event Taster:** Drehencoder verändert die Wellenform
  - Tonleiter Einstellungen:
-   - 7-Segment Display: zeigt den Ton an, der gerade spielt
-   - Index/Cursor: zeigt den Index an
-   - Drehencoder: zum Verändern den Tonleiter
-   - Event Taster: verändert den Modus des Tonleiters (Dur,Moll…)
+   - **7-Segment Display:** zeigt den Ton an, der gerade spielt
+   - **Index/Cursor:** zeigt den Index an
+   - **Drehencoder:** zum Verändern den Tonleiter
+   - **Event Taster:** verändert den Modus des Tonleiters (Dur,Moll…)
  - Enable/Reset:
-   - 7-Segment Display:
-   - Index/Cursor: zeigt den Cursor an
-   - Drehencoder: bewegt den Cursor. Dort wo der Cursor stehen bleibt, setzt sich der Zyklus zurück.
-   - Event Taster: stummt/entstummt einen Ton an der Cursorstellung
+   - **7-Segment Display:**
+   - **Index/Cursor:** zeigt den Cursor an
+   - **Drehencoder:** bewegt den Cursor. Dort wo der Cursor stehen bleibt, setzt sich der Zyklus zurück.
+   - **Event Taster:** stummt/entstummt einen Ton an der Cursorstellung
  
  - Transpose:
-   - 7-Segment Display: zeigt an um wieviel Halbtöne die Melodie transponiert wird
-   - Index/Cursor: zeigt den Index an
-   - Drehencoder: zum Verändern der Tonlage
-   - Event Taster: Drehencoder verändert die Tonlage um eine Oktave
+   - **7-Segment Display:** zeigt an um wieviel Halbtöne die Melodie transponiert wird
+   - **Index/Cursor:** zeigt den Index an
+   - **Drehencoder:** zum Verändern der Tonlage
+   - **Event Taster:** Drehencoder verändert die Tonlage um eine Oktave
  
 7. ESP32 32-Bit Microcontroller:
  - Zentrale Recheneinheit für den Sequenzer
