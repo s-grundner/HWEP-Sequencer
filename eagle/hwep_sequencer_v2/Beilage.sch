@@ -15973,13 +15973,6 @@ HW Adr: 00</text>
 <pinref part="X1" gate="G$1" pin="GPIO13/ADC2_CH4/HSPID"/>
 </segment>
 </net>
-<net name="ADC088S052_!CS" class="0">
-<segment>
-<wire x1="127" y1="226.06" x2="132.08" y2="226.06" width="0.1524" layer="91"/>
-<label x="132.08" y="226.06" size="1.016" layer="95" font="vector" xref="yes"/>
-<pinref part="X1" gate="G$1" pin="GPIO21"/>
-</segment>
-</net>
 <net name="RKR" class="0">
 <segment>
 <label x="111.76" y="142.24" size="1.016" layer="95" font="vector" xref="yes"/>
@@ -16064,18 +16057,30 @@ HW Adr: 00</text>
 <label x="111.76" y="157.48" size="1.016" layer="95" font="vector" xref="yes"/>
 </segment>
 </net>
-<net name="STP_!CS" class="0">
-<segment>
-<pinref part="X1" gate="G$1" pin="GPIO22"/>
-<wire x1="127" y1="233.68" x2="132.08" y2="233.68" width="0.1524" layer="91"/>
-<label x="132.08" y="233.68" size="1.016" layer="95" font="vector" xref="yes"/>
-</segment>
-</net>
 <net name="INT_23S08" class="0">
 <segment>
 <pinref part="D1" gate="G$1" pin="INT"/>
 <wire x1="78.74" y1="142.24" x2="45.72" y2="142.24" width="0.1524" layer="91"/>
 <label x="45.72" y="142.24" size="1.016" layer="95" font="vector" rot="R180" xref="yes"/>
+</segment>
+<segment>
+<wire x1="127" y1="233.68" x2="132.08" y2="233.68" width="0.1524" layer="91"/>
+<label x="132.08" y="233.68" size="1.016" layer="95" font="vector" xref="yes"/>
+<pinref part="X1" gate="G$1" pin="GPIO22"/>
+</segment>
+</net>
+<net name="ADC088S052_!CS" class="0">
+<segment>
+<wire x1="127" y1="200.66" x2="132.08" y2="200.66" width="0.1524" layer="91"/>
+<label x="132.08" y="200.66" size="1.016" layer="95" font="vector" xref="yes"/>
+<pinref part="X1" gate="G$1" pin="GPIO15/ADC2_CH3/HCS"/>
+</segment>
+</net>
+<net name="STP_!CS" class="0">
+<segment>
+<wire x1="127" y1="226.06" x2="132.08" y2="226.06" width="0.1524" layer="91"/>
+<label x="132.08" y="226.06" size="1.016" layer="95" font="vector" xref="yes"/>
+<pinref part="X1" gate="G$1" pin="GPIO21"/>
 </segment>
 </net>
 </nets>
