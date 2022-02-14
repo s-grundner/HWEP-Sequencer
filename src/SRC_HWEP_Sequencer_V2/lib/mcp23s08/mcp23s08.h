@@ -5,7 +5,14 @@
 #include "driver/spi_master.h"
 #include "driver/gpio.h"
 #include "esp_log.h"
-#include <string.h>
+
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
+#include "freertos/semphr.h"
+
+#include <unistd.h>
+#include <sys/param.h>
+#include "sdkconfig.h"
 
 // ------------------------------------------------------------
 // Datasheet
@@ -60,6 +67,7 @@ struct mcp23s08_context_t
 {
 	mcp23s08_config_t cfg;
 	spi_device_handle_t spi;
+	SemaphoreHandle_t ready_sem;
 };
 
 typedef struct mcp23s08_context_t mcp23s08_context_t;
@@ -72,9 +80,9 @@ typedef struct mcp23s08_context_t *mcp23s08_handle_t;
 #define F_SCK (SPI_MASTER_FREQ_10M)
 
 // ------------------------------------------------------------
-// Functions
+// (Public) Functions
 // ------------------------------------------------------------
 
 esp_err_t mcp23s08_init(mcp23s08_handle_t *out_handle, const mcp23s08_config_t *cfg);
-esp_err_t mcp23s08_write(mcp23s08_handle_t out_handle, mcp23s08_hw_adr hw_adr, mcp23s08_reg_adr reg_adr, uint8_t data);
+esp_err_t mcp23s08_write(mcp23s08_handle_t out_handle, mcp23s08_hw_adr hw_adr, mcp23s08_reg_adr reg_adr, const uint8_t data);
 esp_err_t mcp23s08_read(mcp23s08_handle_t out_handle, mcp23s08_hw_adr hw_adr, mcp23s08_reg_adr reg_adr, uint8_t *data);

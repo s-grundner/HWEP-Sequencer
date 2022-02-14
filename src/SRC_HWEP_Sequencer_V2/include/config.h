@@ -6,6 +6,13 @@
 #include "driver/gpio.h"
 #include "driver/i2s.h"
 #include "driver/spi_master.h"
+#include "freertos/FreeRTOS.h"
+#include "driver/gpio.h"
+#include "esp_system.h"
+
+#include "i2s_interface.h"
+#include "mcp23s08.h"
+#include "misc.h"
 
 // ------------------------------------------------------------
 // Pinout
@@ -69,24 +76,27 @@ spi_bus_config_t v_spi_cfg = {
 #define APP_MODE_BPM 0x00 // Set Beats per Minute
 						  // HEX:		shows BPM
 						  // Rotary:	changes BPM on Rotation
-						  // Event:	+SHIFT Rotary: CHange Waveform
-						  //		+SHIFT HEX: Shows Selected Waveform
+						  // Event:		SHIFT Rotary: CHange Waveform
+						  //			+SHIFT HEX: Shows Selected Waveform
 						  // Index/Cur:	Index
+
 #define APP_MODE_KEY 0x01 // Key Settings
 						  // HEX:		shows Current Key
 						  // Rotary:	Change Key (Shift Key Register)
-						  // Event:	+SHIFT Rotary: Change Mode
+						  // Event:		+SHIFT Rotary: Change Mode
 						  // Index/Cur:	Index
+
 #define APP_MODE_ENR 0x02 // Enable and Reset at Index
 						  // HEX:		-
 						  // Rotary:	Moves Cursor
-						  // Event:	Toggles On/Off State at Cursor -> Lights EN Led
-						  // Index/Cur.:	Cursor
+						  // Event:		Toggles On/Off State at Cursor -> Lights EN Led
+						  // Index/Cur.:Cursor
+
 #define APP_MODE_TSP 0x03 // Transpose in Key
 						  // HEX:		Transposition amount
 						  // Rotary:	Transpose +/- 1 ST
-						  // Event:	+SHIFT Rotary: Transpose Octave (+/- 12 ST)
-						  // Index/Cur.:	Index
+						  // Event:		+SHIFT Rotary: Transpose Octave (+/- 12 ST)
+						  // Index/Cur.:Index
 
 // ------------------------------------------------------------
 // Ideas
