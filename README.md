@@ -1,4 +1,4 @@
-# HWEP
+# HWEP [DE]
  [HWEP] Hardware School Project with my bestest frens
 
 ## KUB - Kurzbeschreibung
