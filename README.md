@@ -3,7 +3,7 @@
 
 ## BSB - Blockschaltbild
 
-![BSB](/docu/v1/BSB_Sequencer_I2S.drawio.svg)
+![BSB](/docu/v2/BSB_Sequencer_I2S.drawio.svg)
 
 ## KUB - Kurzbeschreibung
 
