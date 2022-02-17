@@ -18,41 +18,26 @@
 // Datasheet
 // ------------------------------------------------------------
 
-// https://ww1.microchip.com/downloads/en/DeviceDoc/MCP23008-MCP23S08-Data-Sheet-20001919F.pdf
+// https://www.ti.com/lit/ds/symlink/adc088s052.pdf?ts=1645043382836&ref_url=https%253A%252F%252Fwww.ti.com%252Fproduct%252FADC088S052
 
 // ------------------------------------------------------------
-// Register Addresses
-// ------------------------------------------------------------
-
-typedef enum
-{
-	IODIR = 0x00,
-	IPOL = 0x01,
-	GPINTEN = 0x02,
-	DEFVAL = 0x03,
-	INTCON = 0x04,
-	IOCON = 0x05,
-	GPPU = 0x06,
-	INTF = 0x07,
-	INTCAP = 0x08,
-	GPIO_R = 0x09,
-	OLAT = 0x0A,
-} mcp23s08_reg_adr;
-
-// ------------------------------------------------------------
-// Hardware Addresses
+// Channels
 // ------------------------------------------------------------
 
 typedef enum
 {
-	HW_ADR_0 = 0b00,
-	HW_ADR_1 = 0b01,
-	HW_ADR_2 = 0b10,
-	HW_ADR_3 = 0b11,
-} mcp23s08_hw_adr;
+	ADC088S052_CH_0 = 0,
+	ADC088S052_CH_1 = 1,
+	ADC088S052_CH_2 = 2,
+	ADC088S052_CH_3 = 3,
+	ADC088S052_CH_4 = 4,
+	ADC088S052_CH_5 = 5,
+	ADC088S052_CH_6 = 6,
+	ADC088S052_CH_7 = 7,
+}adc088s052_channel_t;
 
 // ------------------------------------------------------------
-// Structs
+// Configuration
 // ------------------------------------------------------------
 
 typedef struct
@@ -61,29 +46,28 @@ typedef struct
 	gpio_num_t cs_io;
 	gpio_num_t miso_io;
 	gpio_num_t mosi_io;
-	gpio_num_t intr_io; // -1 if interrupts ar not used
-} mcp23s08_config_t;
+} adc088s052_config_t;
 
-struct mcp23s08_context_t
+struct adc088s052_context_t
 {
-	mcp23s08_config_t cfg;
+	adc088s052_config_t cfg;
 	spi_device_handle_t spi;
 	SemaphoreHandle_t ready_sem;
 };
 
-typedef struct mcp23s08_context_t mcp23s08_context_t;
-typedef struct mcp23s08_context_t *mcp23s08_handle_t;
+typedef struct adc088s052_context_t adc088s052_context_t;
+typedef struct adc088s052_context_t *adc088s052_handle_t;
 
 // ------------------------------------------------------------
 // Transaction specifications
 // ------------------------------------------------------------
 
-#define F_SCK_MCP (SPI_MASTER_FREQ_10M)
+#define F_SCK_ADC (SPI_MASTER_FREQ_8M)
 
 // ------------------------------------------------------------
 // (Public) Functions
 // ------------------------------------------------------------
 
-esp_err_t mcp23s08_init(mcp23s08_handle_t *out_handle, const mcp23s08_config_t *cfg);
-esp_err_t mcp23s08_write(mcp23s08_handle_t handle, mcp23s08_hw_adr hw_adr, mcp23s08_reg_adr reg_adr, const uint8_t data);
-esp_err_t mcp23s08_read(mcp23s08_handle_t handle, mcp23s08_hw_adr hw_adr, mcp23s08_reg_adr reg_adr, uint8_t *data);
+esp_err_t adc088s052_init(adc088s052_handle_t *out_handle, const adc088s052_config_t *cfg);
+esp_err_t adc088s052_get_raw(adc088s052_handle_t handle, adc088s052_channel_t ch, uint8_t *data);
+esp_err_t adc088s052_get(adc088s052_handle_t handle, uint8_t *data[8]);
