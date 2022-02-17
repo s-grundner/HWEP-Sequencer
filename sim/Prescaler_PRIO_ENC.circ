@@ -3,6 +3,9 @@
   This file is intended to be loaded by Logisim-evolution(https://github.com/logisim-evolution/).
 
   <lib desc="#Wiring" name="0">
+    <tool name="Pin">
+      <a name="appearance" val="NewPins"/>
+    </tool>
     <tool name="Probe">
       <a name="appearance" val="NewPins"/>
     </tool>

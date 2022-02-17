@@ -1,0 +1,31 @@
+{
+	"folders": [
+		{
+			"path": "..\\.."
+		},
+		{
+			"name": "SRC_HWEP_Sequencer_V2",
+			"path": "."
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"config.h": "c",
+			"sequencer.h": "c",
+			"i2s_interface.h": "c",
+			"esp_log.h": "c",
+			"i2s.h": "c",
+			"esp_system.h": "c",
+			"mcp23s08.h": "c",
+			"semphr.h": "c",
+			"*.ipp": "c",
+			"adc088s052.h": "c",
+			"xiosbase": "c",
+			"array": "c",
+			"vector": "c",
+			"xstring": "c",
+			"xutility": "c",
+			"xlocale": "c"
+		}
+	}
+}
