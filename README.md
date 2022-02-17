@@ -19,16 +19,16 @@ Der Sequencer wird mit dem ESP32 32-bit Microcontroller betrieben. Der Digitale 
 
 ## FUB - Funktionsbeschreibung
 1. 8 Potentiometer als analoger Eingang:
-   - dient als analoger Eingang für die Tonlage der einzelnen Töne
-   - jedes Potentiometer umfasst 12 Halbtöne bzw. eine Oktave
-   - die analogen Werte einem 8 Channel ADC (ADC088S052) über die SPI Schnittstelle eingelesen
+ - dient als analoger Eingang für die Tonlage der einzelnen Töne
+ - jedes Potentiometer umfasst 12 Halbtöne bzw. eine Oktave
+ - die analogen Werte einem 8 Channel ADC (ADC088S052) über die SPI Schnittstelle eingelesen
 
 2. 16 Status LED’s:
-   - 8 EN-LED’s:
-     - zeigen an, welcher Ton spielen wird oder stummgeschalten ist (LED aus)
-   - 8 Index/Cursor-LED’s:
-     - **Index:** zeigen an, welcher Ton gerade spielt
-     - **Cursor:** bzw. dient zum Anzeigen eines Cursors
+ - 8 EN-LED’s:
+   - zeigen an, welcher Ton spielen wird oder stummgeschalten ist (LED aus)
+ - 8 Index/Cursor-LED’s:
+   - **Index:** zeigen an, welcher Ton gerade spielt
+   - **Cursor:** bzw. dient zum Anzeigen eines Cursors
 3. 3x 7-Segent Display:
  - nützen zur Anzeige von Parametern
  - werden mit einem MCP23S08 via die SPI Schnittstelle seriell angesteuert
