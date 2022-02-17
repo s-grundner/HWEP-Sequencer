@@ -1,6 +1,10 @@
 # HWEP [DE]
  [HWEP] Hardware School Project with my bestest frens
 
+## BSB - Blockschaltbild
+
+![BSB](/docu/v1/BSB_Sequencer_I2S.drawio.svg)
+
 ## KUB - Kurzbeschreibung
 
 Der Sequenzer ist ein musisches Instrument, welches vom Benutzer einstellbare Töne nacheinander abspielt und dadurch eine Melodie erzeugt. Die Tonlage wird durch Potentiometer analog eingestellt und anschließend an die chromatische Skala angepasst. Die acht Töne werden mit jeder steigenden Flanke des Takts durchgeschaltet.
