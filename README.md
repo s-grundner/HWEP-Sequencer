@@ -1,10 +1,6 @@
 # HWEP [DE]
  [HWEP] Hardware School Project with my bestest frens
 
-## BSB - Blockschaltbild
-
-![BSB](/docu/v2/BSB_Sequencer_I2S.drawio.svg)
-
 ## KUB - Kurzbeschreibung
 
 Der Sequenzer ist ein musisches Instrument, welches vom Benutzer einstellbare Töne nacheinander abspielt und dadurch eine Melodie erzeugt. Die Tonlage wird durch Potentiometer analog eingestellt und anschließend an die chromatische Skala angepasst. Die acht Töne werden mit jeder steigenden Flanke des Takts durchgeschaltet.
@@ -16,6 +12,10 @@ Der Sequencer ist mit zwei Prescalern für Gate-Länge und Taktrate ausgestattet
 Zum Bedienen des Sequencers gibt es verschiedene Parameter, die mithilfe eines einzigen Dreh-Encoder gesteuert werden können. Der Dreh-Encoder hat einen integrierten Taster, mit welchem man die Parameter, die man verändern will, einstellen kann. Die Veränderung der Parameter wird je nach Modus an verschiedenen Status LEDs und Anzeigen abgezeichnet. Der Event-Taster hat je nach Modus eine andere Funktion.
  
 Der Sequencer wird mit dem ESP32 32-bit Microcontroller betrieben. Der Digitale Audioausgang erfolgt über das I²S (Inter-IC-Sound) Protokoll und kann 16-, 24- und 32-bit Sounds bei einer Abtastrate von 44.1kHz übertragen und durch einen I²S-DAC (PCM5102a) direkt als Audio-Signal ausgegeben werden.
+
+## BSB - Blockschaltbild
+
+![BSB](/docu/v2/BSB_Sequencer_I2S.drawio.svg)
 
 ## FUB - Funktionsbeschreibung
 1. 8 Potentiometer als analoger Eingang:
