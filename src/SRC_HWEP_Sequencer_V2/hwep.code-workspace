@@ -25,7 +25,10 @@
 			"vector": "c",
 			"xstring": "c",
 			"xutility": "c",
-			"xlocale": "c"
+			"xlocale": "c",
+			"adc.h": "c",
+			"gpio.h": "c",
+			"esp_intr_alloc.h": "c"
 		}
 	}
 }
