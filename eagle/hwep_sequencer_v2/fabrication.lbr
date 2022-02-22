@@ -321,7 +321,7 @@
 <text x="27.5" y="-6.25" size="1.778" layer="154" font="vector" align="center">0.70</text>
 <wire x1="35" y1="-7.5" x2="35" y2="-5" width="0.1016" layer="154"/>
 <wire x1="35" y1="-5" x2="50" y2="-5" width="0.1016" layer="154"/>
-<text x="42.5" y="-6.25" size="1.778" layer="154" font="vector" align="center">68</text>
+<text x="42.5" y="-6.25" size="1.778" layer="154" font="vector" align="center">69</text>
 <wire x1="50" y1="-7.5" x2="50" y2="-5" width="0.1016" layer="154"/>
 <wire x1="50" y1="-5" x2="65" y2="-5" width="0.1016" layer="154"/>
 <text x="57.5" y="-6.25" size="1.778" layer="154" font="vector" align="center">YES</text>

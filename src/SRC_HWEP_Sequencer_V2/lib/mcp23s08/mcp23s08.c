@@ -42,17 +42,13 @@ esp_err_t mcp23s08_init(mcp23s08_context_t **out_ctx, const mcp23s08_config_t *c
 		.post_cb = cs_low,
 	};
 
-	// if (ctx->cfg.intr_io >= 0)
-	// {
-	// 	gpio_config_t gpio_intr_cfg = {
-	// 		.mode = GPIO_MODE_INPUT,
-	// 		.intr_type = GPIO_INTR_POSEDGE,
-	// 		.pin_bit_mask = 1 << ctx->cfg.intr_io,
-	// 		.pull_down_en = GPIO_PULLDOWN_DISABLE,
-	// 		.pull_up_en = GPIO_PULLUP_DISABLE,
-	// 	};
-	// 	gpio_config(&gpio_intr_cfg);
-	// }
+	gpio_config_t intr_cfg = {
+        .intr_type = GPIO_INTR_POSEDGE,
+        .pull_down_en = 1,
+        .pull_up_en = 0,
+        .mode = GPIO_MODE_INPUT,
+        .pin_bit_mask = 1ULL << GPIO_NUM_32,
+    };
 
 	err = spi_bus_add_device(ctx->cfg.host, &devcfg, &ctx->spi);
 	if (err != ESP_OK)

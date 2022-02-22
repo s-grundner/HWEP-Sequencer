@@ -28,7 +28,8 @@
 			"xlocale": "c",
 			"adc.h": "c",
 			"gpio.h": "c",
-			"esp_intr_alloc.h": "c"
+			"esp_intr_alloc.h": "c",
+			"freertos.h": "c"
 		}
 	}
 }
