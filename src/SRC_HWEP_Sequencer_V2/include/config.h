@@ -3,12 +3,23 @@
 #ifndef __CONFIG_H_
 #define __CONFIG_H_
 
+#include "esp_system.h"
+
 #include "driver/gpio.h"
 #include "driver/i2s.h"
 #include "driver/spi_master.h"
-#include "freertos/FreeRTOS.h"
 #include "driver/gpio.h"
-#include "esp_system.h"
+#include "driver/adc.h"
+
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
+#include "freertos/queue.h"
+
+#include "esp_intr_alloc.h"
+
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
 
 // ------------------------------------------------------------
 // Peripherals

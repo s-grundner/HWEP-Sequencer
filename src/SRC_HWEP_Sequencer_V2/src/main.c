@@ -1,7 +1,6 @@
 #include "config.h"
-#include "driver/adc.h"
-#include "esp_adc_cal.h"
-#include "esp_intr_alloc.h"
+
+#define INTR_MASK (1ULL << GPIO_NUM_32)
 
 void app_main(void)
 {
@@ -20,14 +19,22 @@ void app_main(void)
         .miso_io = VSPIQ,
         .mosi_io = VSPID,
         .cs_io = CS_MCP23S08,
-        .intr_io = MCP23S08_INTR,
+        .intr_io = -1,
     };
 
     err = mcp23s08_init(&mcp_handle, &mcp_cfg);
     ESP_ERROR_CHECK(err);
 
-    err = mcp23s08_write(mcp_handle, HW_ADR_0, IODIR, 0xff);
-    ESP_ERROR_CHECK(err);
+    s_seg_context_t s_seg_ctx = {
+        .hw_adr = HW_ADR_0,
+        .mcp_ctx = mcp_handle,
+    };
+    s_seg_init(&s_seg_ctx);
+
+    // err = mcp23s08_write(mcp_handle, HW_ADR_0, , 0xff);
+    // ESP_ERROR_CHECK(err);
+
+    // uint8_t data = 0;
 
     // ------------------------------------------------------------
     // ADC
@@ -40,19 +47,10 @@ void app_main(void)
     // Timer
     // ------------------------------------------------------------
 
-    // ------------------------------------------------------------
-    // Interrupts
-    // ------------------------------------------------------------
-
-    esp_intr_alloc(ETS_GPIO_INTR_SOURCE, ESP_INTR_FLAG_EDGE, NULL, NULL, NULL);
-
-    uint8_t *data = (uint8_t *)malloc(sizeof(uint8_t *));
+    // gpio_isr_handler_remove(GPIO_NUM_32);
 
     while (1)
     {
-        err = mcp23s08_read(mcp_handle, HW_ADR_0, GPIO_R, data);
-        ESP_ERROR_CHECK(err);
-        printf("%d\n", *data);
         vTaskDelay(10);
     }
 }

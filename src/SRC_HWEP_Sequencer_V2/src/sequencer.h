@@ -1,6 +1,28 @@
 #pragma once
 
-#include "config.h"
+#include "esp_system.h"
+
+#include "driver/gpio.h"
+#include "driver/i2s.h"
+#include "driver/spi_master.h"
+#include "driver/gpio.h"
+#include "driver/adc.h"
+
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
+#include "freertos/queue.h"
+
+#include "esp_intr_alloc.h"
+
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+#include "mcp23s08.h"
+
+#define MUX_E 0
+#define MUX_Z 1
+#define MUX_H 2
 
 typedef enum {
 	START,
@@ -19,13 +41,10 @@ void run(void);
 // ------------------------------------------------------------
 
 typedef struct {
-	int8_t mux_e;
-	int8_t mux_z;
-	int8_t mux_h;
 	mcp23s08_hw_adr hw_adr;
 	mcp23s08_context_t *mcp_ctx;
 }s_seg_context_t;
 
 void s_seg_init(s_seg_context_t *sg_ctx);
 void s_seg_shift(s_seg_context_t *sg_ctx, int8_t dir);
-void s_seg_write(char *buf);
+void s_seg_write(char *buf); 
