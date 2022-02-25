@@ -30,7 +30,7 @@ void s_seg_init(s_seg_context_t *sg_ctx)
 		gpio_config_t gpio_intr_cfg = {
 			.mode = GPIO_MODE_INPUT,
 			.intr_type = GPIO_INTR_POSEDGE,
-			.pin_bit_mask = 1 << sg_ctx->mcp_ctx->cfg.intr_io,
+			.pin_bit_mask = 1ULL << sg_ctx->mcp_ctx->cfg.intr_io,
 			.pull_down_en = GPIO_PULLDOWN_DISABLE,
 			.pull_up_en = GPIO_PULLUP_DISABLE,
 		};

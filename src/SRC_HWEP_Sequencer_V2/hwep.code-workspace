@@ -6,6 +6,18 @@
 		{
 			"name": "SRC_HWEP_Sequencer_V2",
 			"path": "."
+		},
+		{
+			"name": "HWEP_Test_PICO",
+			"path": "..\\HWEP_Test_PICO"
+		},
+		{
+			"name": "test",
+			"path": "..\\..\\..\\..\\Documents\\PlatformIO\\Projects\\test"
+		},
+		{
+			"name": "test_enc",
+			"path": "..\\..\\..\\..\\Documents\\PlatformIO\\Projects\\test_enc"
 		}
 	],
 	"settings": {
@@ -29,7 +41,19 @@
 			"adc.h": "c",
 			"gpio.h": "c",
 			"esp_intr_alloc.h": "c",
-			"freertos.h": "c"
+			"freertos.h": "c",
+			"ratio": "cpp",
+			"encoder.h": "c",
+			"charconv": "c",
+			"future": "c",
+			"memory": "c",
+			"random": "c",
+			"sstream": "c",
+			"xhash": "c",
+			"xlocnum": "c",
+			"*.tcc": "c",
+			"cstdlib": "c",
+			"queue.h": "c"
 		}
 	}
 }
