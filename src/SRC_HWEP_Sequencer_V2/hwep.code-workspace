@@ -53,7 +53,8 @@
 			"xlocnum": "c",
 			"*.tcc": "c",
 			"cstdlib": "c",
-			"queue.h": "c"
+			"queue.h": "c",
+			"misc.h": "c"
 		}
 	}
 }
