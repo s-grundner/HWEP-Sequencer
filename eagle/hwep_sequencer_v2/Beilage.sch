@@ -7342,21 +7342,21 @@ Source: AVX .. aphvc.pdf</description>
 <packageinstance name="C0805"/>
 </packageinstances>
 </package3d>
-<package3d name="P160S" urn="urn:adsk.eagle:package:33302053/6" type="model" library_version="47">
-<description>&lt;b&gt;P160KN-0EA15B10K-1&lt;/b&gt;&lt;br&gt;</description>
-<packageinstances>
-<packageinstance name="P160S"/>
-</packageinstances>
-</package3d>
 <package3d name="P160LT" urn="urn:adsk.eagle:package:33664428/5" type="model" library_version="52">
 <packageinstances>
 <packageinstance name="P160LT"/>
 </packageinstances>
 </package3d>
-<package3d name="P160L" urn="urn:adsk.eagle:package:33302106/6" type="model" library_version="49">
+<package3d name="P160L" urn="urn:adsk.eagle:package:33302106/7" type="model" library_version="54">
 <description>&lt;b&gt;P164N221QNA30C103-3&lt;/b&gt;&lt;br&gt;</description>
 <packageinstances>
 <packageinstance name="P160LB"/>
+</packageinstances>
+</package3d>
+<package3d name="P160S" urn="urn:adsk.eagle:package:33302053/7" type="model" library_version="54">
+<description>&lt;b&gt;P160KN-0EA15B10K-1&lt;/b&gt;&lt;br&gt;</description>
+<packageinstances>
+<packageinstance name="P160S"/>
 </packageinstances>
 </package3d>
 </packages3d>
@@ -10132,7 +10132,7 @@ Source: AVX .. aphvc.pdf</description>
 </device>
 </devices>
 </deviceset>
-<deviceset name="P160" urn="urn:adsk.eagle:component:33302174/9" prefix="R" uservalue="yes" library_version="53">
+<deviceset name="P160" urn="urn:adsk.eagle:component:33302174/10" prefix="R" uservalue="yes" library_version="54">
 <description>&lt;a href="https://www.ttelectronics.com/TTElectronics/media/ProductFiles/Datasheets/P160.pdf"&gt;Datasheet P160&lt;/a&gt;&lt;br&gt;
 &lt;a href="https://www.digikey.com/en/products/filter/rotary-potentiometers-rheostats/84?s=N4IgjCBcoEwCxVAYygMwIYBsDOBTANCAPZQDaIcADDAGxgwgC6hADgC5QgDKbATgJYA7AOYgAvoRoBORCBSQMOAsTIgAzAA41NAKwNmIdpx4CR4wjB0bZ8xXkIlI5TXA1WmrDpG58hoiSA6agjQcmhY9ipO6gDslDQaEAZG3iZ%2B5oFwOjbhSg6q2jAxGpQehl4%2Bpv6EGlI0OQoRyo7OJcEIyRVpZgFglFoNds0FajCJ1p3Gvj2EfVIMobZN%2BdHaOmBgHZ5TVRlgGnAyi7mRLeBlKSAAkoJsuMK4vHtStYPLUeSlk6nT1SAwMH2bzyH3O3xAABEiABXABGmFwGQAtCFkCdhtFLBpLEwAkjssdGiCzmAYrjCEiIIShityC8yYwxEygA"&gt;DigiKey Collection&lt;/a&gt;</description>
 <gates>
@@ -10146,7 +10146,7 @@ Source: AVX .. aphvc.pdf</description>
 <connect gate="G$1" pin="3" pad="2"/>
 </connects>
 <package3dinstances>
-<package3dinstance package3d_urn="urn:adsk.eagle:package:33302053/6"/>
+<package3dinstance package3d_urn="urn:adsk.eagle:package:33302053/7"/>
 </package3dinstances>
 <technologies>
 <technology name=""/>
@@ -10159,7 +10159,7 @@ Source: AVX .. aphvc.pdf</description>
 <connect gate="G$1" pin="3" pad="2"/>
 </connects>
 <package3dinstances>
-<package3dinstance package3d_urn="urn:adsk.eagle:package:33302106/6"/>
+<package3dinstance package3d_urn="urn:adsk.eagle:package:33302106/7"/>
 </package3dinstances>
 <technologies>
 <technology name=""/>
@@ -10463,7 +10463,7 @@ HTBLuVA Salzburg&lt;br&gt;
 Schuljahr: 2019-20&lt;br&gt;
 Eagle Ver. 9.x&lt;br&gt;</description>
 <packages>
-<package name="EC11" urn="urn:adsk.eagle:footprint:33306157/1" library_version="47">
+<package name="EC11" urn="urn:adsk.eagle:footprint:33306157/1" library_version="48">
 <description>&lt;b&gt;EC11E09244BS&lt;/b&gt;&lt;br&gt;
 </description>
 <pad name="A1" x="0" y="0" drill="1" diameter="1.5" shape="square"/>
@@ -10791,9 +10791,8 @@ Eagle Ver. 9.x&lt;br&gt;</description>
 </package>
 </packages>
 <packages3d>
-<package3d name="EC11" urn="urn:adsk.eagle:package:33306160/3" type="model" library_version="47">
-<description>&lt;b&gt;EC11E09244BS&lt;/b&gt;&lt;br&gt;
-</description>
+<package3d name="EC11" urn="urn:adsk.eagle:package:33306160/7" type="model" library_version="50">
+<description>&lt;b&gt;EC11E09244BS&lt;/b&gt;&lt;br&gt;</description>
 <packageinstances>
 <packageinstance name="EC11"/>
 </packageinstances>
@@ -10876,7 +10875,7 @@ Eagle Ver. 9.x&lt;br&gt;</description>
 </symbol>
 </symbols>
 <devicesets>
-<deviceset name="EC11" urn="urn:adsk.eagle:component:33306162/2" prefix="S" library_version="47">
+<deviceset name="EC11" urn="urn:adsk.eagle:component:33306162/5" prefix="S" library_version="50">
 <description>&lt;b&gt;Alps 9 Pulse Incremental Mechanical Rotary Encoder with a 6 mm Flat Shaft (Not Indexed), Through Hole//&lt;/b&gt;&lt;p&gt;
 Source: &lt;a href="https://componentsearchengine.com/Datasheets/2/EC11E09244BS.pdf"&gt; Datasheet &lt;/a&gt;</description>
 <gates>
@@ -10894,7 +10893,7 @@ Source: &lt;a href="https://componentsearchengine.com/Datasheets/2/EC11E09244BS.
 <connect gate="G$1" pin="WIPER" pad="C1"/>
 </connects>
 <package3dinstances>
-<package3dinstance package3d_urn="urn:adsk.eagle:package:33306160/3"/>
+<package3dinstance package3d_urn="urn:adsk.eagle:package:33306160/7"/>
 </package3dinstances>
 <technologies>
 <technology name="">
@@ -11214,15 +11213,13 @@ Source: http://www.semiconductors.philips.com/acrobat_download/datasheets/PCF857
 </packages>
 <packages3d>
 <package3d name="TSSOP24" urn="urn:adsk.eagle:package:33324059/2" type="model" library_version="42">
-<description>&lt;b&gt;TSSOP24&lt;/b&gt;&lt;br&gt;
-</description>
+<description>&lt;b&gt;TSSOP24&lt;/b&gt;&lt;br&gt;</description>
 <packageinstances>
 <packageinstance name="TSSOP24"/>
 </packageinstances>
 </package3d>
 <package3d name="SO18W" urn="urn:adsk.eagle:package:33327837/3" type="model" library_version="42">
-<description>&lt;b&gt;(SO) - Wide, 7.50 mm (.300 In.) Body [SOIC&lt;/b&gt;&lt;br&gt;
-</description>
+<description>&lt;b&gt;(SO) - Wide, 7.50 mm (.300 In.) Body [SOIC&lt;/b&gt;&lt;br&gt;</description>
 <packageinstances>
 <packageinstance name="SO18W"/>
 </packageinstances>
@@ -11235,8 +11232,7 @@ Source: http://www.semiconductors.philips.com/acrobat_download/datasheets/PCF857
 </packageinstances>
 </package3d>
 <package3d name="SO24" urn="urn:adsk.eagle:package:33306208/2" type="box" library_version="42">
-<description>&lt;b&gt;SO-24_&lt;/b&gt;&lt;br&gt;
-</description>
+<description>&lt;b&gt;SO-24_&lt;/b&gt;&lt;br&gt;</description>
 <packageinstances>
 <packageinstance name="SO24"/>
 </packageinstances>
@@ -13837,8 +13833,7 @@ Eagle Ver. 9.x&lt;br&gt;</description>
 </packages>
 <packages3d>
 <package3d name="TSSOP16" urn="urn:adsk.eagle:package:33494874/1" type="box" library_version="17">
-<description>&lt;b&gt;PW0016A&lt;/b&gt;&lt;br&gt;
-</description>
+<description>&lt;b&gt;PW0016A&lt;/b&gt;&lt;br&gt;</description>
 <packageinstances>
 <packageinstance name="TSSOP16"/>
 </packageinstances>
@@ -15923,7 +15918,7 @@ Eagle Ver. 9.x&lt;br&gt;</description>
 <part name="FRAMES1" library="frames_GruS" library_urn="urn:adsk.eagle:library:27468648" deviceset="HTL-A4H-V1" device=""/>
 <part name="FRAMES2" library="frames_GruS" library_urn="urn:adsk.eagle:library:27468648" deviceset="HTL-A4H-V1" device=""/>
 <part name="FRAMES3" library="frames_GruS" library_urn="urn:adsk.eagle:library:27468648" deviceset="HTL-A4H-V1" device=""/>
-<part name="S11" library="switch_GruS" library_urn="urn:adsk.eagle:library:13571161" deviceset="EC11" device="E09244AQ" package3d_urn="urn:adsk.eagle:package:33306160/3">
+<part name="S11" library="switch_GruS" library_urn="urn:adsk.eagle:library:13571161" deviceset="EC11" device="E09244AQ" package3d_urn="urn:adsk.eagle:package:33306160/7">
 <attribute name="CATEGORY" value="17"/>
 </part>
 <part name="GND3" library="supply_GruS" library_urn="urn:adsk.eagle:library:13579815" deviceset="GND" device=""/>
@@ -16103,14 +16098,14 @@ Eagle Ver. 9.x&lt;br&gt;</description>
 <part name="H33" library="led_GruS" library_urn="urn:adsk.eagle:library:13581853" deviceset="LED" device="5MM" package3d_urn="urn:adsk.eagle:package:15824755/4" value="ge">
 <attribute name="CATEGORY" value="7"/>
 </part>
-<part name="R1" library="rcl_GruS" library_urn="urn:adsk.eagle:library:13572313" deviceset="P160" device="LB" package3d_urn="urn:adsk.eagle:package:33302106/6" value="10k"/>
-<part name="R2" library="rcl_GruS" library_urn="urn:adsk.eagle:library:13572313" deviceset="P160" device="LB" package3d_urn="urn:adsk.eagle:package:33302106/6" value="10k"/>
-<part name="R3" library="rcl_GruS" library_urn="urn:adsk.eagle:library:13572313" deviceset="P160" device="LB" package3d_urn="urn:adsk.eagle:package:33302106/6" value="10k"/>
-<part name="R4" library="rcl_GruS" library_urn="urn:adsk.eagle:library:13572313" deviceset="P160" device="LB" package3d_urn="urn:adsk.eagle:package:33302106/6" value="10k"/>
-<part name="R5" library="rcl_GruS" library_urn="urn:adsk.eagle:library:13572313" deviceset="P160" device="LB" package3d_urn="urn:adsk.eagle:package:33302106/6" value="10k"/>
-<part name="R6" library="rcl_GruS" library_urn="urn:adsk.eagle:library:13572313" deviceset="P160" device="LB" package3d_urn="urn:adsk.eagle:package:33302106/6" value="10k"/>
-<part name="R7" library="rcl_GruS" library_urn="urn:adsk.eagle:library:13572313" deviceset="P160" device="LB" package3d_urn="urn:adsk.eagle:package:33302106/6" value="10k"/>
-<part name="R8" library="rcl_GruS" library_urn="urn:adsk.eagle:library:13572313" deviceset="P160" device="LB" package3d_urn="urn:adsk.eagle:package:33302106/6" value="10k"/>
+<part name="R1" library="rcl_GruS" library_urn="urn:adsk.eagle:library:13572313" deviceset="P160" device="LB" package3d_urn="urn:adsk.eagle:package:33302106/7" value="10k"/>
+<part name="R2" library="rcl_GruS" library_urn="urn:adsk.eagle:library:13572313" deviceset="P160" device="LB" package3d_urn="urn:adsk.eagle:package:33302106/7" value="10k"/>
+<part name="R3" library="rcl_GruS" library_urn="urn:adsk.eagle:library:13572313" deviceset="P160" device="LB" package3d_urn="urn:adsk.eagle:package:33302106/7" value="10k"/>
+<part name="R4" library="rcl_GruS" library_urn="urn:adsk.eagle:library:13572313" deviceset="P160" device="LB" package3d_urn="urn:adsk.eagle:package:33302106/7" value="10k"/>
+<part name="R5" library="rcl_GruS" library_urn="urn:adsk.eagle:library:13572313" deviceset="P160" device="LB" package3d_urn="urn:adsk.eagle:package:33302106/7" value="10k"/>
+<part name="R6" library="rcl_GruS" library_urn="urn:adsk.eagle:library:13572313" deviceset="P160" device="LB" package3d_urn="urn:adsk.eagle:package:33302106/7" value="10k"/>
+<part name="R7" library="rcl_GruS" library_urn="urn:adsk.eagle:library:13572313" deviceset="P160" device="LB" package3d_urn="urn:adsk.eagle:package:33302106/7" value="10k"/>
+<part name="R8" library="rcl_GruS" library_urn="urn:adsk.eagle:library:13572313" deviceset="P160" device="LB" package3d_urn="urn:adsk.eagle:package:33302106/7" value="10k"/>
 <part name="D8" library="74xx_GruS" library_urn="urn:adsk.eagle:library:13569359" deviceset="74*1G125" device="DBV" package3d_urn="urn:adsk.eagle:package:33442082/1" technology="AHC" value="74AHC1G125DBV">
 <attribute name="CATEGORY" value="13"/>
 </part>

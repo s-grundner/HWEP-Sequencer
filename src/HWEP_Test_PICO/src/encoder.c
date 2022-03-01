@@ -45,40 +45,18 @@ static void encoder_update(encoder_states_t *arg)
 // ISR for pin A
 // ------------------------------------------------------------
 
-static QueueHandle_t a_evt_queue = NULL;
-static void IRAM_ATTR a_isr_handler(void *arg)
+static QueueHandle_t ec_evt_queue = NULL;
+static void IRAM_ATTR ec_isr_handler(void *arg)
 {
 	encoder_states_t *states = (encoder_states_t *)arg;
 	xQueueSendFromISR(a_evt_queue, &states, NULL);
 }
-static void a_task(void *arg)
+static void ec_task(void *arg)
 {
 	encoder_states_t *states;
 	for (;;)
 	{
-		if (xQueueReceive(a_evt_queue, &states, portMAX_DELAY))
-		{
-			encoder_update(states);
-		}
-	}
-}
-
-// ------------------------------------------------------------
-// ISR for pin B
-// ------------------------------------------------------------
-
-static QueueHandle_t b_evt_queue = NULL;
-static void IRAM_ATTR b_isr_handler(void *arg)
-{
-	encoder_states_t *states = (encoder_states_t *)arg;
-	xQueueSendFromISR(b_evt_queue, &states, NULL);
-}
-static void b_task(void *arg)
-{
-	encoder_states_t *states;
-	for (;;)
-	{
-		if (xQueueReceive(b_evt_queue, &states, portMAX_DELAY))
+		if (xQueueReceive(ec_evt_queue, &states, portMAX_DELAY))
 		{
 			encoder_update(states);
 		}
@@ -134,18 +112,16 @@ void encoder_init(encoder_states_t *ec)
 	gpio_set_intr_type(ec->pin_b, GPIO_INTR_ANYEDGE);
 	gpio_set_intr_type(ec->pin_sw, GPIO_INTR_NEGEDGE);
 
-	a_evt_queue = xQueueCreate(10, sizeof(uint32_t));
-	xTaskCreate(a_task, "a_input_interrupt", 2048, NULL, 10, NULL);
+	ec_evt_queue = xQueueCreate(10, sizeof(uint32_t));
+	xTaskCreate(ec_task, "encoder_interrupt", 2048, NULL, 10, NULL);
 
-	b_evt_queue = xQueueCreate(10, sizeof(uint32_t));
-	xTaskCreate(b_task, "b_input_interrupt", 2048, NULL, 10, NULL);
 
 	sw_evt_queue = xQueueCreate(10, sizeof(uint32_t));
 	xTaskCreate(sw_task, "sw_input_interrupt", 2048, NULL, 10, NULL);
 
 	gpio_install_isr_service(0);
 
-	gpio_isr_handler_add(ec->pin_a, a_isr_handler, (void *)ec);
-	gpio_isr_handler_add(ec->pin_b, b_isr_handler, (void *)ec);
+	gpio_isr_handler_add(ec->pin_a, ec_isr_handler, (void *)ec);
+	gpio_isr_handler_add(ec->pin_b, ec_isr_handler, (void *)ec);
 	gpio_isr_handler_add(ec->pin_sw, sw_isr_handler, (void *)ec);
 }

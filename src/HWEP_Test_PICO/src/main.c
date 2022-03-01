@@ -7,7 +7,6 @@
 #define EC_A (GPIO_NUM_33)
 #define EC_B (GPIO_NUM_32)
 #define EC_SW (GPIO_NUM_26)
-#define EC_MASK (1ULL << EC_A) | (1ULL << EC_B)
 
 void cb_sw(void *args)
 {
