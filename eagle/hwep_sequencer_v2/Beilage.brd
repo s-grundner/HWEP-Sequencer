@@ -2100,7 +2100,7 @@ Eagle Ver. 9.x&lt;br&gt;</description>
 <text x="-4.572" y="-2.794" size="1.27" layer="51" ratio="10">3</text>
 <text x="3.556" y="-2.794" size="1.27" layer="51" ratio="10">4</text>
 </package>
-<package name="EC11" urn="urn:adsk.eagle:footprint:33306157/1" library_version="48">
+<package name="EC11" urn="urn:adsk.eagle:footprint:33306157/1" library_version="50">
 <description>&lt;b&gt;EC11E09244BS&lt;/b&gt;&lt;br&gt;
 </description>
 <pad name="A1" x="0" y="0" drill="1" diameter="1.5" shape="square"/>

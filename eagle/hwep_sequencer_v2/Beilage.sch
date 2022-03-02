@@ -10132,7 +10132,7 @@ Source: AVX .. aphvc.pdf</description>
 </device>
 </devices>
 </deviceset>
-<deviceset name="P160" urn="urn:adsk.eagle:component:33302174/10" prefix="R" uservalue="yes" library_version="54">
+<deviceset name="P160" urn="urn:adsk.eagle:component:33302174/11" prefix="R" uservalue="yes" library_version="55">
 <description>&lt;a href="https://www.ttelectronics.com/TTElectronics/media/ProductFiles/Datasheets/P160.pdf"&gt;Datasheet P160&lt;/a&gt;&lt;br&gt;
 &lt;a href="https://www.digikey.com/en/products/filter/rotary-potentiometers-rheostats/84?s=N4IgjCBcoEwCxVAYygMwIYBsDOBTANCAPZQDaIcADDAGxgwgC6hADgC5QgDKbATgJYA7AOYgAvoRoBORCBSQMOAsTIgAzAA41NAKwNmIdpx4CR4wjB0bZ8xXkIlI5TXA1WmrDpG58hoiSA6agjQcmhY9ipO6gDslDQaEAZG3iZ%2B5oFwOjbhSg6q2jAxGpQehl4%2Bpv6EGlI0OQoRyo7OJcEIyRVpZgFglFoNds0FajCJ1p3Gvj2EfVIMobZN%2BdHaOmBgHZ5TVRlgGnAyi7mRLeBlKSAAkoJsuMK4vHtStYPLUeSlk6nT1SAwMH2bzyH3O3xAABEiABXABGmFwGQAtCFkCdhtFLBpLEwAkjssdGiCzmAYrjCEiIIShityC8yYwxEygA"&gt;DigiKey Collection&lt;/a&gt;</description>
 <gates>
@@ -10463,7 +10463,7 @@ HTBLuVA Salzburg&lt;br&gt;
 Schuljahr: 2019-20&lt;br&gt;
 Eagle Ver. 9.x&lt;br&gt;</description>
 <packages>
-<package name="EC11" urn="urn:adsk.eagle:footprint:33306157/1" library_version="48">
+<package name="EC11" urn="urn:adsk.eagle:footprint:33306157/1" library_version="50">
 <description>&lt;b&gt;EC11E09244BS&lt;/b&gt;&lt;br&gt;
 </description>
 <pad name="A1" x="0" y="0" drill="1" diameter="1.5" shape="square"/>
