@@ -18,26 +18,26 @@ Der Sequencer wird mit dem ESP32 32-bit Microcontroller betrieben. Der Digitale 
 ![BSB](/docu/v2/BSB_Sequencer_I2S.drawio.svg)
 
 ## FUB - Funktionsbeschreibung
-1. 8 Potentiometer als analoger Eingang:
+#### 1. 8 Potentiometer als analoger Eingang:
  - dient als analoger Eingang für die Tonlage der einzelnen Töne
  - jedes Potentiometer umfasst 12 Halbtöne bzw. eine Oktave
  - die analogen Werte einem 8 Channel ADC (ADC088S052) über die SPI Schnittstelle eingelesen
 
-2. 16 Status LED’s:
+#### 2. 16 Status LED’s:
  - 8 EN-LED’s:
    - zeigen an, welcher Ton spielen wird oder stummgeschalten ist (LED aus)
  - 8 Index/Cursor-LED’s:
    - **Index:** zeigen an, welcher Ton gerade spielt
    - **Cursor:** bzw. dient zum Anzeigen eines Cursors
-3. 3x 7-Segent Display:
+#### 3. 3x 7-Segent Display:
  - nützen zur Anzeige von Parametern
  - werden mit einem MCP23S08 via die SPI Schnittstelle seriell angesteuert
  
-4. Dreh-Encoder:
+#### 4. Dreh-Encoder:
  - zum Einstellen der Parameter der verschiedenen Modi
  - um den Drehencoder befinden sich 12 RBG-LED’s, welche den Rotationstatus anzeigen
  
-5. Taster: 
+#### 5. Taster: 
 > Jeder Taster wird mittels eines MCP23S08 via SPI eingelesen.
  - **Pause:** pausiert den Zyklus
  - **Reset:** setzt den Zyklus asynchron zurück
@@ -46,7 +46,7 @@ Der Sequencer wird mit dem ESP32 32-bit Microcontroller betrieben. Der Digitale 
  - **Prescaler:** einstellen von zwei verschiedenen Prescalern für Gate und Takt
    - 5 Taster für jeden Prescaler
  
-6. 4 Modi
+#### 6. 4 Modi
 > Jeder Modus verändert die Anzeigen an den Status LED’s und Displays bzw. die Funktionalität verschiedener Eingaben. Nach wechseln eines Modus wird der aktuelle Modus am 7-Segment Display angezeigt, bis die Anzeige benötigt wird, um einen Parameter anzuzeigen.
  
  - BPM:
@@ -71,7 +71,7 @@ Der Sequencer wird mit dem ESP32 32-bit Microcontroller betrieben. Der Digitale 
    - **Drehencoder:** zum Verändern der Tonlage
    - **Event Taster:** Drehencoder verändert die Tonlage um eine Oktave
  
-7. ESP32 32-Bit Microcontroller:
+#### 7. ESP32 32-Bit Microcontroller:
  - Zentrale Recheneinheit für den Sequenzer
  - Berechnung der Wavetables
  - SPI als Übertragungsprotokoll zur Ansteuerung der internen Peripherien
