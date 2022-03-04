@@ -41,7 +41,7 @@ Der Sequencer wird mit dem ESP32 32-bit Microcontroller betrieben. Der Digitale 
 > Jeder Taster wird mittels eines MCP23S08 via SPI eingelesen.
  - **Pause:** pausiert den Zyklus
  - **Reset:** setzt den Zyklus asynchron zurück
- - **Reset Key Register:** setzt die Tonleitereinstellungen auf Default Settings (C4 Moll)
+ - **Clear Key Register:** setzt die Tonleitereinstellungen auf Default Settings (C4 Moll)
  - **Event:** zum Einstellen der Parameter der verschiedenen Modi
  - **Prescaler:** einstellen von zwei verschiedenen Prescalern für Gate und Takt
    - 5 Taster für jeden Prescaler
