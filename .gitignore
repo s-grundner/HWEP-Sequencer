@@ -1,5 +1,7 @@
 *.s#*
 *.b#*
+*.l#*
+*fabrication.l*
 *tmp.scr*
 *eagle.epf*
 *.epf
