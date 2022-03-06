@@ -22,7 +22,8 @@ typedef struct
 {
 	uint8_t state;
 	uint32_t position;
-	uint8_t sw_state;
+	uint32_t sw_state;
+	uint32_t sw_max;
 	encoder_config_t cgf;
 } encoder_states_t;
 
