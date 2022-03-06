@@ -1,6 +1,6 @@
 #include "scale.h"
 
-char key_name[12][2] = {"A", "A*", "B", "C", "C*", "D", "D*", "E", "F", "F*", "G", "G*"};
+char key_name[12][2] = {"G ", "A ", "A*", "B ", "C ", "C*", "D ", "D*", "E ", "F ", "F*"};
 
 uint8_t get_key_num(double freq)
 {

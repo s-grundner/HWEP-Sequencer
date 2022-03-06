@@ -31,6 +31,7 @@
 void i2s_write_freq(double frequency, uint8_t wf)
 {
 	size_t i2s_bytes_write = 0;
+	uint16_t samples_per_cycle = SAMPLE_RATE / frequency;
 	uint32_t data_size = ((AUDIO_RESOLUTION_BIT + 8) / 16) * WT_SIZE * 4;
 	int *samples_data = malloc(data_size);
 	uint sample_val = 0;
@@ -118,7 +119,7 @@ void app_main(void)
 	uint16_t prev_pos = encoder_read(&ec) + 1;
 	while (1)
 	{
-
+		uint32_t button = encoder_read_sw(&ec);
 		uint16_t pos = abs(encoder_read(&ec));
 		pos = pos ? pos : 1;
 		if (prev_pos != pos)
@@ -126,30 +127,28 @@ void app_main(void)
 			switch (encoder_read_sw(&ec))
 			{
 			case 0:
-				printf("SINE\n");
+				printf("%d: SINE\n", button);
 				break;
 			case 1:
-				printf("SAW\n");
+				printf("%d: SAW\n", button);
 				break;
 			case 2:
-				printf("SQUARE\n");
+				printf("%d: SQUARE\n", button);
 				break;
 			case 3:
-				printf("TRI\n");
+				printf("%d: TRI\n", button);
 				break;
 			case 4:
-				printf("MUTE\n");
+				printf("%d: MUTE\n", button);
 				break;
 
 			default:
 				break;
 			}
-
-			printf("%d\n%d ----- %lf\n",encoder_read_sw(&ec), pos, get_pitch_hz(pos));
-			i2s_write_freq(get_pitch_hz(pos), encoder_read_sw(&ec));
+			printf("%d ----- %lf\n",pos, get_pitch_hz(pos));
+			i2s_write_freq(get_pitch_hz(pos), button);
 			prev_pos = pos;
 		}
-
 		vTaskDelay(50 / portTICK_PERIOD_MS);
 	}
 }
