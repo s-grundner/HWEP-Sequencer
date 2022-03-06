@@ -11,7 +11,7 @@ static void cs_high(spi_transaction_t *t)
 
 static void cs_low(spi_transaction_t *t)
 {
-	gpio_set_level(5, 0);
+	gpio_set_level(((mcp23s08_context_t*)&(t->user))->cfg.cs_io, 0);
 }
 
 // ------------------------------------------------------------
