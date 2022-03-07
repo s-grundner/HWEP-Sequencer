@@ -45,6 +45,7 @@ Der Sequencer wird mit dem ESP32 32-bit Microcontroller betrieben. Der Digitale 
  - **Event:** zum Einstellen der Parameter der verschiedenen Modi
  - **Prescaler:** einstellen von zwei verschiedenen Prescalern für Gate und Takt
    - 5 Taster für jeden Prescaler
+   - Tasten werden auf 4 bit Prioritäts Encodiert
  
 #### 6. 4 Modi
 > Jeder Modus verändert die Anzeigen an den Status LED’s und Displays bzw. die Funktionalität verschiedener Eingaben. Nach wechseln eines Modus wird der aktuelle Modus am 7-Segment Display angezeigt, bis die Anzeige benötigt wird, um einen Parameter anzuzeigen.
@@ -77,5 +78,6 @@ Der Sequencer wird mit dem ESP32 32-bit Microcontroller betrieben. Der Digitale 
  - SPI als Übertragungsprotokoll zur Ansteuerung der internen Peripherien
  - Audio-Output:
    - Digitale Audioübertragung via I²S Protokoll
-   - Auswahl zwischen 16-, 24- und 32-bit Audio-Signale mit Abtastrate von 44,1kHz
+   - 16-bit Audio-Signale mit Abtastrate von 44,1kHz
    - Ein I²S-DAC (PCM5102a) decodiert die Audio-Daten und gibt sie Analog an eine 3,5mm Klinkenbuchse aus.
+   - Kompatibel mit Trinity Endstufe 
