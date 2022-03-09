@@ -25,11 +25,11 @@
 // Peripherals
 // ------------------------------------------------------------
 
-#include "i2s_interface.h"
-#include "mcp23s08.h"
-#include "adc088s052.h"
-#include "misc.h"
-#include "sequencer.h"
+// #include "i2s_interface.h"
+// #include "mcp23s08.h"
+// #include "adc088s052.h"
+// #include "misc.h"
+// #include "sequencer.h"
 
 // ------------------------------------------------------------
 // Pinout
@@ -52,19 +52,16 @@
 #define VCS0 (GPIO_NUM_5)	// CS0 for SPI3 (VSPI) host
 #define VCLK (GPIO_NUM_18)	// SCK for SPI3 (VSPI) hosts
 
+#define	CS_MCP23S08 (GPIO_NUM_5)
+#define	CS_ADC0880S052 (GPIO_NUM_15)
+#define	CS_STP16CP05 (GPIO_NUM_21)
+
 typedef enum
 {
 	CH = (GPIO_NUM_33),
 	CZ = (GPIO_NUM_25),
 	CE = (GPIO_NUM_26),
 } s_seg_channel_t;
-
-typedef enum
-{
-	CS_MCP23S08 = GPIO_NUM_5,
-	CS_ADC0880S052 = GPIO_NUM_15,
-	CS_STP16CP05 = GPIO_NUM_21,
-} cs_t;
 
 i2s_pin_config_t i2s_pin_cfg = {
 	.bck_io_num = GPIO_NUM_4,

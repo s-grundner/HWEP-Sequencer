@@ -153,6 +153,8 @@ void sw_cb(void *args)
 void app_main(void)
 {
 
+	
+
 	encoder_states_t ec = {
 		.state = 0,
 		.position = 18,
