@@ -15908,7 +15908,7 @@ Eagle Ver. 9.x&lt;br&gt;</description>
 <attribute name="DOKUMENTART" value="Schaltplan"/>
 <attribute name="GEZ" value="GruS"/>
 <attribute name="ID" value="4AHEL"/>
-<attribute name="REV" value="2"/>
+<attribute name="REV" value="3"/>
 <attribute name="SCHALTPLAN" value="Sequencer"/>
 <attribute name="STATUS" value="Prototyp"/>
 <attribute name="VER" value="2.0"/>

@@ -8,7 +8,7 @@
 </settings>
 <grid distance="50" unitdist="mil" unit="mil" style="lines" multiple="1" display="yes" altdistance="5" altunitdist="mil" altunit="mil"/>
 <layers>
-<layer number="1" name="Top" color="4" fill="1" visible="yes" active="yes"/>
+<layer number="1" name="Top" color="4" fill="1" visible="no" active="yes"/>
 <layer number="2" name="Route2" color="16" fill="1" visible="no" active="no"/>
 <layer number="3" name="Route3" color="17" fill="1" visible="no" active="no"/>
 <layer number="4" name="Route4" color="18" fill="1" visible="no" active="no"/>
@@ -23,17 +23,17 @@
 <layer number="13" name="Route13" color="21" fill="1" visible="no" active="no"/>
 <layer number="14" name="Route14" color="22" fill="1" visible="no" active="no"/>
 <layer number="15" name="Route15" color="23" fill="1" visible="no" active="no"/>
-<layer number="16" name="Bottom" color="1" fill="1" visible="yes" active="yes"/>
-<layer number="17" name="Pads" color="2" fill="1" visible="yes" active="yes"/>
-<layer number="18" name="Vias" color="2" fill="1" visible="yes" active="yes"/>
-<layer number="19" name="Unrouted" color="6" fill="1" visible="yes" active="yes"/>
-<layer number="20" name="Dimension" color="20" fill="1" visible="yes" active="yes"/>
-<layer number="21" name="tPlace" color="21" fill="1" visible="yes" active="yes"/>
-<layer number="22" name="bPlace" color="21" fill="1" visible="yes" active="yes"/>
-<layer number="23" name="tOrigins" color="15" fill="1" visible="yes" active="yes"/>
-<layer number="24" name="bOrigins" color="15" fill="1" visible="yes" active="yes"/>
-<layer number="25" name="tNames" color="21" fill="1" visible="yes" active="yes"/>
-<layer number="26" name="bNames" color="21" fill="1" visible="yes" active="yes"/>
+<layer number="16" name="Bottom" color="1" fill="1" visible="no" active="yes"/>
+<layer number="17" name="Pads" color="2" fill="1" visible="no" active="yes"/>
+<layer number="18" name="Vias" color="2" fill="1" visible="no" active="yes"/>
+<layer number="19" name="Unrouted" color="6" fill="1" visible="no" active="yes"/>
+<layer number="20" name="Dimension" color="20" fill="1" visible="no" active="yes"/>
+<layer number="21" name="tPlace" color="21" fill="1" visible="no" active="yes"/>
+<layer number="22" name="bPlace" color="21" fill="1" visible="no" active="yes"/>
+<layer number="23" name="tOrigins" color="15" fill="1" visible="no" active="yes"/>
+<layer number="24" name="bOrigins" color="15" fill="1" visible="no" active="yes"/>
+<layer number="25" name="tNames" color="21" fill="1" visible="no" active="yes"/>
+<layer number="26" name="bNames" color="21" fill="1" visible="no" active="yes"/>
 <layer number="27" name="tValues" color="21" fill="1" visible="no" active="yes"/>
 <layer number="28" name="bValues" color="21" fill="1" visible="no" active="yes"/>
 <layer number="29" name="tStop" color="18" fill="3" visible="no" active="yes"/>
@@ -46,10 +46,10 @@
 <layer number="36" name="bGlue" color="7" fill="5" visible="no" active="yes"/>
 <layer number="37" name="tTest" color="7" fill="1" visible="no" active="yes"/>
 <layer number="38" name="bTest" color="7" fill="1" visible="no" active="yes"/>
-<layer number="39" name="tKeepout" color="4" fill="11" visible="yes" active="yes"/>
-<layer number="40" name="bKeepout" color="1" fill="11" visible="yes" active="yes"/>
-<layer number="41" name="tRestrict" color="4" fill="10" visible="yes" active="yes"/>
-<layer number="42" name="bRestrict" color="1" fill="10" visible="yes" active="yes"/>
+<layer number="39" name="tKeepout" color="4" fill="11" visible="no" active="yes"/>
+<layer number="40" name="bKeepout" color="1" fill="11" visible="no" active="yes"/>
+<layer number="41" name="tRestrict" color="4" fill="10" visible="no" active="yes"/>
+<layer number="42" name="bRestrict" color="1" fill="10" visible="no" active="yes"/>
 <layer number="43" name="vRestrict" color="2" fill="10" visible="no" active="yes"/>
 <layer number="44" name="Drills" color="7" fill="1" visible="no" active="yes"/>
 <layer number="45" name="Holes" color="7" fill="1" visible="no" active="yes"/>
@@ -58,8 +58,8 @@
 <layer number="48" name="Document" color="7" fill="1" visible="no" active="yes"/>
 <layer number="49" name="Reference" color="7" fill="1" visible="no" active="yes"/>
 <layer number="50" name="dxf" color="7" fill="1" visible="no" active="no"/>
-<layer number="51" name="tDocu" color="21" fill="1" visible="yes" active="yes"/>
-<layer number="52" name="bDocu" color="21" fill="1" visible="yes" active="yes"/>
+<layer number="51" name="tDocu" color="21" fill="1" visible="no" active="yes"/>
+<layer number="52" name="bDocu" color="21" fill="1" visible="no" active="yes"/>
 <layer number="53" name="tGND_GNDA" color="7" fill="9" visible="no" active="no"/>
 <layer number="54" name="bGND_GNDA" color="1" fill="9" visible="no" active="no"/>
 <layer number="56" name="wert" color="7" fill="1" visible="no" active="no"/>
@@ -102,10 +102,10 @@
 <layer number="121" name="_tsilk" color="7" fill="1" visible="no" active="yes"/>
 <layer number="122" name="_bsilk" color="7" fill="1" visible="no" active="yes"/>
 <layer number="123" name="_dimension" color="20" fill="1" visible="no" active="yes"/>
-<layer number="124" name="_background" color="22" fill="1" visible="no" active="yes"/>
+<layer number="124" name="_background" color="21" fill="1" visible="no" active="yes"/>
 <layer number="125" name="_tNames" color="7" fill="1" visible="no" active="yes"/>
 <layer number="126" name="_bNames" color="7" fill="1" visible="no" active="yes"/>
-<layer number="127" name="_empty" color="8" fill="1" visible="no" active="yes"/>
+<layer number="127" name="_empty" color="20" fill="1" visible="no" active="yes"/>
 <layer number="128" name="_bValues" color="7" fill="1" visible="no" active="yes"/>
 <layer number="129" name="top_silk" color="7" fill="1" visible="no" active="yes"/>
 <layer number="130" name="SMDSTROOK" color="7" fill="1" visible="no" active="yes"/>
@@ -203,6 +203,15 @@
 <wire x1="178.435" y1="66.04" x2="179.07" y2="66.675" width="0.1524" layer="26"/>
 <wire x1="195.58" y1="73.66" x2="195.58" y2="76.2" width="0.1524" layer="26"/>
 <wire x1="195.58" y1="76.2" x2="196.215" y2="76.835" width="0.1524" layer="26"/>
+<text x="8.89" y="63.5" size="3.81" layer="1" font="vector" ratio="12">HWEP-Sequencer</text>
+<text x="50.8" y="63.5" size="1.27" layer="1" font="vector" ratio="12">GruS
+IhnH</text>
+<text x="57.15" y="63.5" size="1.27" layer="1" font="vector" ratio="12">HTL
+SBG</text>
+<text x="62.23" y="63.5" size="1.27" layer="1" font="vector" ratio="12">V2.0
+R03</text>
+<text x="222.25" y="7.62" size="1.27" layer="1" font="vector" ratio="12">top</text>
+<text x="224.79" y="7.62" size="1.27" layer="16" font="vector" ratio="12" rot="MR0">bot</text>
 <wire x1="0" y1="0" x2="227.33" y2="0" width="0.152" layer="123"/>
 <wire x1="227.33" y1="0" x2="227.33" y2="82.55" width="0.152" layer="123"/>
 <wire x1="227.33" y1="82.55" x2="0" y2="82.55" width="0.152" layer="123"/>
@@ -465,9 +474,9 @@
 <circle x="199.39" y="45.72" radius="0.406" width="0" layer="127"/>
 <circle x="196.85" y="45.72" radius="0.406" width="0" layer="127"/>
 <polygon width="0.152" layer="124">
-<vertex x="0" y="82.55"/>
-<vertex x="0" y="0"/>
 <vertex x="227.33" y="0"/>
+<vertex x="0" y="0"/>
+<vertex x="0" y="82.55"/>
 <vertex x="227.33" y="82.55"/>
 </polygon>
 </plain>
@@ -6134,10 +6143,19 @@ und speichern die Design Rules unter einem neuen Namen ab.&lt;br&gt;
 <approved hash="5,16,7f2c5551dd394131"/>
 <approved hash="5,16,f85bd550dd20465d"/>
 <approved hash="5,16,0587555fdd293b88"/>
+<approved hash="3,1,81335530c35e175d"/>
+<approved hash="3,1,732d6468f391e4d4"/>
+<approved hash="3,1,ea2c6309f5357c10"/>
+<approved hash="3,1,7948df4e093eaf38"/>
+<approved hash="3,16,fc5c8bc25db22a2c"/>
 </errors>
 </board>
 </drawing>
 <compatibility>
+<note version="6.3" minversion="6.2.2" severity="warning">
+Since Version 6.2.2 text objects can contain more than one line,
+which will not be processed correctly with this version.
+</note>
 <note version="8.2" severity="warning">
 Since Version 8.2, EAGLE supports online libraries. The ids
 of those online libraries will not be understood (or retained)

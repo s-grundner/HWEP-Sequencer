@@ -5,22 +5,13 @@
 // ------------------------------------------------------------
 float *waveFormLookUp[WAVEFORM_TYPE_COUNT];
 
-// ------------------------------------------------------------
-// add waveforms here
-// ------------------------------------------------------------
-float *sine = NULL;
-float *saw = NULL;
-float *square = NULL;
-float *tri = NULL;
-float *silence = NULL;
-
 void init_wavetables(void)
 {
-	sine = (float *)malloc(sizeof(float) * WT_SIZE);
-	saw = (float *)malloc(sizeof(float) * WT_SIZE);
-	square = (float *)malloc(sizeof(float) * WT_SIZE);
-	tri = (float *)malloc(sizeof(float) * WT_SIZE);
-	silence = (float *)malloc(sizeof(float) * WT_SIZE);
+	float *sine = (float *)malloc(sizeof(float) * WT_SIZE);
+	float *saw = (float *)malloc(sizeof(float) * WT_SIZE);
+	float *square = (float *)malloc(sizeof(float) * WT_SIZE);
+	float *tri = (float *)malloc(sizeof(float) * WT_SIZE);
+	float *silence = (float *)malloc(sizeof(float) * WT_SIZE);
 
 	for (int i = 0; i < WT_SIZE; i++)
 	{
@@ -41,11 +32,11 @@ void init_wavetables(void)
 
 void exit_wavetables(void)
 {
-	free(sine);
-	free(saw);
-	free(square);
-	free(tri);
-	free(silence);
+	free(waveFormLookUp[SINE_WT]);
+	free(waveFormLookUp[SAW_WT]);
+	free(waveFormLookUp[SQUARE_WT]);
+	free(waveFormLookUp[TRI_WT]);
+	free(waveFormLookUp[SILENCE]);
 }
 
 float *get_wavetable(int index)
@@ -57,8 +48,8 @@ float interpol_float(float *wt, double index)
 {
 	int indexBase = floor(index);
 	double indexFract = index - indexBase;
-	float value1 = sine[indexBase];
-	float value2 = sine[indexBase + 1];
+	float value1 = wt[indexBase];
+	float value2 = wt[indexBase + 1];
 	return value1 + ((value2 - value1) * indexFract);	
 }
 
@@ -66,7 +57,7 @@ uint16_t interpol_int(uint16_t *wt, double index)
 {
 	int indexBase = floor(index);
 	double indexFract = index - indexBase;
-	uint16_t value1 = sine[indexBase];
-	uint16_t value2 = sine[indexBase + 1];
+	uint16_t value1 = wt[indexBase];
+	uint16_t value2 = wt[indexBase + 1];
 	return value1 + ((value2 - value1) * indexFract);	
 }

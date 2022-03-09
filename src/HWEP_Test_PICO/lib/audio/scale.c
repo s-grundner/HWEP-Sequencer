@@ -1,6 +1,6 @@
 #include "scale.h"
 
-char key_name[12][2] = {"G ", "A ", "A*", "B ", "C ", "C*", "D ", "D*", "E ", "F ", "F*"};
+const char key_name[12][2] = {"G*", "A ", "A*", "B ", "C ", "C*", "D ", "D*", "E ", "F ", "F*", "G "};
 
 uint8_t get_key_num(double freq)
 {
@@ -16,7 +16,7 @@ double get_pitch_hz(uint8_t key_num)
 	return pow(2.0, ((double)key_num-49.0)/12.0)*(double)CONCERT_PITCH;
 }
 
-char* get_key_name(uint8_t key_num)
+void get_key_name(uint8_t key_num)
 {
-	return key_name[key_num%12];
+	printf("%c%c%d",key_name[key_num%12][0],key_name[key_num%12][1], 1+((key_num-4)/12));
 }

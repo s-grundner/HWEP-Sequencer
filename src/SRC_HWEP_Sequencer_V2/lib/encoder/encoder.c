@@ -41,8 +41,21 @@ static void encoder_update(encoder_states_t *arg)
 	arg->state = (s >> 2);
 }
 
+static void encoder_switch_update(encoder_states_t *arg)
+{
+	arg->cgf.sw_callback(arg);
+	if (arg->sw_state >= arg->sw_max)
+	{
+		arg->sw_state = 0;
+	}
+	else
+	{
+		arg->sw_state++;
+	}
+}
+
 // ------------------------------------------------------------
-// ISR for pin A
+// ISR for rotation
 // ------------------------------------------------------------
 
 static QueueHandle_t ec_evt_queue = NULL;
@@ -80,7 +93,7 @@ static void sw_task(void *arg)
 	{
 		if (xQueueReceive(sw_evt_queue, &states, portMAX_DELAY))
 		{
-			states->cgf.sw_callback(states);
+			encoder_switch_update(states);
 		}
 	}
 }
@@ -91,6 +104,8 @@ static void sw_task(void *arg)
 
 void encoder_init(encoder_states_t *ec)
 {
+
+	ec->sw_state = 0;
 	gpio_config_t ec_ab = {
 		.intr_type = GPIO_PIN_INTR_ANYEDGE,
 		.mode = GPIO_MODE_INPUT,
@@ -114,7 +129,6 @@ void encoder_init(encoder_states_t *ec)
 
 	ec_evt_queue = xQueueCreate(10, sizeof(uint32_t));
 	xTaskCreate(ec_task, "encoder_interrupt", 2048, NULL, 10, NULL);
-
 
 	sw_evt_queue = xQueueCreate(10, sizeof(uint32_t));
 	xTaskCreate(sw_task, "sw_input_interrupt", 2048, NULL, 10, NULL);

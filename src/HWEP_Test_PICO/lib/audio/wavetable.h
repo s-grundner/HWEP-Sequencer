@@ -42,4 +42,4 @@ float *get_wavetable(int index);
 float interpol_float(float *wt, double index);
 uint16_t interpol_int(uint16_t *wt, double index);
 
-#endif  //AUDIO_H_
+#endif  //WAVETABLE_H_
