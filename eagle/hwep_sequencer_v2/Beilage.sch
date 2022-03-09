@@ -10792,7 +10792,8 @@ Eagle Ver. 9.x&lt;br&gt;</description>
 </packages>
 <packages3d>
 <package3d name="EC11" urn="urn:adsk.eagle:package:33306160/7" type="model" library_version="50">
-<description>&lt;b&gt;EC11E09244BS&lt;/b&gt;&lt;br&gt;</description>
+<description>&lt;b&gt;EC11E09244BS&lt;/b&gt;&lt;br&gt;
+</description>
 <packageinstances>
 <packageinstance name="EC11"/>
 </packageinstances>
@@ -11213,13 +11214,15 @@ Source: http://www.semiconductors.philips.com/acrobat_download/datasheets/PCF857
 </packages>
 <packages3d>
 <package3d name="TSSOP24" urn="urn:adsk.eagle:package:33324059/2" type="model" library_version="42">
-<description>&lt;b&gt;TSSOP24&lt;/b&gt;&lt;br&gt;</description>
+<description>&lt;b&gt;TSSOP24&lt;/b&gt;&lt;br&gt;
+</description>
 <packageinstances>
 <packageinstance name="TSSOP24"/>
 </packageinstances>
 </package3d>
 <package3d name="SO18W" urn="urn:adsk.eagle:package:33327837/3" type="model" library_version="42">
-<description>&lt;b&gt;(SO) - Wide, 7.50 mm (.300 In.) Body [SOIC&lt;/b&gt;&lt;br&gt;</description>
+<description>&lt;b&gt;(SO) - Wide, 7.50 mm (.300 In.) Body [SOIC&lt;/b&gt;&lt;br&gt;
+</description>
 <packageinstances>
 <packageinstance name="SO18W"/>
 </packageinstances>
@@ -11232,7 +11235,8 @@ Source: http://www.semiconductors.philips.com/acrobat_download/datasheets/PCF857
 </packageinstances>
 </package3d>
 <package3d name="SO24" urn="urn:adsk.eagle:package:33306208/2" type="box" library_version="42">
-<description>&lt;b&gt;SO-24_&lt;/b&gt;&lt;br&gt;</description>
+<description>&lt;b&gt;SO-24_&lt;/b&gt;&lt;br&gt;
+</description>
 <packageinstances>
 <packageinstance name="SO24"/>
 </packageinstances>
@@ -13833,7 +13837,8 @@ Eagle Ver. 9.x&lt;br&gt;</description>
 </packages>
 <packages3d>
 <package3d name="TSSOP16" urn="urn:adsk.eagle:package:33494874/1" type="box" library_version="17">
-<description>&lt;b&gt;PW0016A&lt;/b&gt;&lt;br&gt;</description>
+<description>&lt;b&gt;PW0016A&lt;/b&gt;&lt;br&gt;
+</description>
 <packageinstances>
 <packageinstance name="TSSOP16"/>
 </packageinstances>
@@ -15903,7 +15908,7 @@ Eagle Ver. 9.x&lt;br&gt;</description>
 <attribute name="DOKUMENTART" value="Schaltplan"/>
 <attribute name="GEZ" value="GruS"/>
 <attribute name="ID" value="4AHEL"/>
-<attribute name="REV" value="2"/>
+<attribute name="REV" value="3"/>
 <attribute name="SCHALTPLAN" value="Sequencer"/>
 <attribute name="STATUS" value="Prototyp"/>
 <attribute name="VER" value="2.0"/>

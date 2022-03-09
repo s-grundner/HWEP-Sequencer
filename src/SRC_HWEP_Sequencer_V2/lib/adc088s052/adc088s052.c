@@ -67,7 +67,6 @@ esp_err_t adc088s052_init(adc088s052_context_t **out_ctx, const adc088s052_confi
 esp_err_t adc088s052_get_raw(adc088s052_context_t *ctx, adc088s052_channel_t ch, uint8_t *data)
 {
 	esp_err_t err;
-
 	uint16_t data_local = malloc(sizeof(uint16_t));
 	spi_transaction_t t = {
 		.cmd = 0,
