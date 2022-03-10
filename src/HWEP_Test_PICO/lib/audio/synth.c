@@ -44,13 +44,45 @@ float *get_wavetable(int index)
 	return waveFormLookUp[index];
 }
 
+// ------------------------------------------------------------
+// Audio Processing
+// ------------------------------------------------------------
+void send_audio_stereo(oscillator_t *osc)
+{
+	size_t i2s_bytes_write = 0;
+	uint sample_val = 0;
+	double indexIncr = ((WT_SIZE / SAMPLE_RATE) * osc->pitch);
+	int *samples_data = malloc(DATA_SIZE);
+	uint16_t mul = ((1 << AUDIO_RESOLUTION_BIT) / 10) - 1;
+
+	for (int n = 0; n < WT_SIZE; n++)
+	{
+		sample_val = 0;
+		sample_val += (uint16_t)(mul * interpol_float(osc->wavetable, osc->sample_pos));
+		sample_val = sample_val << 16;
+		sample_val += (uint16_t)(mul * interpol_float(osc->wavetable, osc->sample_pos));
+		samples_data[n] = sample_val;
+
+		osc->sample_pos += indexIncr;
+		if (osc->sample_pos >= (double)WT_SIZE)
+			osc->sample_pos -= (double)WT_SIZE;
+	}
+	i2s_write(I2S_NUM, samples_data, DATA_SIZE, &i2s_bytes_write, portMAX_DELAY);
+	free(samples_data);
+}
+
+void process_sample(oscillator_t *osc)
+{
+
+}
+
 float interpol_float(float *wt, double index)
 {
 	int indexBase = floor(index);
 	double indexFract = index - indexBase;
 	float value1 = wt[indexBase];
 	float value2 = wt[indexBase + 1];
-	return value1 + ((value2 - value1) * indexFract);	
+	return value1 + ((value2 - value1) * indexFract);
 }
 
 uint16_t interpol_int(uint16_t *wt, double index)
@@ -59,5 +91,41 @@ uint16_t interpol_int(uint16_t *wt, double index)
 	double indexFract = index - indexBase;
 	uint16_t value1 = wt[indexBase];
 	uint16_t value2 = wt[indexBase + 1];
-	return value1 + ((value2 - value1) * indexFract);	
+	return value1 + ((value2 - value1) * indexFract);
+}
+
+// ------------------------------------------------------------
+// I2S functions
+// ------------------------------------------------------------
+
+void i2s_init(void)
+{
+	i2s_config_t i2s_bus_cfg = {
+		.mode = I2S_MODE_MASTER | I2S_MODE_TX,
+		.sample_rate = SAMPLE_RATE,
+		.bits_per_sample = I2S_BITS_PER_SAMPLE_16BIT,
+		.channel_format = I2S_CHANNEL_FMT_RIGHT_LEFT,
+		.communication_format = I2S_COMM_FORMAT_STAND_MSB,
+		.dma_buf_count = 2,
+		.dma_buf_len = 512,
+		.tx_desc_auto_clear = true,
+		.use_apll = true,
+		.intr_alloc_flags = ESP_INTR_FLAG_LEVEL1 // Interrupt level 1
+	};
+
+	i2s_pin_config_t i2s_pin_cfg = {
+		.bck_io_num = I2S_BCK_IO,
+		.ws_io_num = I2S_WS_IO,
+		.data_out_num = I2S_DO_IO,
+		.data_in_num = -1,
+	};
+
+	i2s_driver_install(I2S_NUM, &i2s_bus_cfg, 0, NULL);
+	i2s_set_pin(I2S_NUM, &i2s_pin_cfg);
+	i2s_reset();
+}
+
+void i2s_reset(void)
+{
+	i2s_set_clk(I2S_NUM, SAMPLE_RATE, AUDIO_RESOLUTION_BIT, I2S_CHANNEL_STEREO);
 }

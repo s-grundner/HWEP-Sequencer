@@ -52,9 +52,9 @@
 #define VCS0 (GPIO_NUM_5)	// CS0 for SPI3 (VSPI) host
 #define VCLK (GPIO_NUM_18)	// SCK for SPI3 (VSPI) hosts
 
-#define	CS_MCP23S08 (GPIO_NUM_5)
-#define	CS_ADC0880S052 (GPIO_NUM_15)
-#define	CS_STP16CP05 (GPIO_NUM_21)
+#define CS_MCP23S08 (GPIO_NUM_5)
+#define CS_ADC0880S052 (GPIO_NUM_15)
+#define CS_STP16CP05 (GPIO_NUM_21)
 
 typedef enum
 {
@@ -62,13 +62,6 @@ typedef enum
 	CZ = (GPIO_NUM_25),
 	CE = (GPIO_NUM_26),
 } s_seg_channel_t;
-
-i2s_pin_config_t i2s_pin_cfg = {
-	.bck_io_num = GPIO_NUM_4,
-	.ws_io_num = GPIO_NUM_17,
-	.data_out_num = GPIO_NUM_16,
-	.data_in_num = PIN_UNUSED,
-};
 
 spi_bus_config_t vspi_pin_cfg = {
 	.miso_io_num = VSPIQ,

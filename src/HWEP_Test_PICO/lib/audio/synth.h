@@ -11,36 +11,49 @@
 #include "esp_system.h"
 #include "esp_log.h"
 
-// ------------------------------------------------------------
-// define Constants
-// ------------------------------------------------------------
-#define PI (3.14159265)
+#include "audio_config.h"
 
 // ------------------------------------------------------------
-// Audio Settings
+// Oscillators
 // ------------------------------------------------------------
-#define SAMPLE_RATE (44100.0)
-#define AUDIO_RESOLUTION_BIT 16
+
+#define MAX_POLY 1
+
+typedef struct
+{
+	float *wavetable;
+	double pitch;
+	double sample_pos;
+}oscillator_t;
+oscillator_t poly_osc[MAX_POLY];
+
+typedef struct
+{
+	float *fl_sample;
+	float *fr_sample;
+	double sample_pos;
+}sample_t;
 
 // ------------------------------------------------------------
-// Wavetable Settings
-// ------------------------------------------------------------
-#define SINE_WT 0
-#define SAW_WT 1
-#define SQUARE_WT 2
-#define TRI_WT 3
-#define SILENCE 4
-
-#define WT_BIT 10UL
-#define WT_SIZE (1<<WT_BIT)
-#define WAVEFORM_TYPE_COUNT 5
-
-// ------------------------------------------------------------
-// Functions
+// Wavetable functions
 // ------------------------------------------------------------
 void init_wavetables(void);
 float *get_wavetable(int index);
+
+// ------------------------------------------------------------
+// Audio Processing
+// ------------------------------------------------------------
 float interpol_float(float *wt, double index);
 uint16_t interpol_int(uint16_t *wt, double index);
+
+void process_sample(oscillator_t *osc);
+
+// ------------------------------------------------------------
+// I2S functions
+// ------------------------------------------------------------
+void i2s_init(void);
+void i2s_reset(void);
+void send_audio_stereo(oscillator_t *osc);
+void send_audio_mono(float *f_sample);
 
 #endif  //SYNTH_H_
