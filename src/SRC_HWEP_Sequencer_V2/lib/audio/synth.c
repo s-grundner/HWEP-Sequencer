@@ -71,9 +71,29 @@ void send_audio_stereo(oscillator_t *osc)
 	free(samples_data);
 }
 
-void process_sample(oscillator_t *osc)
+sample_t process_sample(oscillator_t **osc, uint8_t osc_cnt)
 {
+	sample_t ret = {
+		.fl_sample = NULL,
+		.fr_sample = NULL,
+	};
+	uint16_t mul = ((1 << AUDIO_RESOLUTION_BIT) / 10) - 1;
+	for (int i = 0; i < osc_cnt; i++)
+	{
+		double indexIncr = ((WT_SIZE / SAMPLE_RATE) * osc[i]->pitch);
+		uint16_t mul = ((1 << AUDIO_RESOLUTION_BIT) / 10) - 1;
+		
+		for (int j = 0; j < WT_SIZE; j++)
+		{
+			ret.fr_sample[j] += (uint16_t)(mul * interpol_float(osc[i]->wavetable, osc[i]->sample_pos));
+			ret.fl_sample[j] += (uint16_t)(mul * interpol_float(osc[i]->wavetable, osc[i]->sample_pos));
 
+			osc[i]->sample_pos += indexIncr;
+			if (osc[i]->sample_pos >= (double)WT_SIZE)
+				osc[i]->sample_pos -= (double)WT_SIZE;
+		}
+	}
+	return ret;
 }
 
 float interpol_float(float *wt, double index)

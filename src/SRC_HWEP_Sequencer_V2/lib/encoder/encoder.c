@@ -4,7 +4,7 @@
 // private functions
 // ------------------------------------------------------------
 
-static void encoder_update(encoder_states_t *arg)
+static void encoder_update(encoder_context_t *arg)
 {
 	uint8_t s = arg->state & 3;
 	if (gpio_get_level(arg->cgf.pin_a))
@@ -41,7 +41,7 @@ static void encoder_update(encoder_states_t *arg)
 	arg->state = (s >> 2);
 }
 
-static void encoder_switch_update(encoder_states_t *arg)
+static void encoder_switch_update(encoder_context_t *arg)
 {
 	arg->cgf.sw_callback(arg);
 	if (arg->sw_state >= arg->sw_max)
@@ -61,17 +61,17 @@ static void encoder_switch_update(encoder_states_t *arg)
 static QueueHandle_t ec_evt_queue = NULL;
 static void IRAM_ATTR ec_isr_handler(void *arg)
 {
-	encoder_states_t *states = (encoder_states_t *)arg;
-	xQueueSendFromISR(ec_evt_queue, &states, NULL);
+	encoder_context_t *context = (encoder_context_t *)arg;
+	xQueueSendFromISR(ec_evt_queue, &context, NULL);
 }
 static void ec_task(void *arg)
 {
-	encoder_states_t *states;
+	encoder_context_t *context;
 	for (;;)
 	{
-		if (xQueueReceive(ec_evt_queue, &states, portMAX_DELAY))
+		if (xQueueReceive(ec_evt_queue, &context, portMAX_DELAY))
 		{
-			encoder_update(states);
+			encoder_update(context);
 		}
 	}
 }
@@ -83,17 +83,17 @@ static void ec_task(void *arg)
 static QueueHandle_t sw_evt_queue = NULL;
 static void IRAM_ATTR sw_isr_handler(void *arg)
 {
-	encoder_states_t *states = (encoder_states_t *)arg;
-	xQueueSendFromISR(sw_evt_queue, &states, NULL);
+	encoder_context_t *context = (encoder_context_t *)arg;
+	xQueueSendFromISR(sw_evt_queue, &context, NULL);
 }
 static void sw_task(void *arg)
 {
-	encoder_states_t *states;
+	encoder_context_t *context;
 	for (;;)
 	{
-		if (xQueueReceive(sw_evt_queue, &states, portMAX_DELAY))
+		if (xQueueReceive(sw_evt_queue, &context, portMAX_DELAY))
 		{
-			encoder_switch_update(states);
+			encoder_switch_update(context);
 		}
 	}
 }
@@ -102,7 +102,7 @@ static void sw_task(void *arg)
 // public functions
 // ------------------------------------------------------------
 
-void encoder_init(encoder_states_t *ec)
+void encoder_init(encoder_context_t *ec)
 {
 
 	ec->sw_state = 0;
@@ -139,7 +139,7 @@ void encoder_init(encoder_states_t *ec)
 	gpio_isr_handler_add(ec->cgf.pin_b, ec_isr_handler, (void *)ec);
 	gpio_isr_handler_add(ec->cgf.pin_sw, sw_isr_handler, (void *)ec);
 }
-int32_t encoder_read(encoder_states_t *arg)
+int32_t encoder_read(encoder_context_t *arg)
 {
 	gpio_intr_disable(arg->cgf.pin_a);
 	gpio_intr_disable(arg->cgf.pin_b);
@@ -148,7 +148,7 @@ int32_t encoder_read(encoder_states_t *arg)
 	gpio_intr_enable(arg->cgf.pin_b);
 	return ret;
 }
-void encoder_write(encoder_states_t *arg, int32_t position)
+void encoder_write(encoder_context_t *arg, int32_t position)
 {
 	gpio_intr_disable(arg->cgf.pin_a);
 	gpio_intr_disable(arg->cgf.pin_b);
@@ -156,7 +156,7 @@ void encoder_write(encoder_states_t *arg, int32_t position)
 	gpio_intr_enable(arg->cgf.pin_a);
 	gpio_intr_enable(arg->cgf.pin_b);
 }
-uint8_t encoder_read_sw(encoder_states_t *arg)
+uint8_t encoder_read_sw(encoder_context_t *arg)
 {
 	gpio_intr_disable(arg->cgf.pin_sw);
 	uint8_t ret = arg->sw_state;

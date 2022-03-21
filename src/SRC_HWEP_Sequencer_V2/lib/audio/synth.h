@@ -22,16 +22,18 @@
 typedef struct
 {
 	float *wavetable;
-	double pitch;
 	double sample_pos;
+	double pitch;
+	int8_t oct_offset;
+	float detune;
+	float pan;
+	float level;
 }oscillator_t;
-oscillator_t poly_osc[MAX_POLY];
+// oscillator_t poly_osc[MAX_POLY];
 
 typedef struct
 {
-	float *fl_sample;
-	float *fr_sample;
-	double sample_pos;
+	float *fl_sample, *fr_sample;
 }sample_t;
 
 // ------------------------------------------------------------
@@ -46,7 +48,7 @@ float *get_wavetable(int index);
 float interpol_float(float *wt, double index);
 uint16_t interpol_int(uint16_t *wt, double index);
 
-void process_sample(oscillator_t *osc);
+sample_t process_sample(oscillator_t **osc, uint8_t osc_cnt);
 
 // ------------------------------------------------------------
 // I2S functions

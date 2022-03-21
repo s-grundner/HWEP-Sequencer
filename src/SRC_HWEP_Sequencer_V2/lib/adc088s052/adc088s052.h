@@ -48,15 +48,15 @@ typedef struct
 	gpio_num_t mosi_io;
 } adc088s052_config_t;
 
-struct adc088s052_context_t
+struct adc088s052_context
 {
 	adc088s052_config_t cfg;
 	spi_device_handle_t spi;
 	SemaphoreHandle_t ready_sem;
 };
 
-typedef struct adc088s052_context_t adc088s052_context_t;
-typedef struct adc088s052_context_t *adc088s052_handle_t;
+typedef struct adc088s052_context adc088s052_context_t;
+typedef struct adc088s052_context *adc088s052_handle_t;
 
 // ------------------------------------------------------------
 // Transaction specifications
@@ -69,5 +69,4 @@ typedef struct adc088s052_context_t *adc088s052_handle_t;
 // ------------------------------------------------------------
 
 esp_err_t adc088s052_init(adc088s052_handle_t *out_handle, const adc088s052_config_t *cfg);
-esp_err_t adc088s052_get_raw(adc088s052_handle_t handle, adc088s052_channel_t ch, uint8_t *data);
-esp_err_t adc088s052_get(adc088s052_handle_t handle, uint8_t *data[8]);
+esp_err_t adc088s052_get_raw(adc088s052_handle_t handle, adc088s052_channel_t ch, uint16_t *data);

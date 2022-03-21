@@ -1,42 +1,42 @@
-#include "adc088s052.h"
-#define CS_ADC0880S052 (GPIO_NUM_15)
+#include "stp16cp05.h"
+#define CS_STP16CP05 (GPIO_NUM_21)
 // ------------------------------------------------------------
-// (Public) Functions
+// (Private) Functions
 // ------------------------------------------------------------
 
 static void cs_high(spi_transaction_t *t)
 {
-	gpio_set_level(CS_ADC0880S052, 1);
+	gpio_set_level(CS_STP16CP05, 1);
 }
 
 static void cs_low(spi_transaction_t *t)
 {
-	gpio_set_level(CS_ADC0880S052, 0);
+	gpio_set_level(CS_STP16CP05, 0);
 }
 
 // ------------------------------------------------------------
 // (Public) Functions
 // ------------------------------------------------------------
 
-esp_err_t adc088s052_init(adc088s052_context_t **out_ctx, const adc088s052_config_t *cfg)
+esp_err_t stp16cp05_init(stp16cp05_context_t **out_ctx, const stp16cp05_config_t *cfg)
 {
 	esp_err_t err = ESP_OK;
 
-	adc088s052_context_t *ctx = (adc088s052_context_t *)malloc(sizeof(adc088s052_context_t));
+	stp16cp05_context_t *ctx = (stp16cp05_context_t *)malloc(sizeof(stp16cp05_context_t));
 	if (!ctx)
 		return ESP_ERR_NO_MEM;
 
-	*ctx = (adc088s052_context_t){
+	*ctx = (stp16cp05_context_t){
 		.cfg = *cfg,
 	};
 
 	spi_device_interface_config_t devcfg = {
-		.command_bits = 0,
+		.command_bits = 8,
 		.address_bits = 8,
-		.clock_speed_hz = F_SCK_ADC,
+		.clock_speed_hz = F_SCK_STP,
 		.mode = 0,
-		.flags = SPI_DEVICE_HALFDUPLEX,
-		.spics_io_num = CS_ADC0880S052,
+		.flags = SPI_DEVICE_HALFDUPLEX | SPI_DEVICE_NO_DUMMY | SPI_DEVICE_POSITIVE_CS,
+		.spics_io_num = ctx->cfg.cs_io,
 		.queue_size = 1,
 		.pre_cb = cs_high,
 		.post_cb = cs_low,
@@ -57,29 +57,29 @@ esp_err_t adc088s052_init(adc088s052_context_t **out_ctx, const adc088s052_confi
 		}
 		return err;
 	}
-
 	*out_ctx = ctx;
+
 	free(ctx);
 	return ESP_OK;
 }
-esp_err_t adc088s052_get_raw(adc088s052_context_t *ctx, adc088s052_channel_t ch, uint16_t *data)
+
+esp_err_t stp16cp05_write(stp16cp05_context_t *ctx, const uint8_t data_top, const uint8_t data_bot)
 {
-	
 	esp_err_t err;
 	err = spi_device_acquire_bus(ctx->spi, portMAX_DELAY);
-	spi_transaction_t t = {
-		.cmd = 0,
-		.addr = (ch+1) << 3,
-		.rxlength = 16,
-		.flags = SPI_TRANS_USE_RXDATA,
+	if (err != ESP_OK)
+		return err;
+
+	// printf("stp data : 0x%04x\n", data);
+
+	spi_transaction_t t = { 
+		.cmd = data_top,
+		.addr = data_bot,
+		.length = 0,
 		.user = ctx,
 	};
 
 	err = spi_device_polling_transmit(ctx->spi, &t);
-	if (err != ESP_OK)
-		return err;
-	// TODO: SPI_SWAP_DATA_RX
-	*data = t.rx_data[0];
 	spi_device_release_bus(ctx->spi);
-	return ESP_OK;
+	return err;
 }

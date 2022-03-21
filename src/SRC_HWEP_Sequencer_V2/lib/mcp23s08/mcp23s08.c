@@ -1,17 +1,17 @@
 #include "mcp23s08.h"
-
+#define CS_MCP23S08 (GPIO_NUM_5)
 // ------------------------------------------------------------
 // (Private) Functions
 // ------------------------------------------------------------
 
 static void cs_high(spi_transaction_t *t)
 {
-	gpio_set_level(5, 1);
+	gpio_set_level(CS_MCP23S08, 1);
 }
 
 static void cs_low(spi_transaction_t *t)
 {
-	gpio_set_level(((mcp23s08_context_t*)&(t->user))->cfg.cs_io, 0);
+	gpio_set_level(CS_MCP23S08, 0);
 }
 
 // ------------------------------------------------------------
@@ -42,13 +42,17 @@ esp_err_t mcp23s08_init(mcp23s08_context_t **out_ctx, const mcp23s08_config_t *c
 		.post_cb = cs_low,
 	};
 
-	gpio_config_t intr_cfg = {
-        .intr_type = GPIO_INTR_POSEDGE,
-        .pull_down_en = 1,
-        .pull_up_en = 0,
-        .mode = GPIO_MODE_INPUT,
-        .pin_bit_mask = 1ULL << GPIO_NUM_32,
-    };
+	if(ctx->cfg.intr_io >= 0)
+	{
+		gpio_config_t intr_cfg = {
+			.intr_type = GPIO_INTR_POSEDGE,
+			.pull_down_en = 1,
+			.pull_up_en = 0,
+			.mode = GPIO_MODE_INPUT,
+			.pin_bit_mask = 1ULL << ctx->cfg.intr_io,
+		};
+		gpio_config(&intr_cfg);
+	}
 
 	err = spi_bus_add_device(ctx->cfg.host, &devcfg, &ctx->spi);
 	if (err != ESP_OK)
@@ -100,8 +104,7 @@ esp_err_t mcp23s08_write(mcp23s08_context_t *ctx, mcp23s08_hw_adr hw_adr, mcp23s
 		return err;
 
 	uint8_t opcode = 0x40 | (hw_adr << 1);
-
-	spi_transaction_t t = {
+	spi_transaction_t t = { 
 		.cmd = opcode,
 		.addr = (uint8_t)reg_adr,
 		.length = 8,

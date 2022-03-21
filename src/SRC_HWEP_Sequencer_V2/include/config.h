@@ -37,7 +37,7 @@
 
 #define PIN_UNUSED (-1)
 #define MCP23S08_INTR (GPIO_NUM_22)
-#define PL_DIN (GPIO_NUM_13)
+#define WS2012_DATA (GPIO_NUM_13)
 #define PS_FLAG (GPIO_NUM_32)
 
 #define IN_PS_HW_ADR 0b00
@@ -47,10 +47,11 @@
 #define A (GPIO_NUM_12)
 #define B (GPIO_NUM_14)
 
+#define VSPI (VSPI_HOST)
 #define VSPIQ (GPIO_NUM_19) // MISO for SPI3 (VSPI) host
 #define VSPID (GPIO_NUM_23) // MOSI for SPI3 (VSPI) host
 #define VCS0 (GPIO_NUM_5)	// CS0 for SPI3 (VSPI) host
-#define VCLK (GPIO_NUM_18)	// SCK for SPI3 (VSPI) hosts
+#define VSCK (GPIO_NUM_18)	// SCK for SPI3 (VSPI) hosts
 
 #define CS_MCP23S08 (GPIO_NUM_5)
 #define CS_ADC0880S052 (GPIO_NUM_15)
@@ -63,15 +64,7 @@ typedef enum
 	CE = (GPIO_NUM_26),
 } s_seg_channel_t;
 
-spi_bus_config_t vspi_pin_cfg = {
-	.miso_io_num = VSPIQ,
-	.mosi_io_num = VSPID,
-	.sclk_io_num = VCLK,
-	.quadhd_io_num = PIN_UNUSED,
-	.quadwp_io_num = PIN_UNUSED,
-	.max_transfer_sz = 32,
-};
-
+#define S_SEG_CHANNEL_MASK (1ULL<<33)|(1ULL<<25)|(1ULL<<26)
 // ------------------------------------------------------------
 // define Application Modes
 // ------------------------------------------------------------

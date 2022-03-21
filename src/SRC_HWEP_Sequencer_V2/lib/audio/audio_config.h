@@ -7,13 +7,6 @@
 #define PI (3.14159265)
 
 // ------------------------------------------------------------
-// Audio Settings
-// ------------------------------------------------------------
-#define SAMPLE_RATE (44100.0)
-#define AUDIO_RESOLUTION_BIT 16
-#define DATA_SIZE (((AUDIO_RESOLUTION_BIT + 8) / 16) * WT_SIZE * 4)
-
-// ------------------------------------------------------------
 // Wavetable Settings
 // ------------------------------------------------------------
 #define WT_BIT 10UL
@@ -28,6 +21,13 @@
 #define TRI_WT 3
 #define SILENCE 4
 #define WAVEFORM_TYPE_COUNT 5
+
+// ------------------------------------------------------------
+// Audio Settings
+// ------------------------------------------------------------
+#define SAMPLE_RATE (44100.0)
+#define AUDIO_RESOLUTION_BIT 16
+#define DATA_SIZE (((AUDIO_RESOLUTION_BIT + 8) / 16) * WT_SIZE * 4)
 
 // ------------------------------------------------------------
 // I2S Settings

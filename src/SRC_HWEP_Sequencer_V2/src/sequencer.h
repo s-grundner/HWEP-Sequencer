@@ -23,6 +23,7 @@
 #define MUX_E 0
 #define MUX_Z 1
 #define MUX_H 2
+#define MUX_MASK (1ULL<<33)|(1ULL<<25)|(1ULL<<26)
 
 typedef enum {
 	START,
@@ -42,9 +43,12 @@ void run(void);
 
 typedef struct {
 	mcp23s08_hw_adr hw_adr;
-	mcp23s08_context_t *mcp_ctx;
+	mcp23s08_handle_t mcp_handle;
+	mcp23s08_config_t mcp_cfg;
+	uint32_t *buffer;
 }s_seg_context_t;
 
 void s_seg_init(s_seg_context_t *sg_ctx);
 void s_seg_shift(s_seg_context_t *sg_ctx, int8_t dir);
-void s_seg_write(char *buf); 
+void s_seg_write(s_seg_context_t *sg_ctx, char *buf);
+void s_seg_write_single(s_seg_context_t *sg_ctx, uint8_t s_seg_channel, char data);   
