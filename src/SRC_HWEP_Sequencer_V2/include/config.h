@@ -1,35 +1,14 @@
 #pragma once
 
-#ifndef __CONFIG_H_
-#define __CONFIG_H_
+#ifndef CONFIG_H_
+#define CONFIG_H_
 
 #include "esp_system.h"
 
-#include "driver/gpio.h"
-#include "driver/i2s.h"
-#include "driver/spi_master.h"
-#include "driver/gpio.h"
-#include "driver/adc.h"
-
-#include "freertos/FreeRTOS.h"
-#include "freertos/task.h"
-#include "freertos/queue.h"
-
-#include "esp_intr_alloc.h"
-
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
 
 // ------------------------------------------------------------
 // Peripherals
 // ------------------------------------------------------------
-
-// #include "i2s_interface.h"
-// #include "mcp23s08.h"
-// #include "adc088s052.h"
-// #include "misc.h"
-// #include "sequencer.h"
 
 // ------------------------------------------------------------
 // Pinout
@@ -105,4 +84,4 @@ typedef enum
 
 // Triplets
 
-#endif // #ifndef __CONFIG_H_
+#endif // #ifndef CONFIG_H_
