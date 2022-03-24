@@ -1,14 +1,3 @@
-/* I2S Example
-
-	This example code will output 100Hz sine wave and triangle wave to 2-channel of I2S driver
-	Every 5 seconds, it will change bits_per_sample [16, 24, 32] for i2s data
-
-	This example code is in the Public Domain (or CC0 licensed, at your option.)
-
-	Unless required by applicable law or agreed to in writing, this
-	software is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
-	CONDITIONS OF ANY KIND, either express or implied.
-*/
 #include <stdio.h>
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
@@ -16,6 +5,7 @@
 #include "driver/gpio.h"
 #include "esp_system.h"
 #include "esp_log.h"
+#include "esp_timer.h"
 #include <math.h>
 
 #include "config.h"
@@ -25,8 +15,20 @@
 #include "encoder.h"
 #include "stp16cp05.h"
 #include "adc088s052.h"
+#include "synth.h"
+#include "scale.h"
 
-void sw_cb(void *arg){};
+typedef struct {
+	s_seg_channel_t ch;
+	uint8_t data;
+	mcp23s08_handle_t mcp_h;
+
+}s_seg_context_t;
+
+void sw_cb(void *arg){
+
+
+};
 
 void itos(char **s, int i)
 {
@@ -36,8 +38,25 @@ void itos(char **s, int i)
 	}
 }
 
+static void timer_cb (void* args) {
+	gpio_set_level(((s_seg_context_t*)args)->ch, 1);
+	mcp23s08_write(((s_seg_context_t*)args)->mcp_h, S_SEG_HW_ADR, GPIO_R, ((s_seg_context_t*)args)->data);
+}
+
 void app_main(void)
 {
+	
+	// ------------------------------------------------------------
+	// Audio
+	// ------------------------------------------------------------
+	i2s_init();
+	init_wavetables();
+
+	oscillator_t osc = {
+		.wavetable = 0,
+		.pitch = 1,
+		.sample_pos = 0,
+	};
 	// ------------------------------------------------------------
 	// Encoder
 	// ------------------------------------------------------------
@@ -48,9 +67,9 @@ void app_main(void)
 			.pin_sw = SW,
 			.sw_callback = sw_cb,
 		},
-		.position = 0,
 		.state = 0,
-		.sw_max = 5,
+		.position = 18,
+		.sw_max = 4,
 		.sw_state = 0,
 	};
 	encoder_init(&ec);
@@ -95,7 +114,7 @@ void app_main(void)
 	// 	.mosi_io = VSPID,
 	// };
 	// adc088s052_init(&adc_handle, &adc_cfg);
-
+	//ich hasse alles
 	// ------------------------------------------------------------
 	// STP16CP05
 	// ------------------------------------------------------------
@@ -131,23 +150,71 @@ void app_main(void)
 
 	mcp23s08_write(mcp_handle, S_SEG_HW_ADR, GPIO_R, get_char_segment('A'));
 
+	// ------------------------------------------------------------
+	//	Timer
+	// ------------------------------------------------------------
+	esp_timer_init();
+	s_seg_context_t s_seg_ctx = {
+		.ch = CE,
+		.data = 0x00,
+		.mcp_h = mcp_handle,
+	};
+
+	esp_timer_handle_t timer_handle;
+	esp_timer_create_args_t timer_cfg = {
+		.name = "mux",
+		.callback = &timer_cb,
+		.arg = &s_seg_ctx,
+	};
+	esp_timer_create(&timer_cfg, &timer_handle);
+	esp_timer_start_periodic(timer_handle,10);
+
 	while (1)
 	{
-		int pos = encoder_read(&ec)/2;
-		if (pos != prev_pos)
-		{
-			stp16cp05_write(stp_handle, ~(1 << (pos % 8)), 1 << (pos % 8));
-			prev_pos = pos;
-		}
-
 		for (int i = 0; i < 3; i++)
 		{
 			gpio_set_level(seg_channels[i], 1);
 			mcp23s08_write(mcp_handle, S_SEG_HW_ADR, GPIO_R, get_char_segment(buf[2 - i]));
-			vTaskDelay(10 / (portTICK_RATE_MS));
+			
+			int button = encoder_read_sw(&ec);
+			int pos = abs(encoder_read(&ec) / 2);
+			pos = pos ? pos : 1;
+			if (prev_pos != pos)
+			{
+				stp16cp05_write(stp_handle, ~(1 << (pos % 8)), 1 << (pos % 8));
+				switch (button)
+				{
+				case 0:
+					printf("%d: SINE\n", button);
+					break;
+				case 1:
+					printf("%d: SAW\n", button);
+					break;
+				case 2:
+					printf("%d: SQUARE\n", button);
+					break;
+				case 3:
+					printf("%d: TRI\n", button);
+					break;
+				case 4:
+					printf("%d: MUTE\n", button);
+					break;
+				default:
+					break;
+				}
+				printf("%d ----- %lf ----- ", pos, get_pitch_hz(pos));
+				print_key_name(pos);
+				printf("\n");
+				prev_pos = pos;
+			}
+
+			osc.wavetable = get_wavetable(button);
+			osc.pitch = get_pitch_hz(pos);
+
+			send_audio_stereo(&osc);
+
 			gpio_set_level(seg_channels[i], 0);
 			mcp23s08_write(mcp_handle, S_SEG_HW_ADR, GPIO_R, 0x00);
 		}
-		// vTaskDelay(100 / portTICK_RATE_MS);
 	}
 }

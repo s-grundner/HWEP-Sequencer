@@ -24,11 +24,13 @@
 #include "scale.h"
 #include "encoder.h"
 
-void sw_cb(void *args){}
+void sw_cb(void *args){
+	printf("sw_cb\n");
+}
 
 void app_main(void)
 {
-	encoder_states_t ec = {
+	encoder_context_t ec = {
 		.state = 0,
 		.position = 18,
 		.sw_max = 4,
@@ -39,6 +41,7 @@ void app_main(void)
 			.pin_sw = SW,
 			.sw_callback = sw_cb,
 		},
+		
 	};
 	encoder_init(&ec);
 
@@ -53,7 +56,7 @@ void app_main(void)
 		.sample_pos = 0,
 	};
 
-	oscillator_t chord[3] = {};
+	// oscillator_t chord[3] = {};
 
 	while (1)
 	{

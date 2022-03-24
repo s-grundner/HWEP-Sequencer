@@ -81,7 +81,7 @@ sample_t process_sample(oscillator_t **osc, uint8_t osc_cnt)
 	for (int i = 0; i < osc_cnt; i++)
 	{
 		double indexIncr = ((WT_SIZE / SAMPLE_RATE) * osc[i]->pitch);
-		uint16_t mul = ((1 << AUDIO_RESOLUTION_BIT) / 10) - 1;
+		uint16_t mul = ((1 << AUDIO_RESOLUTION_BIT) / 12) - 1;
 		
 		for (int j = 0; j < WT_SIZE; j++)
 		{
@@ -134,9 +134,9 @@ void i2s_init(void)
 	};
 
 	i2s_pin_config_t i2s_pin_cfg = {
-		.bck_io_num = I2S_BCK_IO,
-		.ws_io_num = I2S_WS_IO,
-		.data_out_num = I2S_DO_IO,
+		.bck_io_num = 4,
+		.ws_io_num = 17,
+		.data_out_num = 16,
 		.data_in_num = -1,
 	};
 
