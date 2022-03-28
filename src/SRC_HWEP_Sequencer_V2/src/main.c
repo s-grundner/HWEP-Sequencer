@@ -106,15 +106,15 @@ void app_main(void)
 	// ADC
 	// ------------------------------------------------------------
 
-	// adc088s052_handle_t adc_handle;
-	// adc088s052_config_t adc_cfg = {
-	// 	.cs_io = CS_ADC0880S052,
-	// 	.host = VSPI,
-	// 	.miso_io = VSPIQ,
-	// 	.mosi_io = VSPID,
-	// };
-	// adc088s052_init(&adc_handle, &adc_cfg);
-	//ich hasse alles
+	adc088s052_handle_t adc_handle;
+	adc088s052_config_t adc_cfg = {
+		.cs_io = CS_ADC0880S052,
+		.host = VSPI,
+		.miso_io = VSPIQ,
+		.mosi_io = VSPID,
+	};
+	adc088s052_init(&adc_handle, &adc_cfg);
+
 	// ------------------------------------------------------------
 	// STP16CP05
 	// ------------------------------------------------------------
@@ -176,6 +176,11 @@ void app_main(void)
 			gpio_set_level(seg_channels[i], 1);
 			mcp23s08_write(mcp_handle, S_SEG_HW_ADR, GPIO_R, get_char_segment(buf[2 - i]));
 			
+			for (int i = 0; i < ADC0880S052_CHANNEL_MAX; i++)
+			{
+				adc088s052_get_raw(adc_handle);
+
+			}
 			int button = encoder_read_sw(&ec);
 			int pos = abs(encoder_read(&ec) / 2);
 			pos = pos ? pos : 1;
