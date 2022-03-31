@@ -104,7 +104,6 @@ static void sw_task(void *arg)
 
 void encoder_init(encoder_context_t *ec)
 {
-
 	ec->sw_state = 0;
 	gpio_config_t ec_ab = {
 		.intr_type = GPIO_PIN_INTR_ANYEDGE,

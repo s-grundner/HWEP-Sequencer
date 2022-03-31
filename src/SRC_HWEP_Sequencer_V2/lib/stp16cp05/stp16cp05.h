@@ -32,15 +32,7 @@ typedef struct
 	gpio_num_t mosi_io;
 } stp16cp05_config_t;
 
-struct stp16cp05_context_t
-{
-	stp16cp05_config_t cfg;
-	spi_device_handle_t spi;
-	SemaphoreHandle_t ready_sem;
-};
-
-typedef struct stp16cp05_context_t stp16cp05_context_t;
-typedef struct stp16cp05_context_t *stp16cp05_handle_t;
+typedef struct stp16cp05_context_t* stp16cp05_handle_t;
 
 // ------------------------------------------------------------
 // Transaction specifications

@@ -25,18 +25,6 @@
 #define MUX_H 2
 #define MUX_MASK (1ULL<<33)|(1ULL<<25)|(1ULL<<26)
 
-typedef enum {
-	START,
-	__LAST_STATE
-} fsm_states_t;
-
-typedef struct {
-	fsm_states_t state;
-	fsm_states_t next_state;
-} fsm_state_info_t;
-
-void run(void);
-
 // ------------------------------------------------------------
 // Seven Segment 
 // ------------------------------------------------------------

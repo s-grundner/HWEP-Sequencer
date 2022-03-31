@@ -36,15 +36,7 @@ typedef struct
 	gpio_num_t intr_io; // -1 if interrupts ar not used
 } mcp23s08_config_t;
 
-struct mcp23s08_context
-{
-	mcp23s08_config_t cfg;
-	spi_device_handle_t spi;
-	SemaphoreHandle_t ready_sem;
-};
-
-typedef struct mcp23s08_context mcp23s08_context_t;
-typedef struct mcp23s08_context *mcp23s08_handle_t;
+typedef struct mcp23s08_context_t* mcp23s08_handle_t;
 
 // ------------------------------------------------------------
 // Transaction specifications

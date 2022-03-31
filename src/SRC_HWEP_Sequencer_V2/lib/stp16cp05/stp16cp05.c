@@ -1,5 +1,18 @@
 #include "stp16cp05.h"
+#include "esp_log.h"
 #define CS_STP16CP05 (GPIO_NUM_21)
+
+struct stp16cp05_context_t
+{
+	stp16cp05_config_t cfg;
+	spi_device_handle_t spi;
+	SemaphoreHandle_t ready_sem;
+};
+
+typedef struct stp16cp05_context_t stp16cp05_context_t;
+
+static const char *TAG = "stp16cp05";
+
 // ------------------------------------------------------------
 // (Private) Functions
 // ------------------------------------------------------------
@@ -45,6 +58,7 @@ esp_err_t stp16cp05_init(stp16cp05_context_t **out_ctx, const stp16cp05_config_t
 	err = spi_bus_add_device(ctx->cfg.host, &devcfg, &ctx->spi);
 	if (err != ESP_OK)
 	{
+		ESP_LOGE(TAG, "Failed to add device to spi bus");
 		if (ctx->spi)
 		{
 			spi_bus_remove_device(ctx->spi);
@@ -55,17 +69,17 @@ esp_err_t stp16cp05_init(stp16cp05_context_t **out_ctx, const stp16cp05_config_t
 			vSemaphoreDelete(ctx->ready_sem);
 			ctx->ready_sem = NULL;
 		}
+		free(ctx);
 		return err;
 	}
 	*out_ctx = ctx;
-
-	free(ctx);
 	return ESP_OK;
 }
 
 esp_err_t stp16cp05_write(stp16cp05_context_t *ctx, const uint8_t data_top, const uint8_t data_bot)
 {
-	esp_err_t err;
+	esp_err_t err = ESP_OK;
+	ESP_LOGD(TAG, "Aquiring host %d with CS %d", ctx->cfg.host, ctx->cfg.cs_io);
 	err = spi_device_acquire_bus(ctx->spi, portMAX_DELAY);
 	if (err != ESP_OK)
 		return err;

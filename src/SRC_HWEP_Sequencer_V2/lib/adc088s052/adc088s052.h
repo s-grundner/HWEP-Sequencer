@@ -50,15 +50,7 @@ typedef struct
 	gpio_num_t mosi_io;
 } adc088s052_config_t;
 
-struct adc088s052_context
-{
-	adc088s052_config_t cfg;
-	spi_device_handle_t spi;
-	SemaphoreHandle_t ready_sem;
-};
-
-typedef struct adc088s052_context adc088s052_context_t;
-typedef struct adc088s052_context *adc088s052_handle_t;
+typedef struct adc088s052_context_t *adc088s052_handle_t;
 
 // ------------------------------------------------------------
 // Transaction specifications

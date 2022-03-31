@@ -10792,8 +10792,7 @@ Eagle Ver. 9.x&lt;br&gt;</description>
 </packages>
 <packages3d>
 <package3d name="EC11" urn="urn:adsk.eagle:package:33306160/7" type="model" library_version="50">
-<description>&lt;b&gt;EC11E09244BS&lt;/b&gt;&lt;br&gt;
-</description>
+<description>&lt;b&gt;EC11E09244BS&lt;/b&gt;&lt;br&gt;</description>
 <packageinstances>
 <packageinstance name="EC11"/>
 </packageinstances>
@@ -11214,15 +11213,13 @@ Source: http://www.semiconductors.philips.com/acrobat_download/datasheets/PCF857
 </packages>
 <packages3d>
 <package3d name="TSSOP24" urn="urn:adsk.eagle:package:33324059/2" type="model" library_version="42">
-<description>&lt;b&gt;TSSOP24&lt;/b&gt;&lt;br&gt;
-</description>
+<description>&lt;b&gt;TSSOP24&lt;/b&gt;&lt;br&gt;</description>
 <packageinstances>
 <packageinstance name="TSSOP24"/>
 </packageinstances>
 </package3d>
 <package3d name="SO18W" urn="urn:adsk.eagle:package:33327837/3" type="model" library_version="42">
-<description>&lt;b&gt;(SO) - Wide, 7.50 mm (.300 In.) Body [SOIC&lt;/b&gt;&lt;br&gt;
-</description>
+<description>&lt;b&gt;(SO) - Wide, 7.50 mm (.300 In.) Body [SOIC&lt;/b&gt;&lt;br&gt;</description>
 <packageinstances>
 <packageinstance name="SO18W"/>
 </packageinstances>
@@ -11235,8 +11232,7 @@ Source: http://www.semiconductors.philips.com/acrobat_download/datasheets/PCF857
 </packageinstances>
 </package3d>
 <package3d name="SO24" urn="urn:adsk.eagle:package:33306208/2" type="box" library_version="42">
-<description>&lt;b&gt;SO-24_&lt;/b&gt;&lt;br&gt;
-</description>
+<description>&lt;b&gt;SO-24_&lt;/b&gt;&lt;br&gt;</description>
 <packageinstances>
 <packageinstance name="SO24"/>
 </packageinstances>
@@ -12591,7 +12587,7 @@ Source: http://www.ledtronics.com/ds/smd-0603/Dstr0092.pdf</description>
 <packageinstance name="LED3MM"/>
 </packageinstances>
 </package3d>
-<package3d name="LED5MM" urn="urn:adsk.eagle:package:15824755/4" type="model" library_version="29">
+<package3d name="LED5MM" urn="urn:adsk.eagle:package:15824755/5" type="model" library_version="39">
 <description>&lt;B&gt;LED&lt;/B&gt;&lt;p&gt;
 5 mm, round</description>
 <packageinstances>
@@ -12947,7 +12943,7 @@ Mod. WenN / 2019</description>
 </symbol>
 </symbols>
 <devicesets>
-<deviceset name="LED" urn="urn:adsk.eagle:component:13582775/15" prefix="H" uservalue="yes" library_version="29">
+<deviceset name="LED" urn="urn:adsk.eagle:component:13582775/16" prefix="H" uservalue="yes" library_version="39">
 <description>&lt;b&gt;LED&lt;/b&gt;, EN-60617
 &lt;p&gt;
 &lt;u&gt;OSRAM&lt;/u&gt;:&lt;br&gt;
@@ -13070,7 +13066,7 @@ Source: www.kingbright.com</description>
 <connect gate="G$1" pin="C" pad="K"/>
 </connects>
 <package3dinstances>
-<package3dinstance package3d_urn="urn:adsk.eagle:package:15824755/4"/>
+<package3dinstance package3d_urn="urn:adsk.eagle:package:15824755/5"/>
 </package3dinstances>
 <technologies>
 <technology name=""/>
@@ -13503,7 +13499,7 @@ HTBLuVA Salzburg&lt;br&gt;
 Schuljahr: 2019-20&lt;br&gt;
 Eagle Ver. 9.x&lt;br&gt;</description>
 <packages>
-<package name="HDSP-E" urn="urn:adsk.eagle:footprint:33327846/1" library_version="7">
+<package name="HDSP-E" urn="urn:adsk.eagle:footprint:33327846/3" library_version="9">
 <description>&lt;b&gt;LED DISPLAY&lt;/b&gt;&lt;p&gt;
  10-mm 1 character 7 segment, decimal point right</description>
 <wire x1="4.953" y1="-6.477" x2="-4.953" y2="-6.477" width="0.1524" layer="21"/>
@@ -13561,14 +13557,14 @@ Eagle Ver. 9.x&lt;br&gt;</description>
 <wire x1="-1.016" y1="4.699" x2="2.413" y2="4.699" width="0.6096" layer="51"/>
 <wire x1="3.048" y1="4.064" x2="2.413" y2="0.762" width="0.6096" layer="51"/>
 <circle x="3.048" y="-4.699" radius="0.254" width="0.6096" layer="51"/>
-<pad name="CC1" x="-3.81" y="5.08" drill="0.8128" shape="square"/>
+<pad name="CC2" x="-3.81" y="0" drill="0.8128" shape="octagon"/>
 <pad name="F" x="-3.81" y="2.54" drill="0.8128" shape="octagon"/>
-<pad name="G" x="-3.81" y="0" drill="0.8128" shape="octagon"/>
+<pad name="G" x="-3.81" y="5.08" drill="0.8128" shape="square"/>
 <pad name="E" x="-3.81" y="-2.54" drill="0.8128" shape="octagon"/>
 <pad name="D" x="-3.81" y="-5.08" drill="0.8128" shape="octagon"/>
-<pad name="CC2" x="3.81" y="-5.08" drill="0.8128" shape="octagon"/>
-<pad name="DP" x="3.81" y="-2.54" drill="0.8128" shape="octagon"/>
-<pad name="C" x="3.81" y="0" drill="0.8128" shape="octagon"/>
+<pad name="CC1" x="3.81" y="0" drill="0.8128" shape="octagon"/>
+<pad name="DP" x="3.81" y="-5.08" drill="0.8128" shape="octagon"/>
+<pad name="C" x="3.81" y="-2.54" drill="0.8128" shape="octagon"/>
 <pad name="B" x="3.81" y="2.54" drill="0.8128" shape="octagon"/>
 <pad name="A" x="3.81" y="5.08" drill="0.8128" shape="octagon"/>
 <text x="-4.953" y="6.9342" size="1.27" layer="25" ratio="10">&gt;NAME</text>
@@ -13576,7 +13572,7 @@ Eagle Ver. 9.x&lt;br&gt;</description>
 </package>
 </packages>
 <packages3d>
-<package3d name="HDSP-E" urn="urn:adsk.eagle:package:20330690/4" type="model" library_version="7">
+<package3d name="HDSP-E" urn="urn:adsk.eagle:package:20330690/6" type="model" library_version="9">
 <description>&lt;b&gt;LED DISPLAY&lt;/b&gt;&lt;p&gt;
  10-mm 1 character 7 segment, decimal point right</description>
 <packageinstances>
@@ -13666,7 +13662,7 @@ Eagle Ver. 9.x&lt;br&gt;</description>
 </symbol>
 </symbols>
 <devicesets>
-<deviceset name="HD-H103" urn="urn:adsk.eagle:component:18594820/5" prefix="H" uservalue="yes" library_version="7">
+<deviceset name="HD-H103" urn="urn:adsk.eagle:component:18594820/7" prefix="H" uservalue="yes" library_version="9">
 <description>&lt;b&gt;LED DISPLAY&lt;/b&gt;&lt;p&gt;
  1-character 7 segment, decimal point right</description>
 <gates>
@@ -13678,8 +13674,8 @@ Eagle Ver. 9.x&lt;br&gt;</description>
 <connect gate="A" pin="A" pad="A"/>
 <connect gate="A" pin="B" pad="B"/>
 <connect gate="A" pin="C" pad="C"/>
-<connect gate="A" pin="CC" pad="CC2"/>
-<connect gate="A" pin="CC@1" pad="CC1"/>
+<connect gate="A" pin="CC" pad="CC1"/>
+<connect gate="A" pin="CC@1" pad="CC2"/>
 <connect gate="A" pin="D" pad="D"/>
 <connect gate="A" pin="DP" pad="DP"/>
 <connect gate="A" pin="E" pad="E"/>
@@ -13687,7 +13683,7 @@ Eagle Ver. 9.x&lt;br&gt;</description>
 <connect gate="A" pin="G" pad="G"/>
 </connects>
 <package3dinstances>
-<package3dinstance package3d_urn="urn:adsk.eagle:package:20330690/4"/>
+<package3dinstance package3d_urn="urn:adsk.eagle:package:20330690/6"/>
 </package3dinstances>
 <technologies>
 <technology name="">
@@ -13837,8 +13833,7 @@ Eagle Ver. 9.x&lt;br&gt;</description>
 </packages>
 <packages3d>
 <package3d name="TSSOP16" urn="urn:adsk.eagle:package:33494874/1" type="box" library_version="17">
-<description>&lt;b&gt;PW0016A&lt;/b&gt;&lt;br&gt;
-</description>
+<description>&lt;b&gt;PW0016A&lt;/b&gt;&lt;br&gt;</description>
 <packageinstances>
 <packageinstance name="TSSOP16"/>
 </packageinstances>
@@ -15956,13 +15951,13 @@ Eagle Ver. 9.x&lt;br&gt;</description>
 </part>
 <part name="GND30" library="supply_GruS" library_urn="urn:adsk.eagle:library:13579815" deviceset="GND" device=""/>
 <part name="GND31" library="supply_GruS" library_urn="urn:adsk.eagle:library:13579815" deviceset="GND" device=""/>
-<part name="H15" library="display_GruS" library_urn="urn:adsk.eagle:library:13570041" deviceset="HD-H103" device="" package3d_urn="urn:adsk.eagle:package:20330690/4">
+<part name="H15" library="display_GruS" library_urn="urn:adsk.eagle:library:13570041" deviceset="HD-H103" device="" package3d_urn="urn:adsk.eagle:package:20330690/6">
 <attribute name="CATEGORY" value="15"/>
 </part>
-<part name="H16" library="display_GruS" library_urn="urn:adsk.eagle:library:13570041" deviceset="HD-H103" device="" package3d_urn="urn:adsk.eagle:package:20330690/4">
+<part name="H16" library="display_GruS" library_urn="urn:adsk.eagle:library:13570041" deviceset="HD-H103" device="" package3d_urn="urn:adsk.eagle:package:20330690/6">
 <attribute name="CATEGORY" value="15"/>
 </part>
-<part name="H17" library="display_GruS" library_urn="urn:adsk.eagle:library:13570041" deviceset="HD-H103" device="" package3d_urn="urn:adsk.eagle:package:20330690/4">
+<part name="H17" library="display_GruS" library_urn="urn:adsk.eagle:library:13570041" deviceset="HD-H103" device="" package3d_urn="urn:adsk.eagle:package:20330690/6">
 <attribute name="CATEGORY" value="15"/>
 </part>
 <part name="V1" library="mfet_GruS" library_urn="urn:adsk.eagle:library:13571573" deviceset="NTR4003" device="" package3d_urn="urn:adsk.eagle:package:33327851/2">
@@ -16055,52 +16050,52 @@ Eagle Ver. 9.x&lt;br&gt;</description>
 <part name="X2" library="con-lsta" library_urn="urn:adsk.eagle:library:17400448" deviceset="FE06-1" device="" package3d_urn="urn:adsk.eagle:package:33511460/3">
 <attribute name="CATEGORY" value="18"/>
 </part>
-<part name="H18" library="led_GruS" library_urn="urn:adsk.eagle:library:13581853" deviceset="LED" device="5MM" package3d_urn="urn:adsk.eagle:package:15824755/4" value="gn">
+<part name="H18" library="led_GruS" library_urn="urn:adsk.eagle:library:13581853" deviceset="LED" device="5MM" package3d_urn="urn:adsk.eagle:package:15824755/5" value="gn">
 <attribute name="CATEGORY" value="7"/>
 </part>
-<part name="H19" library="led_GruS" library_urn="urn:adsk.eagle:library:13581853" deviceset="LED" device="5MM" package3d_urn="urn:adsk.eagle:package:15824755/4" value="gn">
+<part name="H19" library="led_GruS" library_urn="urn:adsk.eagle:library:13581853" deviceset="LED" device="5MM" package3d_urn="urn:adsk.eagle:package:15824755/5" value="gn">
 <attribute name="CATEGORY" value="7"/>
 </part>
-<part name="H20" library="led_GruS" library_urn="urn:adsk.eagle:library:13581853" deviceset="LED" device="5MM" package3d_urn="urn:adsk.eagle:package:15824755/4" value="gn">
+<part name="H20" library="led_GruS" library_urn="urn:adsk.eagle:library:13581853" deviceset="LED" device="5MM" package3d_urn="urn:adsk.eagle:package:15824755/5" value="gn">
 <attribute name="CATEGORY" value="7"/>
 </part>
-<part name="H21" library="led_GruS" library_urn="urn:adsk.eagle:library:13581853" deviceset="LED" device="5MM" package3d_urn="urn:adsk.eagle:package:15824755/4" value="gn">
+<part name="H21" library="led_GruS" library_urn="urn:adsk.eagle:library:13581853" deviceset="LED" device="5MM" package3d_urn="urn:adsk.eagle:package:15824755/5" value="gn">
 <attribute name="CATEGORY" value="7"/>
 </part>
-<part name="H22" library="led_GruS" library_urn="urn:adsk.eagle:library:13581853" deviceset="LED" device="5MM" package3d_urn="urn:adsk.eagle:package:15824755/4" value="gn">
+<part name="H22" library="led_GruS" library_urn="urn:adsk.eagle:library:13581853" deviceset="LED" device="5MM" package3d_urn="urn:adsk.eagle:package:15824755/5" value="gn">
 <attribute name="CATEGORY" value="7"/>
 </part>
-<part name="H23" library="led_GruS" library_urn="urn:adsk.eagle:library:13581853" deviceset="LED" device="5MM" package3d_urn="urn:adsk.eagle:package:15824755/4" value="gn">
+<part name="H23" library="led_GruS" library_urn="urn:adsk.eagle:library:13581853" deviceset="LED" device="5MM" package3d_urn="urn:adsk.eagle:package:15824755/5" value="gn">
 <attribute name="CATEGORY" value="7"/>
 </part>
-<part name="H24" library="led_GruS" library_urn="urn:adsk.eagle:library:13581853" deviceset="LED" device="5MM" package3d_urn="urn:adsk.eagle:package:15824755/4" value="gn">
+<part name="H24" library="led_GruS" library_urn="urn:adsk.eagle:library:13581853" deviceset="LED" device="5MM" package3d_urn="urn:adsk.eagle:package:15824755/5" value="gn">
 <attribute name="CATEGORY" value="7"/>
 </part>
-<part name="H25" library="led_GruS" library_urn="urn:adsk.eagle:library:13581853" deviceset="LED" device="5MM" package3d_urn="urn:adsk.eagle:package:15824755/4" value="gn">
+<part name="H25" library="led_GruS" library_urn="urn:adsk.eagle:library:13581853" deviceset="LED" device="5MM" package3d_urn="urn:adsk.eagle:package:15824755/5" value="gn">
 <attribute name="CATEGORY" value="7"/>
 </part>
-<part name="H26" library="led_GruS" library_urn="urn:adsk.eagle:library:13581853" deviceset="LED" device="5MM" package3d_urn="urn:adsk.eagle:package:15824755/4" value="ge">
+<part name="H26" library="led_GruS" library_urn="urn:adsk.eagle:library:13581853" deviceset="LED" device="5MM" package3d_urn="urn:adsk.eagle:package:15824755/5" value="ge">
 <attribute name="CATEGORY" value="7"/>
 </part>
-<part name="H27" library="led_GruS" library_urn="urn:adsk.eagle:library:13581853" deviceset="LED" device="5MM" package3d_urn="urn:adsk.eagle:package:15824755/4" value="ge">
+<part name="H27" library="led_GruS" library_urn="urn:adsk.eagle:library:13581853" deviceset="LED" device="5MM" package3d_urn="urn:adsk.eagle:package:15824755/5" value="ge">
 <attribute name="CATEGORY" value="7"/>
 </part>
-<part name="H28" library="led_GruS" library_urn="urn:adsk.eagle:library:13581853" deviceset="LED" device="5MM" package3d_urn="urn:adsk.eagle:package:15824755/4" value="ge">
+<part name="H28" library="led_GruS" library_urn="urn:adsk.eagle:library:13581853" deviceset="LED" device="5MM" package3d_urn="urn:adsk.eagle:package:15824755/5" value="ge">
 <attribute name="CATEGORY" value="7"/>
 </part>
-<part name="H29" library="led_GruS" library_urn="urn:adsk.eagle:library:13581853" deviceset="LED" device="5MM" package3d_urn="urn:adsk.eagle:package:15824755/4" value="ge">
+<part name="H29" library="led_GruS" library_urn="urn:adsk.eagle:library:13581853" deviceset="LED" device="5MM" package3d_urn="urn:adsk.eagle:package:15824755/5" value="ge">
 <attribute name="CATEGORY" value="7"/>
 </part>
-<part name="H30" library="led_GruS" library_urn="urn:adsk.eagle:library:13581853" deviceset="LED" device="5MM" package3d_urn="urn:adsk.eagle:package:15824755/4" value="ge">
+<part name="H30" library="led_GruS" library_urn="urn:adsk.eagle:library:13581853" deviceset="LED" device="5MM" package3d_urn="urn:adsk.eagle:package:15824755/5" value="ge">
 <attribute name="CATEGORY" value="7"/>
 </part>
-<part name="H31" library="led_GruS" library_urn="urn:adsk.eagle:library:13581853" deviceset="LED" device="5MM" package3d_urn="urn:adsk.eagle:package:15824755/4" value="ge">
+<part name="H31" library="led_GruS" library_urn="urn:adsk.eagle:library:13581853" deviceset="LED" device="5MM" package3d_urn="urn:adsk.eagle:package:15824755/5" value="ge">
 <attribute name="CATEGORY" value="7"/>
 </part>
-<part name="H32" library="led_GruS" library_urn="urn:adsk.eagle:library:13581853" deviceset="LED" device="5MM" package3d_urn="urn:adsk.eagle:package:15824755/4" value="ge">
+<part name="H32" library="led_GruS" library_urn="urn:adsk.eagle:library:13581853" deviceset="LED" device="5MM" package3d_urn="urn:adsk.eagle:package:15824755/5" value="ge">
 <attribute name="CATEGORY" value="7"/>
 </part>
-<part name="H33" library="led_GruS" library_urn="urn:adsk.eagle:library:13581853" deviceset="LED" device="5MM" package3d_urn="urn:adsk.eagle:package:15824755/4" value="ge">
+<part name="H33" library="led_GruS" library_urn="urn:adsk.eagle:library:13581853" deviceset="LED" device="5MM" package3d_urn="urn:adsk.eagle:package:15824755/5" value="ge">
 <attribute name="CATEGORY" value="7"/>
 </part>
 <part name="R1" library="rcl_GruS" library_urn="urn:adsk.eagle:library:13572313" deviceset="P160" device="LB" package3d_urn="urn:adsk.eagle:package:33302106/7" value="10k"/>

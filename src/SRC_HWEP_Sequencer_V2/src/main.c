@@ -5,6 +5,7 @@
 #include "driver/gpio.h"
 #include "esp_system.h"
 #include "esp_log.h"
+#include "driver/rmt.h"
 #include "esp_timer.h"
 #include <math.h>
 
@@ -17,41 +18,84 @@
 #include "adc088s052.h"
 #include "synth.h"
 #include "scale.h"
+#include "led_strip.h"
 
-typedef struct {
-	s_seg_channel_t ch;
-	uint8_t data;
+static const char *TAG = "sequencer";
+
+typedef struct
+{
+	uint8_t ch;
+	uint8_t buf[3];
 	mcp23s08_handle_t mcp_h;
+	bool is_on;
+	s_seg_channel_t ch_gpio[3];
+} s_seg_context_t;
 
-}s_seg_context_t;
-
-void sw_cb(void *arg){
-
-
+static void sw_cb(void *arg)
+{
+	ESP_LOGI(TAG, "EC_SWITCH_CB");
 };
 
-void itos(char **s, int i)
+static void timer_cb(void *args)
 {
-	for (int i = 0; i < 3; i++)
-	{
-		*s[i] = i / (pow10(i));
-	}
-}
+	s_seg_context_t *ctx = (s_seg_context_t *)args;
 
-static void timer_cb (void* args) {
-	gpio_set_level(((s_seg_context_t*)args)->ch, 1);
-	mcp23s08_write(((s_seg_context_t*)args)->mcp_h, S_SEG_HW_ADR, GPIO_R, ((s_seg_context_t*)args)->data);
+	if (ctx->is_on)
+	{
+		gpio_set_level(ctx->ch_gpio[ctx->ch], 1);
+		mcp23s08_write(ctx->mcp_h, S_SEG_HW_ADR, GPIO_R, get_char_segment(ctx->buf[ctx->ch]));
+		ctx->is_on = false;
+	}
+	else
+	{
+		gpio_set_level(ctx->ch_gpio[ctx->ch], 0);
+		mcp23s08_write(ctx->mcp_h, S_SEG_HW_ADR, GPIO_R, 0x00);
+		if (ctx->ch >= 2)
+		{
+			ctx->ch = 0;
+		}
+		else
+		{
+			ctx->ch++;
+		}
+		ctx->is_on = true;
+	}
 }
 
 void app_main(void)
 {
-	
+	// ------------------------------------------------------------
+	// ws2812 ring
+	// ------------------------------------------------------------
+#define rgb_ring
+#ifdef rgb_ring
+	rmt_config_t config = RMT_DEFAULT_CONFIG_TX(WS2812_DATA, RMT_TX_CHANNEL);
+	// set counter clock to 40MHz
+	config.clk_div = 2;
+
+	ESP_ERROR_CHECK(rmt_config(&config));
+	ESP_ERROR_CHECK(rmt_driver_install(config.channel, 0, 0));
+
+	// install ws2812 driver
+	led_strip_config_t strip_config = LED_STRIP_DEFAULT_CONFIG(WS2812_STRIP_LEN, (led_strip_dev_t)config.channel);
+	led_strip_t *strip = led_strip_new_rmt_ws2812(&strip_config);
+	if (!strip)
+	{
+		ESP_LOGE(TAG, "install WS2812 driver failed");
+	}
+	ESP_ERROR_CHECK(strip->clear(strip, 100));
+
+	char rDir = -1;
+	char gDir = 1;
+	char bDir = -1;
+
+	unsigned char r = 255, g = 0, b = 127;
+#endif
 	// ------------------------------------------------------------
 	// Audio
 	// ------------------------------------------------------------
 	i2s_init();
 	init_wavetables();
-
 	oscillator_t osc = {
 		.wavetable = 0,
 		.pitch = 1,
@@ -74,7 +118,6 @@ void app_main(void)
 	};
 	encoder_init(&ec);
 	int prev_pos = encoder_read(&ec) + 1;
-
 	// ------------------------------------------------------------
 	// Segment Display
 	// ------------------------------------------------------------
@@ -83,42 +126,21 @@ void app_main(void)
 		.pin_bit_mask = S_SEG_CHANNEL_MASK,
 	};
 	gpio_config(&cf);
-
-	s_seg_channel_t seg_channels[3] = {CE, CZ, CH};
-	char buf[3] = "SQC";
-	gpio_set_level(CE, 1);
-	gpio_set_level(CZ, 1);
-	gpio_set_level(CH, 1);
-
 	// ------------------------------------------------------------
 	// SPI-Bus
 	// ------------------------------------------------------------
-
 	spi_bus_config_t buscfg = {
 		.max_transfer_sz = 32,
 		.miso_io_num = VSPIQ,
 		.mosi_io_num = VSPID,
 		.sclk_io_num = VSCK,
 	};
-	spi_bus_initialize(VSPI, &buscfg, SPI_DMA_CH_AUTO);
-
-	// ------------------------------------------------------------
-	// ADC
-	// ------------------------------------------------------------
-
-	adc088s052_handle_t adc_handle;
-	adc088s052_config_t adc_cfg = {
-		.cs_io = CS_ADC0880S052,
-		.host = VSPI,
-		.miso_io = VSPIQ,
-		.mosi_io = VSPID,
-	};
-	adc088s052_init(&adc_handle, &adc_cfg);
-
+	ESP_ERROR_CHECK(spi_bus_initialize(VSPI, &buscfg, SPI_DMA_CH_AUTO));
 	// ------------------------------------------------------------
 	// STP16CP05
 	// ------------------------------------------------------------
-
+#define stp
+#ifdef stp
 	stp16cp05_handle_t stp_handle;
 	stp16cp05_config_t stp_cfg = {
 		.cs_io = CS_STP16CP05,
@@ -126,13 +148,15 @@ void app_main(void)
 		.mosi_io = VSPID,
 		.miso_io = VSPIQ,
 	};
-	stp16cp05_init(&stp_handle, &stp_cfg);
+	ESP_ERROR_CHECK(stp16cp05_init(&stp_handle, &stp_cfg));
 
 	stp16cp05_write(stp_handle, 0x00, 0x00);
-
+#endif
 	// ------------------------------------------------------------
 	// MCP23S08
 	// ------------------------------------------------------------
+#define mcp
+#ifdef mcp
 	mcp23s08_handle_t mcp_handle;
 	mcp23s08_config_t mcp_cfg = {
 		.cs_io = CS_MCP23S08,
@@ -141,85 +165,136 @@ void app_main(void)
 		.mosi_io = VSPID,
 		.intr_io = -1,
 	};
-	mcp23s08_init(&mcp_handle, &mcp_cfg);
 
-	mcp23s08_write(mcp_handle, 0, IOCON, (1 << HAEN));
-	mcp23s08_write(mcp_handle, S_SEG_HW_ADR, IODIR, 0x00);
-	mcp23s08_write(mcp_handle, IN_PS_HW_ADR, IODIR, 0xff);
-	mcp23s08_write(mcp_handle, IN_PS_HW_ADR, GPPU, 0x0f);
+	ESP_ERROR_CHECK(mcp23s08_init(&mcp_handle, &mcp_cfg));
 
-	mcp23s08_write(mcp_handle, S_SEG_HW_ADR, GPIO_R, get_char_segment('A'));
-
+	ESP_ERROR_CHECK(mcp23s08_write(mcp_handle, 0, IOCON, (1 << HAEN)));
+	ESP_ERROR_CHECK(mcp23s08_write(mcp_handle, S_SEG_HW_ADR, IODIR, 0x00));
+	ESP_ERROR_CHECK(mcp23s08_write(mcp_handle, IN_PS_HW_ADR, IODIR, 0xff));
+	ESP_ERROR_CHECK(mcp23s08_write(mcp_handle, IN_PS_HW_ADR, GPPU, 0x0f));
+#endif
+	// ------------------------------------------------------------
+	// ADC
+	// ------------------------------------------------------------
+#define adc
+#ifdef adc
+	adc088s052_handle_t adc_handle;
+	adc088s052_config_t adc_cfg = {
+		.cs_io = CS_ADC0880S052,
+		.host = VSPI,
+		.miso_io = VSPIQ,
+		.mosi_io = VSPID,
+	};
+	ESP_ERROR_CHECK(adc088s052_init(&adc_handle, &adc_cfg));
+	uint16_t adc_data[8];
+	uint16_t adc_data_prev[8];
+	bool data_changed;
+#endif
 	// ------------------------------------------------------------
 	//	Timer
 	// ------------------------------------------------------------
-	esp_timer_init();
-	s_seg_context_t s_seg_ctx = {
-		.ch = CE,
-		.data = 0x00,
+#define timer
+#ifdef timer
+	s_seg_context_t seg_ctx = {
+		.buf = "SQC",
+		.ch = 0,
 		.mcp_h = mcp_handle,
+		.is_on = true,
+		.ch_gpio = {CH, CZ, CE},
 	};
-
 	esp_timer_handle_t timer_handle;
 	esp_timer_create_args_t timer_cfg = {
 		.name = "mux",
 		.callback = &timer_cb,
-		.arg = &s_seg_ctx,
+		.arg = &seg_ctx,
 	};
-	esp_timer_create(&timer_cfg, &timer_handle);
-	esp_timer_start_periodic(timer_handle,10);
+	ESP_ERROR_CHECK(esp_timer_create(&timer_cfg, &timer_handle));
+	ESP_ERROR_CHECK(esp_timer_start_periodic(timer_handle, 1000));
+#endif
 
 	while (1)
 	{
-		for (int i = 0; i < 3; i++)
+#ifdef adc
+		for (int i = 0; i < ADC0880S052_CHANNEL_MAX; i++)
 		{
-			gpio_set_level(seg_channels[i], 1);
-			mcp23s08_write(mcp_handle, S_SEG_HW_ADR, GPIO_R, get_char_segment(buf[2 - i]));
-			
+			ESP_ERROR_CHECK(adc088s052_get_raw(adc_handle, i, &adc_data[i]));
+			if (adc_data_prev[i] != adc_data[i])
+			{
+				data_changed = true;
+				adc_data_prev[i] = adc_data[i];
+			}
+		}
+		if (data_changed)
+		{
+			data_changed = false;
 			for (int i = 0; i < ADC0880S052_CHANNEL_MAX; i++)
 			{
-				adc088s052_get_raw(adc_handle);
-
+				printf("| %03d ", adc_data[i]);
 			}
-			int button = encoder_read_sw(&ec);
-			int pos = abs(encoder_read(&ec) / 2);
-			pos = pos ? pos : 1;
-			if (prev_pos != pos)
-			{
-				stp16cp05_write(stp_handle, ~(1 << (pos % 8)), 1 << (pos % 8));
-				switch (button)
-				{
-				case 0:
-					printf("%d: SINE\n", button);
-					break;
-				case 1:
-					printf("%d: SAW\n", button);
-					break;
-				case 2:
-					printf("%d: SQUARE\n", button);
-					break;
-				case 3:
-					printf("%d: TRI\n", button);
-					break;
-				case 4:
-					printf("%d: MUTE\n", button);
-					break;
-				default:
-					break;
-				}
-				printf("%d ----- %lf ----- ", pos, get_pitch_hz(pos));
-				print_key_name(pos);
-				printf("\n");
-				prev_pos = pos;
-			}
-
-			osc.wavetable = get_wavetable(button);
-			osc.pitch = get_pitch_hz(pos);
-
-			send_audio_stereo(&osc);
-
-			gpio_set_level(seg_channels[i], 0);
-			mcp23s08_write(mcp_handle, S_SEG_HW_ADR, GPIO_R, 0x00);
+			printf("|\n");
 		}
+#endif
+		int button = encoder_read_sw(&ec);
+		int pos = abs(encoder_read(&ec) / 2);
+		pos = pos ? pos : 1;
+		if (prev_pos != pos)
+		{
+#ifdef stp
+			ESP_ERROR_CHECK(stp16cp05_write(stp_handle, ~(1 << (pos % 8)), 1 << (pos % 8)));
+#endif
+			switch (button)
+			{
+			case 0:
+				printf("%d: SINE\n", button);
+				break;
+			case 1:
+				printf("%d: SAW\n", button);
+				break;
+			case 2:
+				printf("%d: SQUARE\n", button);
+				break;
+			case 3:
+				printf("%d: TRI\n", button);
+				break;
+			case 4:
+				printf("%d: MUTE\n", button);
+				break;
+			default:
+				break;
+			}
+			printf("%d ----- %lf ----- ", pos, get_pitch_hz(pos));
+			print_key_name(pos);
+			printf("\n");
+			prev_pos = pos;
+		}
+
+#ifdef rgb_ring
+		r = r + rDir;
+		g = g + gDir;
+		b = b + bDir;
+		for (int i = 0; i < WS2812_STRIP_LEN; i++)
+		{
+			ESP_ERROR_CHECK(strip->set_pixel(strip, i, r, g, b));
+		}
+		if (r >= 255 || r <= 0)
+		{
+			rDir = rDir * -1;
+		}
+		if (g >= 255 || g <= 0)
+		{
+			gDir = gDir * -1;
+		}
+		if (b >= 255 || b <= 0)
+		{
+			bDir = bDir * -1;
+		}
+
+		ESP_ERROR_CHECK(strip->refresh(strip, 100));
+#endif
+
+		osc.wavetable = get_wavetable(button);
+		osc.pitch = get_pitch_hz(pos);
+
+		send_audio_stereo(&osc);
 	}
 }
