@@ -142,6 +142,8 @@ led_strip_t * led_strip_init(uint8_t channel, uint8_t gpio, uint16_t led_num);
  */
 esp_err_t led_strip_denit(led_strip_t *strip);
 
+void led_strip_hsv2rgb(uint32_t h, uint32_t s, uint32_t v, uint32_t *r, uint32_t *g, uint32_t *b);
+
 #ifdef __cplusplus
 }
 #endif

@@ -85,11 +85,7 @@ void app_main(void)
 	}
 	ESP_ERROR_CHECK(strip->clear(strip, 100));
 
-	char rDir = -1;
-	char gDir = 1;
-	char bDir = -1;
-
-	unsigned char r = 255, g = 0, b = 127;
+	uint32_t r, g, b, hue, start_rgb=0;
 #endif
 	// ------------------------------------------------------------
 	// Audio
@@ -269,27 +265,15 @@ void app_main(void)
 		}
 
 #ifdef rgb_ring
-		r = r + rDir;
-		g = g + gDir;
-		b = b + bDir;
 		for (int i = 0; i < WS2812_STRIP_LEN; i++)
 		{
-			ESP_ERROR_CHECK(strip->set_pixel(strip, i, r, g, b));
+				hue = pos%12 * 360 / 12 + start_rgb;
+                led_strip_hsv2rgb(hue, 100, 100, &r, &g, &b);
+                // Write RGB values to strip driver
+                ESP_ERROR_CHECK(strip->set_pixel(strip, i, r, g, b));
 		}
-		if (r >= 255 || r <= 0)
-		{
-			rDir = rDir * -1;
-		}
-		if (g >= 255 || g <= 0)
-		{
-			gDir = gDir * -1;
-		}
-		if (b >= 255 || b <= 0)
-		{
-			bDir = bDir * -1;
-		}
-
 		ESP_ERROR_CHECK(strip->refresh(strip, 100));
+		// start_rgb += 60;
 #endif
 
 		osc.wavetable = get_wavetable(button);
