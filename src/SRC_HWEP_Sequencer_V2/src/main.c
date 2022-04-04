@@ -225,7 +225,7 @@ void app_main(void)
 			data_changed = false;
 			for (int i = 0; i < ADC0880S052_CHANNEL_MAX; i++)
 			{
-				printf("| %03d ", adc_data[i]);
+				printf("| %03x ", adc_data[i]);
 			}
 			printf("|\n");
 		}
@@ -270,7 +270,8 @@ void app_main(void)
 				hue = pos%12 * 360 / 12 + start_rgb;
                 led_strip_hsv2rgb(hue, 100, 100, &r, &g, &b);
                 // Write RGB values to strip driver
-                ESP_ERROR_CHECK(strip->set_pixel(strip, i, r, g, b));
+                ESP_ERROR_CHECK(strip->set_pixel(strip, i, r*0.5, g*0.5, b*0.5));
+				ESP_ERROR_CHECK(strip->set_pixel(strip, pos%12, ~(uint32_t)(r*0.5), ~(uint32_t)(g*0.5), ~(uint32_t)(b*0.5)));
 		}
 		ESP_ERROR_CHECK(strip->refresh(strip, 100));
 		// start_rgb += 60;

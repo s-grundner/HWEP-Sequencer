@@ -95,8 +95,9 @@ esp_err_t adc088s052_get_raw(adc088s052_context_t *ctx, adc088s052_channel_t ch,
 	ESP_ERROR_CHECK(err);
 	if (err != ESP_OK)
 		return err;
-	// TODO: SPI_SWAP_DATA_RX
-	*data = t.rx_data[0];
+	// *data = t.rx_data[0];
+	*data = SPI_SWAP_DATA_RX(*(uint16_t*)t.rx_data, 15);
+	*data = *data>>4;
 	spi_device_release_bus(ctx->spi);
 	return ESP_OK;
 }
