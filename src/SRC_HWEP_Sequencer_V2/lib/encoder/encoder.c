@@ -6,6 +6,7 @@
 
 static void encoder_update(encoder_context_t *arg)
 {
+	arg->cgf.rot_callback(arg);
 	uint8_t s = arg->state & 3;
 	if (gpio_get_level(arg->cgf.pin_a))
 		s |= 4;

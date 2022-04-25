@@ -9,13 +9,14 @@
 #include "freertos/queue.h"
 
 typedef void (*sw_cb_fn_t)(void *args);
+typedef void (*rot_cb_fn_t)(void *args);
 
 typedef struct {
 	uint8_t pin_a;
 	uint8_t pin_b;
 	uint8_t pin_sw;
 	sw_cb_fn_t sw_callback;
-	
+	rot_cb_fn_t rot_callback;
 } encoder_config_t;
 
 struct encoder_context
