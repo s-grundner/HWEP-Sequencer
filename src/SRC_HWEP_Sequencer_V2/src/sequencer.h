@@ -1,3 +1,9 @@
+/*!
+* @author	@s-grundner
+* @date 	03.05.2022
+* @brief	Sequencer Main Header  
+*/
+
 #pragma once
 
 #include "esp_system.h"
@@ -18,25 +24,44 @@
 #include <string.h>
 #include <stdlib.h>
 
+#include <config.h>
+
 #include "mcp23s08.h"
+#include "misc.h"
+#include "encoder.h"
+#include "stp16cp05.h"
+#include "adc088s052.h"
+#include "synth.h"
+#include "scale.h"
+#include "led_strip.h"
 
-#define MUX_E 0
-#define MUX_Z 1
-#define MUX_H 2
-#define MUX_MASK (1ULL<<33)|(1ULL<<25)|(1ULL<<26)
+#define BPM_TO_US(a) (0x3938700 / (a))
 
-// ------------------------------------------------------------
-// Seven Segment 
-// ------------------------------------------------------------
+volatile struct sequencer_config_s
+{
+	// dev handles
+	stp16cp05_handle_t stp_handle;
+	encoder_context_t* encoder_handle;
+	adc088s052_handle_t adc_handle;
 
-typedef struct {
-	mcp23s08_hw_adr hw_adr;
-	mcp23s08_handle_t mcp_handle;
-	mcp23s08_config_t mcp_cfg;
-	uint32_t *buffer;
-}s_seg_context_t;
+	// adc specific data
+	uint8_t cur_adc_data[8];
+	uint8_t channel;
 
-void s_seg_init(s_seg_context_t *sg_ctx);
-void s_seg_shift(s_seg_context_t *sg_ctx, int8_t dir);
-void s_seg_write(s_seg_context_t *sg_ctx, char *buf);
-void s_seg_write_single(s_seg_context_t *sg_ctx, uint8_t s_seg_channel, char data);   
+	// stp specific data
+	uint8_t cur_stp_high;
+	
+	// Audio data
+	oscillator_t osc;
+	uint8_t cur_bpm;
+
+	// general
+	app_mode_t cur_appmode;
+	int32_t encoder_positions[MAX_APP_MODES];
+	
+};
+
+typedef struct sequencer_config_s sequencer_config_t;
+typedef struct sequencer_config_s* sequencer_handle_t;
+
+esp_err_t sequencer_init(sequencer_handle_t *sqc_handle);

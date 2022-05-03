@@ -28,7 +28,7 @@ typedef struct
 	float detune;
 	float pan;
 	float level;
-}oscillator_t;
+} oscillator_t;
 // oscillator_t poly_osc[MAX_POLY];
 
 typedef struct

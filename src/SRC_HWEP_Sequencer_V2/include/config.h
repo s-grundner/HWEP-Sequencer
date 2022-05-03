@@ -52,6 +52,8 @@ typedef enum
 
 /* Every Mode Starts with an Indicator on the Hex Display until it is updated by the modes tasks */
 
+#define MAX_APP_MODES 4
+
 typedef enum
 {
 	APP_MODE_BPM = 0, // Set Beats per Minute

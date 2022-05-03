@@ -9,99 +9,60 @@
 #include "esp_timer.h"
 #include <math.h>
 
-#include "config.h"
-// #include "sequencer.h"
-#include "mcp23s08.h"
-#include "misc.h"
-#include "encoder.h"
-#include "stp16cp05.h"
-#include "adc088s052.h"
-#include "synth.h"
-#include "scale.h"
-#include "led_strip.h"
+#include "sequencer.h"
 
 static const char *TAG = "sequencer";
 
-void sw_cb(void *args)
-{
-}
-
-void 
-
-typedef struct
-{
-	stp16cp05_handle_t a;
-	unsigned char pos;
-	encoder_context_t b;
-} context;
-
 static void timer_cb(void *args)
 {
-	context *ctx = (context *)args;
+	sequencer_config_t *ctx = (sequencer_config_t*)args;
+	stp16cp05_write(ctx->stp_handle, ctx->cur_stp_high, (uint8_t)pow(2, ctx->channel));
+	adc088s052_get_raw(ctx->adc_handle, ctx->channel, &ctx->cur_adc_data[ctx->channel]);
+	ctx->channel = (ctx->channel + 1) % ADC0880S052_CHANNEL_MAX;
 }
 
 void app_main(void)
 {
-	/*timer
-	Encoder
-	STP Treiber
-	Audio gage wird
-	*/
+	sequencer_handle_t sqc_handle;
+	sequencer_init(&sqc_handle);
 
-	// ------------------------------------------------------------
-	// Audio
-	// ------------------------------------------------------------
-	i2s_init();
-	init_wavetables();
-	oscillator_t osc = {
-		.wavetable = 0,
-		.pitch = 1,
-		.sample_pos = 0,
-	};
-	// ------------------------------------------------------------
-	// Encoder
-	// ------------------------------------------------------------
-	encoder_context_t ec = {
-		.cgf = {
-			.pin_a = A,
-			.pin_b = B,
-			.pin_sw = SW,
-			.sw_callback = sw_cb,
-		},
-		.state = 0,
-		.position = 18,
-		.sw_max = 4,
-		.sw_state = 0,
-	};
-	encoder_init(&ec);
-	int prev_pos = encoder_read(&ec) + 1;
+	int prev_pos = encoder_read(sqc_handle->encoder_handle) + 1;
 
-	stp16cp05_handle_t stp_handle;
-	stp16cp05_config_t stp_config = {
-		.cs_io = CS_STP16CP05,
-		.host = VSPI,
-		.miso_io = VSPIQ,
-		.mosi_io = VSPID,
-	};
-
-	stp16cp05_init(&stp_handle, &stp_config);
-
-	// ------------------------------------------------------------
-	// Timer
-	// ------------------------------------------------------------
-
-	context ctx = {
-		.a = stp_handle,
-		.b = ec,
-		.pos = 0,
-	};
-
-	esp_timer_handle_t timer_handle;
-	esp_timer_create_args_t timer_cfg = {
-		.name = "mux",
+	esp_timer_handle_t bpm_timer;
+	esp_timer_create_args_t bpm_timer_cfg = {
+		.name = "bpm",
 		.callback = &timer_cb,
-		.arg = &ctx,
+		.arg = &sqc_handle,
 	};
-	ESP_ERROR_CHECK(esp_timer_create(&timer_cfg, &timer_handle));
-	ESP_ERROR_CHECK(esp_timer_start_periodic(timer_handle, 1000));
+
+	ESP_ERROR_CHECK(esp_timer_create(&bpm_timer_cfg, &bpm_timer));
+	ESP_ERROR_CHECK(esp_timer_start_periodic(bpm_timer, BPM_TO_US(sqc_handle->cur_bpm)));
+
+	while (1)
+	{
+		sqc_handle->encoder_positions[sqc_handle->cur_appmode] = encoder_read(sqc_handle->encoder_handle);
+		
+		switch (sqc_handle->cur_appmode)
+		{
+		case APP_MODE_BPM:
+			
+			break;
+		case APP_MODE_KEY:
+
+			break;
+		case APP_MODE_ENR:
+
+			break;
+		case APP_MODE_TSP:
+
+			break;
+		default:
+			break;
+		}
+
+		send_audio_stereo(&sqc_handle->osc);
+		vTaskDelay(100 / portTICK_PERIOD_MS);
+	}
 }
+
+
