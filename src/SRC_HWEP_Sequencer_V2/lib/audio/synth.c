@@ -1,3 +1,14 @@
+/**
+ * @file	synth.c
+ * @author	Simon Grundner
+ * @brief	Library for Synth and Wavetable Processing
+ * @version 0.1
+ * @date 	2022-05-05
+ * 
+ * @copyright Copyright (c) 2022
+ * 
+ */
+
 #include "synth.h"
 
 // ------------------------------------------------------------
@@ -47,6 +58,7 @@ float *get_wavetable(int index)
 // ------------------------------------------------------------
 // Audio Processing
 // ------------------------------------------------------------
+
 void send_audio_stereo(oscillator_t *osc)
 {
 	size_t i2s_bytes_write = 0;

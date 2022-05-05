@@ -17,11 +17,7 @@ esp_err_t sequencer_init(sequencer_config_t **out_sqc_cfg)
 	// ------------------------------------------------------------
 	i2s_init();
 	init_wavetables();
-	oscillator_t osc = {
-		.wavetable = 0,
-		.pitch = 1,
-		.sample_pos = 0,
-	};
+
 	// ------------------------------------------------------------
 	// Encoder
 	// ------------------------------------------------------------
@@ -70,8 +66,14 @@ esp_err_t sequencer_init(sequencer_config_t **out_sqc_cfg)
 		.channel = 0,
 		.cur_appmode = APP_MODE_BPM,
 		.cur_bpm = 120,
-		.cur_stp_high = 0x00,
-		.osc = osc,
+		.cur_stp_upper = 0x00,
+		.osc = {
+			.wavetable = 0,
+			.pitch = 1,
+			.sample_pos = 0,
+			.oct_offset = 0,
+		},
+		.reset_at_n = 0,
 	};
 	*out_sqc_cfg = sqc_cfg;
 

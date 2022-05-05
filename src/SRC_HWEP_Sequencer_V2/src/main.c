@@ -16,14 +16,18 @@ static const char *TAG = "sequencer";
 static void timer_cb(void *args)
 {
 	sequencer_config_t *ctx = (sequencer_config_t*)args;
-	stp16cp05_write(ctx->stp_handle, ctx->cur_stp_high, (uint8_t)pow(2, ctx->channel));
+
+	stp16cp05_write(ctx->stp_handle, ctx->cur_stp_upper, (uint8_t)pow(2, ctx->channel));
 	adc088s052_get_raw(ctx->adc_handle, ctx->channel, &ctx->cur_adc_data[ctx->channel]);
-	ctx->channel = (ctx->channel + 1) % ADC0880S052_CHANNEL_MAX;
+	
+	ctx->osc.pitch = adc_to_pitch(ctx->cur_adc_data[ctx->channel], ctx->osc.oct_offset);
+	ctx->channel = (ctx->channel + 1) % ctx->reset_at_n;
 }
 
 void app_main(void)
 {
 	sequencer_handle_t sqc_handle;
+
 	sequencer_init(&sqc_handle);
 
 	int prev_pos = encoder_read(sqc_handle->encoder_handle) + 1;
@@ -36,7 +40,7 @@ void app_main(void)
 	};
 
 	ESP_ERROR_CHECK(esp_timer_create(&bpm_timer_cfg, &bpm_timer));
-	ESP_ERROR_CHECK(esp_timer_start_periodic(bpm_timer, BPM_TO_US(sqc_handle->cur_bpm)));
+	ESP_ERROR_CHECK(esp_timer_start_periodic(bpm_timer, bpmtous(sqc_handle->cur_bpm)));
 
 	while (1)
 	{
@@ -48,7 +52,7 @@ void app_main(void)
 			
 			break;
 		case APP_MODE_KEY:
-
+			
 			break;
 		case APP_MODE_ENR:
 

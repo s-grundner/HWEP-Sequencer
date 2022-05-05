@@ -35,7 +35,7 @@
 #include "scale.h"
 #include "led_strip.h"
 
-#define BPM_TO_US(a) (0x3938700 / (a))
+#define bpmtous(a) (0x3938700 / (a))
 
 volatile struct sequencer_config_s
 {
@@ -45,19 +45,21 @@ volatile struct sequencer_config_s
 	adc088s052_handle_t adc_handle;
 
 	// adc specific data
-	uint8_t cur_adc_data[8];
+	uint8_t cur_adc_data[ADC0880S052_CHANNEL_MAX];
 	uint8_t channel;
 
 	// stp specific data
-	uint8_t cur_stp_high;
-	
+	uint8_t cur_stp_upper;
+
 	// Audio data
 	oscillator_t osc;
 	uint8_t cur_bpm;
+	uint8_t oct_offs;
 
 	// general
 	app_mode_t cur_appmode;
 	int32_t encoder_positions[MAX_APP_MODES];
+	uint8_t reset_at_n;
 	
 };
 

@@ -1,3 +1,14 @@
+/**
+ * @file	synth.c
+ * @author	Simon Grundner
+ * @brief	Library for Synth and Wavetable Processing
+ * @version 0.1
+ * @date 	2022-05-05
+ * 
+ * @copyright Copyright (c) 2022
+ * 
+ */
+
 #ifndef SYNTH_H_
 #define SYNTH_H_
 
@@ -19,6 +30,11 @@
 
 #define MAX_POLY 1
 
+/**
+ * @brief 
+ * 
+ * @typedef oscillator_t 
+ */
 typedef struct
 {
 	float *wavetable;
@@ -39,15 +55,40 @@ typedef struct
 // ------------------------------------------------------------
 // Wavetable functions
 // ------------------------------------------------------------
+
+
 void init_wavetables(void);
 float *get_wavetable(int index);
 
 // ------------------------------------------------------------
 // Audio Processing
 // ------------------------------------------------------------
+
+/**
+ * @brief Interpolates the 2 closest values in a Wavetable
+ * 
+ * @param wt		Sample as float Pointer to first Samplepoint
+ * @param index 	Non-integral intex in the wavetable to interpolate
+ * @return float 	Returns (32-bit) float sample point
+ */
 float interpol_float(float *wt, double index);
+
+/**
+ * @brief Interpolates the 2 closest values in a Wavetable
+ * 
+ * @param wt		Sample as integer Pointer to first Samplepoint
+ * @param index 	Non-integral intex in the wavetable to interpolate
+ * @return uint16_t Returns interpolated 16 bit sample point
+ */
 uint16_t interpol_int(uint16_t *wt, double index);
 
+/**
+ * @brief Processes Multiple Oscillator-Wavetables into one stereo sample
+ * 
+ * @param osc		Pointer to first Oscillator
+ * @param osc_cnt 	Poly Oscillator Count
+ * @return sample_t returns new WT Sample Point
+ */
 sample_t process_sample(oscillator_t **osc, uint8_t osc_cnt);
 
 // ------------------------------------------------------------

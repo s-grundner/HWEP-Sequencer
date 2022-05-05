@@ -61,25 +61,29 @@ typedef enum
 					  // Rotary:	changes BPM on Rotation
 					  // Event:		SHIFT Rotary: CHange Waveform
 					  //			+SHIFT HEX: Shows Selected Waveform
-					  // Index/Cur:	Index
+					  // Index/Cur:	Index (Yellow LEDS)
+					  // Blue LEDS: Shows on off State
 
 	APP_MODE_KEY = 1, // Key Settings
 					  // HEX:		shows Current Key
 					  // Rotary:	Change Key (Shift Key Register)
 					  // Event:		+SHIFT Rotary: Change Mode
-					  // Index/Cur:	Index
+					  // Index/Cur:	Index (Yellow LEDS)
+					  // Blue LEDS: Shows on off State
 
 	APP_MODE_ENR = 2, // Enable and Reset at Index
 					  // HEX:		-
 					  // Rotary:	Moves Cursor
 					  // Event:		Toggles On/Off State at Cursor -> Lights EN Led
-					  // Index/Cur.:Cursor
+					  // Index/Cur.:Cursor (Yellow LEDS)
+					  // Blue LEDS: Shows on off State
 
 	APP_MODE_TSP = 3, // Transpose in Key
 					  // HEX:		Transposition amount
 					  // Rotary:	Transpose +/- 1 ST
 					  // Event:		+SHIFT Rotary: Transpose Octave (+/- 12 ST)
-					  // Index/Cur.:Index
+					  // Index/Cur.:Index (Yellow LEDS)
+					  // Blue LEDS: Shows on off State
 } app_mode_t;
 
 // ------------------------------------------------------------
