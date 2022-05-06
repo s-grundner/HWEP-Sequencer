@@ -12,7 +12,11 @@
 
 #pragma once
 
+
 #include "esp_system.h"
+#include "esp_log.h"
+#include "driver/rmt.h"
+#include "esp_timer.h"
 
 #include "driver/gpio.h"
 #include "driver/i2s.h"
@@ -29,6 +33,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <math.h>
 
 #include <config.h>
 
@@ -99,4 +104,5 @@ esp_err_t sequencer_init(sequencer_handle_t *sqc_handle);
 
 esp_err_t stp_index(sequencer_handle_t sqc_handle);
 esp_err_t stp_cursor(sequencer_handle_t sqc_handle);
+
 esp_err_t sseg_write(sequencer_handle_t sqc_handle, const char* data);
