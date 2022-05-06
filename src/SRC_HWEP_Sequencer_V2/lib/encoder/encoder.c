@@ -1,14 +1,12 @@
 #include "encoder.h"
 
-
-
 // ------------------------------------------------------------
 // private functions
 // ------------------------------------------------------------
 
 static void encoder_update(encoder_context_t *arg)
 {
-	arg->cgf.rot_callback(arg);
+	arg->cgf.rot_callback(arg->cgf.rot_args);
 	uint8_t s = arg->state & 3;
 	if (gpio_get_level(arg->cgf.pin_a))
 		s |= 4;
@@ -46,15 +44,8 @@ static void encoder_update(encoder_context_t *arg)
 
 static void encoder_switch_update(encoder_context_t *arg)
 {
-	arg->cgf.sw_callback(arg);
-	if (arg->sw_state >= arg->sw_max)
-	{
-		arg->sw_state = 0;
-	}
-	else
-	{
-		arg->sw_state++;
-	}
+	arg->cgf.sw_callback(arg->cgf.sw_args);
+	arg->sw_state = (arg->sw_state >= arg->sw_max) ? 0 : arg->sw_state + 1;
 }
 
 // ------------------------------------------------------------

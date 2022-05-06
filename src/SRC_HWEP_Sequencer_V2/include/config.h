@@ -5,7 +5,6 @@
 
 #include "esp_system.h"
 
-
 // ------------------------------------------------------------
 // Peripherals
 // ------------------------------------------------------------
@@ -17,12 +16,12 @@
 #define PIN_UNUSED (-1)
 #define MCP23S08_INTR (GPIO_NUM_22)
 #define WS2812_DATA (GPIO_NUM_13)
-#define WS2812_STRIP_LEN 12
+#define WS2812_STRIP_LEN (12)
 #define RMT_TX_CHANNEL RMT_CHANNEL_0
 #define PS_FLAG (GPIO_NUM_32)
 
-#define IN_PS_HW_ADR 0b00
-#define S_SEG_HW_ADR 0b01
+#define IN_PS_HW_ADR (0b00)
+#define S_SEG_HW_ADR (0b01)
 
 #define SW (GPIO_NUM_27)
 #define A (GPIO_NUM_12)
@@ -31,6 +30,8 @@
 #define VSPI (VSPI_HOST)
 #define VSPIQ (GPIO_NUM_19) // MISO for SPI3 (VSPI) host
 #define VSPID (GPIO_NUM_23) // MOSI for SPI3 (VSPI) host
+#define VSPI_MISO (GPIO_NUM_19) // MISO for SPI3 (VSPI) host
+#define VSPI_MOSI (GPIO_NUM_23) // MOSI for SPI3 (VSPI) host
 #define VCS0 (GPIO_NUM_5)	// CS0 for SPI3 (VSPI) host
 #define VSCK (GPIO_NUM_18)	// SCK for SPI3 (VSPI) hosts
 
@@ -38,12 +39,12 @@
 #define CS_ADC0880S052 (GPIO_NUM_15)
 #define CS_STP16CP05 (GPIO_NUM_21)
 
-typedef enum
-{
-	CH = (GPIO_NUM_33),
-	CZ = (GPIO_NUM_25),
-	CE = (GPIO_NUM_26),
-} s_seg_channel_t;
+// typedef enum
+// {
+// 	CH = GPIO_NUM_33,
+// 	CZ = GPIO_NUM_25,
+// 	CE = GPIO_NUM_26,
+// } s_seg_channel_t;
 
 #define S_SEG_CHANNEL_MASK (1ULL<<33)|(1ULL<<25)|(1ULL<<26)
 // ------------------------------------------------------------
@@ -68,8 +69,8 @@ typedef enum
 					  // HEX:		shows Current Key
 					  // Rotary:	Change Key (Shift Key Register)
 					  // Event:		+SHIFT Rotary: Change Mode
-					  // Index/Cur:	Index (Yellow LEDS)
-					  // Blue LEDS: Shows on off State
+					  //xndex/Cur:	Index (Yellow LEDS)
+					  //xlue LEDS: Shows on off State
 
 	APP_MODE_ENR = 2, // Enable and Reset at Index
 					  // HEX:		-

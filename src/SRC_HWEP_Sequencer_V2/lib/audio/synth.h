@@ -1,12 +1,11 @@
 /**
- * @file	synth.c
- * @author	Simon Grundner
+ * @file	synth.c 
+ * @author	@s-grundner
  * @brief	Library for Synth and Wavetable Processing
  * @version 0.1
  * @date 	2022-05-05
  * 
  * @copyright Copyright (c) 2022
- * 
  */
 
 #ifndef SYNTH_H_
@@ -31,8 +30,7 @@
 #define MAX_POLY 1
 
 /**
- * @brief 
- * 
+ * @brief	Oscillator struct with some basic parameters
  * @typedef oscillator_t 
  */
 typedef struct
@@ -56,8 +54,17 @@ typedef struct
 // Wavetable functions
 // ------------------------------------------------------------
 
-
+/**
+ * @brief Calculates Basic Wavetables now to save Processing Time
+ */
 void init_wavetables(void);
+
+/**
+ * @brief Get the wavetable of a Waveform
+ * 
+ * @param index 
+ * @return float* 
+ */
 float *get_wavetable(int index);
 
 // ------------------------------------------------------------

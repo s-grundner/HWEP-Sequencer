@@ -14,7 +14,7 @@ typedef struct adc088s052_context_t adc088s052_context_t;
 static const char *TAG = "adc0880s052";
 
 // ------------------------------------------------------------
-// (Public) Functions
+// Static Functions
 // ------------------------------------------------------------
 
 static void cs_high(spi_transaction_t *t)
@@ -77,6 +77,7 @@ esp_err_t adc088s052_init(adc088s052_context_t **out_ctx, const adc088s052_confi
 	*out_ctx = ctx;
 	return ESP_OK;
 }
+
 esp_err_t adc088s052_get_raw(adc088s052_context_t *ctx, adc088s052_channel_t ch, uint16_t *data)
 {
 	esp_err_t err = ESP_OK;
@@ -100,4 +101,9 @@ esp_err_t adc088s052_get_raw(adc088s052_context_t *ctx, adc088s052_channel_t ch,
 	*data = *data>>4;
 	spi_device_release_bus(ctx->spi);
 	return ESP_OK;
+}
+
+void adc088s052_exit(adc088s052_handle_t handle)
+{
+	free(handle);
 }

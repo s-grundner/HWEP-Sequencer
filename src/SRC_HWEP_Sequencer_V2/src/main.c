@@ -1,3 +1,17 @@
+/**
+ * @file 	main.c
+ * @author	@h-ihninger
+ * @author 	@s-grundner
+ * @brief 	main file of the HWEP Sequencer Project
+ * @version 0.1
+ * @date 2022-05-05
+ * 
+ * @copyright Copyright (c) 2022
+ * 
+ */
+
+#include <config.h>
+
 #include <stdio.h>
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
@@ -11,16 +25,11 @@
 
 #include "sequencer.h"
 
-static const char *TAG = "sequencer";
+static const char *TAG = "sequencer_main";
 
 static void timer_cb(void *args)
 {
 	sequencer_config_t *ctx = (sequencer_config_t*)args;
-
-	stp16cp05_write(ctx->stp_handle, ctx->cur_stp_upper, (uint8_t)pow(2, ctx->channel));
-	adc088s052_get_raw(ctx->adc_handle, ctx->channel, &ctx->cur_adc_data[ctx->channel]);
-	
-	ctx->osc.pitch = adc_to_pitch(ctx->cur_adc_data[ctx->channel], ctx->osc.oct_offset);
 	ctx->channel = (ctx->channel + 1) % ctx->reset_at_n;
 }
 
@@ -28,9 +37,9 @@ void app_main(void)
 {
 	sequencer_handle_t sqc_handle;
 
-	sequencer_init(&sqc_handle);
+	ESP_ERROR_CHECK(sequencer_init(&sqc_handle));
 
-	int prev_pos = encoder_read(sqc_handle->encoder_handle) + 1;
+	// int prev_pos = encoder_read(sqc_handle->encoder_handle) + 1;
 
 	esp_timer_handle_t bpm_timer;
 	esp_timer_create_args_t bpm_timer_cfg = {
@@ -44,29 +53,29 @@ void app_main(void)
 
 	while (1)
 	{
-		sqc_handle->encoder_positions[sqc_handle->cur_appmode] = encoder_read(sqc_handle->encoder_handle);
+		sqc_handle->encoder_positions[sqc_handle->encoder_handle->sw_state] = encoder_read(sqc_handle->encoder_handle);
+		ESP_ERROR_CHECK(adc088s052_get_raw(sqc_handle->adc_handle, sqc_handle->channel, &(sqc_handle->cur_adc_data[sqc_handle->channel])));
 		
-		switch (sqc_handle->cur_appmode)
+		switch (sqc_handle->encoder_handle->sw_state)
 		{
 		case APP_MODE_BPM:
-			
-			break;
+			stp_index(sqc_handle);
 		case APP_MODE_KEY:
-			
+			stp_index(sqc_handle);
 			break;
 		case APP_MODE_ENR:
-
+			stp_cursor(sqc_handle);
 			break;
 		case APP_MODE_TSP:
-
+			stp_index(sqc_handle);
 			break;
 		default:
 			break;
 		}
 
+		sqc_handle->osc.pitch = adc_to_pitch(sqc_handle->cur_adc_data[sqc_handle->channel], sqc_handle->osc.oct_offset);
 		send_audio_stereo(&sqc_handle->osc);
 		vTaskDelay(100 / portTICK_PERIOD_MS);
 	}
 }
-
 

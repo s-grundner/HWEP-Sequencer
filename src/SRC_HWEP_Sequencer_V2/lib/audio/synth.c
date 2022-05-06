@@ -1,12 +1,12 @@
 /**
- * @file	synth.c
- * @author	Simon Grundner
+ * @file	synth.c 
+ * @author	@h-ihninger
+ * @author	@s-grundner
  * @brief	Library for Synth and Wavetable Processing
  * @version 0.1
  * @date 	2022-05-05
  * 
  * @copyright Copyright (c) 2022
- * 
  */
 
 #include "synth.h"
@@ -79,7 +79,7 @@ void send_audio_stereo(oscillator_t *osc)
 		if (osc->sample_pos >= (double)WT_SIZE)
 			osc->sample_pos -= (double)WT_SIZE;
 	}
-	i2s_write(I2S_NUM, samples_data, DATA_SIZE, &i2s_bytes_write, portMAX_DELAY);
+	ESP_ERROR_CHECK(i2s_write(I2S_NUM, samples_data, DATA_SIZE, &i2s_bytes_write, portMAX_DELAY));
 	free(samples_data);
 }
 
@@ -89,7 +89,7 @@ sample_t process_sample(oscillator_t **osc, uint8_t osc_cnt)
 		.fl_sample = NULL,
 		.fr_sample = NULL,
 	};
-	uint16_t mul = ((1 << AUDIO_RESOLUTION_BIT) / 10) - 1;
+	// uint16_t mul = ((1 << AUDIO_RESOLUTION_BIT) / 10) - 1;
 	for (int i = 0; i < osc_cnt; i++)
 	{
 		double indexIncr = ((WT_SIZE / SAMPLE_RATE) * osc[i]->pitch);

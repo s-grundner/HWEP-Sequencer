@@ -1,3 +1,14 @@
+/**
+ * @file 	mcp23s08.h
+ * @author 	@s-grundner
+ * @brief 	Library for the mcp23s08 SPI IO-Expander
+ * @version 0.1
+ * @date 	2022-05-06
+ * 
+ * @copyright Copyright (c) 2022
+ * 
+ */
+
 #ifndef MCP23S08_H_
 #define MCP23S08_H_
 

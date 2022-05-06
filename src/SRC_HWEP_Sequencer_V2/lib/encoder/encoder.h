@@ -1,3 +1,14 @@
+/**
+ * @file 	encoder.h
+ * @author 	@s-grundner
+ * @brief 	Library for Rotary Encoders (EC11)
+ * @version 0.1
+ * @date 	2022-05-06
+ * 
+ * @copyright Copyright (c) 2022
+ * 
+ */
+
 #ifndef ENCODER_H_
 #define ENCODER_H_
 
@@ -17,6 +28,8 @@ typedef struct {
 	uint8_t pin_sw;
 	sw_cb_fn_t sw_callback;
 	rot_cb_fn_t rot_callback;
+	void* sw_args; 
+	void* rot_args;
 } encoder_config_t;
 
 struct encoder_context

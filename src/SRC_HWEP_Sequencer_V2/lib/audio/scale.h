@@ -1,3 +1,14 @@
+/**
+ * @file 	scale.h
+ * @author 	@h-ihninger
+ * @author 	@s-grundner
+ * @brief 	Basic Functions for Frequency calculation
+ * @version 0.1
+ * @date 	2022-05-05
+ * 
+ * @copyright Copyright (c) 2022
+ */
+
 #ifndef SCALE_H_
 #define SCALE_H_
 

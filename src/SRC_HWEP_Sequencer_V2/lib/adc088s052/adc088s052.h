@@ -1,3 +1,14 @@
+/**
+ * @file 	adc088s052.h
+ * @author 	@s-grundner
+ * @brief 	Libary for the ADC088S052 SPI Analog-Digital-Converter Chip
+ * @version 0.1
+ * @date 	2022-05-06
+ * 
+ * @copyright Copyright (c) 2022
+ * 
+ */
+
 #pragma once
 
 #include "hal/spi_types.h"
@@ -62,5 +73,27 @@ typedef struct adc088s052_context_t *adc088s052_handle_t;
 // (Public) Functions
 // ------------------------------------------------------------
 
+/**
+ * @brief Initialises the ADC
+ * 
+ * @param out_handle 	externally defined handle to pass arguments and bus information
+ * @param cfg 			the adc/bus configuration to which the handle stores
+ * @return esp_err_t 
+ */
 esp_err_t adc088s052_init(adc088s052_handle_t *out_handle, const adc088s052_config_t *cfg);
+
+/**
+ * @brief 		reads the adc value of any channel via spi and stores it
+ * 
+ * @param ctx	ADC Handler
+ * @param ch 	ADC Channel (0-8)
+ * @param data 	data pointer to store the read data in 
+ * @return esp_err_t 
+ */
 esp_err_t adc088s052_get_raw(adc088s052_handle_t handle, adc088s052_channel_t ch, uint16_t *data);
+
+/**
+ * @brief Frees the memory of the handle
+ * @param handle 
+ */
+void adc088s052_exit(adc088s052_handle_t handle);
