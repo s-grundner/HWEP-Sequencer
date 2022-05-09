@@ -7,7 +7,10 @@ static void switch_cb(void *args)
 {
 	sequencer_config_t *ctx = (sequencer_config_t *)args;
 	ctx->encoder_positions[ctx->cur_appmode] = encoder_read(ctx->encoder_handle);
+
 	ctx->cur_appmode = encoder_read_sw(ctx->encoder_handle);
+	// sseg_new_appmode(ctx->sseg_handle);
+
 	encoder_write(ctx->encoder_handle, ctx->encoder_positions[ctx->cur_appmode]);
 	ESP_LOGI(TAG, "%d", ctx->cur_appmode);
 }
@@ -18,14 +21,16 @@ static void sseg_mux(void *args)
 	sseg_context_t *ctx = (sseg_context_t *)args;
 
 	gpio_set_level(sseg_channel[ctx->channel], 0);
-	mcp23s08_write(ctx->mcp_handle, S_SEG_HW_ADR, GPIO_R, ctx->data_buffer[ctx->channel]);
+
 	ctx->channel = (ctx->channel + 1) % SEG_CNT;
+	mcp23s08_write(ctx->mcp_handle, S_SEG_HW_ADR, GPIO_R, ctx->data_buffer[ctx->channel]);
 	gpio_set_level(sseg_channel[ctx->channel], 1);
 }
 
 static void new_appmode(void* args)
 {
-
+	sseg_context_t *ctx = (sseg_context_t*) args;
+	// TODO
 }
 esp_err_t sequencer_init(sequencer_config_t **out_sqc_cfg)
 {
@@ -150,7 +155,6 @@ esp_err_t sequencer_init(sequencer_config_t **out_sqc_cfg)
 		.active_note_mask = 0xff,
 	};
 	*out_sqc_cfg = sqc_cfg;
-
 	return ESP_OK;
 }
 
@@ -189,7 +193,7 @@ esp_err_t sseg_init(sseg_context_t **out_sseg_ctx, sequencer_handle_t sqc_handle
 
 	esp_timer_handle_t timer_handle;
 
-	*sseg_ctx = (sseg_context_t){
+	*sseg_ctx = (sseg_context_t) {
 		.channel = 0,
 		.data_buffer = malloc(sizeof(uint8_t) * SEG_CNT),
 		.mcp_handle = sqc_handle->mcp_handle,
@@ -219,13 +223,13 @@ esp_err_t sseg_write(sseg_handle_t sseg_handle, const uint8_t *data)
 
 esp_err_t sseg_new_appmode(sseg_handle_t sseg_handle)
 {
-	// esp_timer_handle_t new_appm;
-	// esp_timer_create_args_t timer_cfg = {
-	// 	.name = "new mode",
-	// 	.callback = &new_appmode,
-	// 	.arg = sseg_handle,
-	// };
-	// ESP_ERROR_CHECK(esp_timer_create(&timer_cfg, &sseg_ctx->mux_timer));
-	// ESP_ERROR_CHECK(esp_timer_start_periodic(sseg_ctx->mux_timer, 1000));
+	esp_timer_handle_t new_appm;
+	esp_timer_create_args_t timer_cfg = {
+		.name = "new mode",
+		.callback = &new_appmode,
+		.arg = sseg_handle,
+	};
+	ESP_ERROR_CHECK(esp_timer_create(&timer_cfg, &new_appm));
+	ESP_ERROR_CHECK(esp_timer_start_once(new_appm, 2000000));
 	return ESP_OK;
 }

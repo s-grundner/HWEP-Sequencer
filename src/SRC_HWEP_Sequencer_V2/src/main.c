@@ -3,7 +3,7 @@
  * @author	@h-ihninger
  * @author 	@s-grundner
  * @brief 	main file of the HWEP Sequencer Project
- * @version 0.1
+ * @version 2
  * @date 2022-05-05
  *
  * @copyright Copyright (c) 2022

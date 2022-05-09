@@ -62,7 +62,7 @@ typedef sseg_context_t* sseg_handle_t;
 typedef struct sequencer_config_s
 {
 	// dev handles
-	stp16cp05_handle_t stp_handle;
+	stp16cp05_handle_t stp_handle; 
 	encoder_handle_t encoder_handle;
 	adc088s052_handle_t adc_handle;
 	mcp23s08_handle_t mcp_handle;
@@ -84,6 +84,7 @@ typedef struct sequencer_config_s
 	int32_t encoder_positions[MAX_APP_MODES];
 	uint8_t reset_at_n;
 	uint8_t active_note_mask;
+
 
 }sequencer_config_t;
 typedef sequencer_config_t* sequencer_handle_t;
