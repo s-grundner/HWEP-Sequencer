@@ -1,14 +1,3 @@
-/* I2S Example
-
-	This example code will output 100Hz sine wave and triangle wave to 2-channel of I2S driver
-	Every 5 seconds, it will change bits_per_sample [16, 24, 32] for i2s data
-
-	This example code is in the Public Domain (or CC0 licensed, at your option.)
-
-	Unless required by applicable law or agreed to in writing, this
-	software is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
-	CONDITIONS OF ANY KIND, either express or implied.
-*/
 #include <stdio.h>
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
@@ -18,8 +7,8 @@
 #include "esp_log.h"
 #include <math.h>
 
-#include "synth.h"
 #include "scale.h"
+#include "synth.h"
 #include "encoder.h"
 
 void sw_cb(void *args){}
