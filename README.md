@@ -1,5 +1,7 @@
 # HWEP [DE]
  [HWEP] Hardware School Project with my bestest frens
+ 
+![LOVESP](/docu/github_images/esp32.gif)
 
 ## KUB - Kurzbeschreibung
 
@@ -20,7 +22,7 @@ Der Sequencer wird mit dem ESP32 32-bit Microcontroller betrieben. Der Digitale 
 ## FUB - Funktionsbeschreibung
 #### 1. 8 Potentiometer als analoger Eingang:
  - dient als analoger Eingang für die Tonlage der einzelnen Töne
- - jedes Potentiometer umfasst 12 Halbtöne bzw. eine Oktave
+ - jedes Potentiometer umfasst 24 Halbtöne bzw. zwei Oktaven
  - die analogen Werte einem 8 Channel ADC (ADC088S052) über die SPI Schnittstelle eingelesen
 
 #### 2. 16 Status LED’s:
