@@ -1,35 +1,13 @@
 #pragma once
 
-#ifndef __CONFIG_H_
-#define __CONFIG_H_
+#ifndef CONFIG_H_
+#define CONFIG_H_
 
 #include "esp_system.h"
-
-#include "driver/gpio.h"
-#include "driver/i2s.h"
-#include "driver/spi_master.h"
-#include "driver/gpio.h"
-#include "driver/adc.h"
-
-#include "freertos/FreeRTOS.h"
-#include "freertos/task.h"
-#include "freertos/queue.h"
-
-#include "esp_intr_alloc.h"
-
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
 
 // ------------------------------------------------------------
 // Peripherals
 // ------------------------------------------------------------
-
-// #include "i2s_interface.h"
-// #include "mcp23s08.h"
-// #include "adc088s052.h"
-// #include "misc.h"
-// #include "sequencer.h"
 
 // ------------------------------------------------------------
 // Pinout
@@ -37,53 +15,42 @@
 
 #define PIN_UNUSED (-1)
 #define MCP23S08_INTR (GPIO_NUM_22)
-#define PL_DIN (GPIO_NUM_13)
+#define WS2812_DATA (GPIO_NUM_13)
+#define WS2812_STRIP_LEN (12)
+#define RMT_TX_CHANNEL RMT_CHANNEL_0
 #define PS_FLAG (GPIO_NUM_32)
 
-#define IN_PS_HW_ADR 0b00
-#define S_SEG_HW_ADR 0b01
+#define IN_PS_HW_ADR (0b00)
+#define S_SEG_HW_ADR (0b01)
 
 #define SW (GPIO_NUM_27)
 #define A (GPIO_NUM_12)
 #define B (GPIO_NUM_14)
 
-#define VSPIQ (GPIO_NUM_19) // MISO for SPI3 (VSPI) host
-#define VSPID (GPIO_NUM_23) // MOSI for SPI3 (VSPI) host
-#define VCS0 (GPIO_NUM_5)	// CS0 for SPI3 (VSPI) host
-#define VCLK (GPIO_NUM_18)	// SCK for SPI3 (VSPI) hosts
+#define VSPI (VSPI_HOST)
+#define VSPIQ (GPIO_NUM_19)		// MISO for SPI3 (VSPI) host
+#define VSPID (GPIO_NUM_23)		// MOSI for SPI3 (VSPI) host
+#define VSPI_MISO (GPIO_NUM_19) // MISO for SPI3 (VSPI) host
+#define VSPI_MOSI (GPIO_NUM_23) // MOSI for SPI3 (VSPI) host
+#define VCS0 (GPIO_NUM_5)		// CS0 for SPI3 (VSPI) host
+#define VSCK (GPIO_NUM_18)		// SCK for SPI3 (VSPI) hosts
 
-#define	CS_MCP23S08 (GPIO_NUM_5)
-#define	CS_ADC0880S052 (GPIO_NUM_15)
-#define	CS_STP16CP05 (GPIO_NUM_21)
+#define CS_MCP23S08 (GPIO_NUM_5)
+#define CS_ADC0880S052 (GPIO_NUM_15)
+#define CS_STP16CP05 (GPIO_NUM_21)
 
-typedef enum
-{
-	CH = (GPIO_NUM_33),
-	CZ = (GPIO_NUM_25),
-	CE = (GPIO_NUM_26),
-} s_seg_channel_t;
+const gpio_num_t *sseg_channel = {GPIO_NUM_33, GPIO_NUM_25, GPIO_NUM_26};
+#define SEG_CNT 3
 
-i2s_pin_config_t i2s_pin_cfg = {
-	.bck_io_num = GPIO_NUM_4,
-	.ws_io_num = GPIO_NUM_17,
-	.data_out_num = GPIO_NUM_16,
-	.data_in_num = PIN_UNUSED,
-};
-
-spi_bus_config_t vspi_pin_cfg = {
-	.miso_io_num = VSPIQ,
-	.mosi_io_num = VSPID,
-	.sclk_io_num = VCLK,
-	.quadhd_io_num = PIN_UNUSED,
-	.quadwp_io_num = PIN_UNUSED,
-	.max_transfer_sz = 32,
-};
-
+#define S_SEG_CHANNEL_MASK (1ULL << 33) | (1ULL << 25) | (1ULL << 26)
 // ------------------------------------------------------------
 // define Application Modes
 // ------------------------------------------------------------
 
 /* Every Mode Starts with an Indicator on the Hex Display until it is updated by the modes tasks */
+
+#define START_BPM 120
+#define MAX_APP_MODES 4
 
 typedef enum
 {
@@ -92,25 +59,29 @@ typedef enum
 					  // Rotary:	changes BPM on Rotation
 					  // Event:		SHIFT Rotary: CHange Waveform
 					  //			+SHIFT HEX: Shows Selected Waveform
-					  // Index/Cur:	Index
+					  // Index/Cur:	Index (Yellow LEDS)
+					  // Blue LEDS: Shows on off State
 
 	APP_MODE_KEY = 1, // Key Settings
 					  // HEX:		shows Current Key
 					  // Rotary:	Change Key (Shift Key Register)
 					  // Event:		+SHIFT Rotary: Change Mode
-					  // Index/Cur:	Index
+					  // xndex/Cur:	Index (Yellow LEDS)
+					  // xlue LEDS: Shows on off State
 
 	APP_MODE_ENR = 2, // Enable and Reset at Index
 					  // HEX:		-
 					  // Rotary:	Moves Cursor
 					  // Event:		Toggles On/Off State at Cursor -> Lights EN Led
-					  // Index/Cur.:Cursor
+					  // Index/Cur.:Cursor (Yellow LEDS)
+					  // Blue LEDS: Shows on off State
 
 	APP_MODE_TSP = 3, // Transpose in Key
 					  // HEX:		Transposition amount
 					  // Rotary:	Transpose +/- 1 ST
 					  // Event:		+SHIFT Rotary: Transpose Octave (+/- 12 ST)
-					  // Index/Cur.:Index
+					  // Index/Cur.:Index (Yellow LEDS)
+					  // Blue LEDS: Shows on off State
 } app_mode_t;
 
 // ------------------------------------------------------------
@@ -119,4 +90,4 @@ typedef enum
 
 // Triplets
 
-#endif // #ifndef __CONFIG_H_
+#endif // #ifndef CONFIG_H_

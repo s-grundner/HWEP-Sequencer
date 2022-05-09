@@ -1,46 +1,40 @@
-#ifndef SYNTH_H_
-#define SYNTH_H_
-
-#include <stdio.h>
-#include <math.h>
-
-#include "freertos/FreeRTOS.h"
-#include "freertos/task.h"
-#include "driver/i2s.h"
-#include "driver/gpio.h"
-#include "esp_system.h"
-#include "esp_log.h"
+#ifndef AUDIO_CONFIG_H_
+#define AUDIO_CONFIG_H_
 
 // ------------------------------------------------------------
-// define Constants
+// Constants
 // ------------------------------------------------------------
 #define PI (3.14159265)
 
 // ------------------------------------------------------------
-// Audio Settings
+// Wavetable Settings
 // ------------------------------------------------------------
-#define SAMPLE_RATE (44100.0)
-#define AUDIO_RESOLUTION_BIT 16
+#define WT_BIT 10UL
+#define WT_SIZE (1<<WT_BIT)
 
 // ------------------------------------------------------------
-// Wavetable Settings
+// Waveform Settings
 // ------------------------------------------------------------
 #define SINE_WT 0
 #define SAW_WT 1
 #define SQUARE_WT 2
 #define TRI_WT 3
 #define SILENCE 4
-
-#define WT_BIT 10UL
-#define WT_SIZE (1<<WT_BIT)
 #define WAVEFORM_TYPE_COUNT 5
 
 // ------------------------------------------------------------
-// Functions
+// Audio Settings
 // ------------------------------------------------------------
-void init_wavetables(void);
-float *get_wavetable(int index);
-float interpol_float(float *wt, double index);
-uint16_t interpol_int(uint16_t *wt, double index);
+#define SAMPLE_RATE (44100.0)
+#define AUDIO_RESOLUTION_BIT 16
+#define DATA_SIZE (((AUDIO_RESOLUTION_BIT + 8) / 16) * WT_SIZE * 4)
 
-#endif  //SYNTH_H_
+// ------------------------------------------------------------
+// I2S Settings
+// ------------------------------------------------------------
+#define I2S_NUM (I2S_NUM_0)
+#define I2S_BCK_IO (GPIO_NUM_19)
+#define I2S_WS_IO (GPIO_NUM_21)
+#define I2S_DO_IO (GPIO_NUM_22)
+
+#endif //AUDIO_CONFIG_H_

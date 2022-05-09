@@ -10792,8 +10792,7 @@ Eagle Ver. 9.x&lt;br&gt;</description>
 </packages>
 <packages3d>
 <package3d name="EC11" urn="urn:adsk.eagle:package:33306160/7" type="model" library_version="50">
-<description>&lt;b&gt;EC11E09244BS&lt;/b&gt;&lt;br&gt;
-</description>
+<description>&lt;b&gt;EC11E09244BS&lt;/b&gt;&lt;br&gt;</description>
 <packageinstances>
 <packageinstance name="EC11"/>
 </packageinstances>
@@ -11214,15 +11213,13 @@ Source: http://www.semiconductors.philips.com/acrobat_download/datasheets/PCF857
 </packages>
 <packages3d>
 <package3d name="TSSOP24" urn="urn:adsk.eagle:package:33324059/2" type="model" library_version="42">
-<description>&lt;b&gt;TSSOP24&lt;/b&gt;&lt;br&gt;
-</description>
+<description>&lt;b&gt;TSSOP24&lt;/b&gt;&lt;br&gt;</description>
 <packageinstances>
 <packageinstance name="TSSOP24"/>
 </packageinstances>
 </package3d>
 <package3d name="SO18W" urn="urn:adsk.eagle:package:33327837/3" type="model" library_version="42">
-<description>&lt;b&gt;(SO) - Wide, 7.50 mm (.300 In.) Body [SOIC&lt;/b&gt;&lt;br&gt;
-</description>
+<description>&lt;b&gt;(SO) - Wide, 7.50 mm (.300 In.) Body [SOIC&lt;/b&gt;&lt;br&gt;</description>
 <packageinstances>
 <packageinstance name="SO18W"/>
 </packageinstances>
@@ -11235,8 +11232,7 @@ Source: http://www.semiconductors.philips.com/acrobat_download/datasheets/PCF857
 </packageinstances>
 </package3d>
 <package3d name="SO24" urn="urn:adsk.eagle:package:33306208/2" type="box" library_version="42">
-<description>&lt;b&gt;SO-24_&lt;/b&gt;&lt;br&gt;
-</description>
+<description>&lt;b&gt;SO-24_&lt;/b&gt;&lt;br&gt;</description>
 <packageinstances>
 <packageinstance name="SO24"/>
 </packageinstances>
@@ -12591,7 +12587,7 @@ Source: http://www.ledtronics.com/ds/smd-0603/Dstr0092.pdf</description>
 <packageinstance name="LED3MM"/>
 </packageinstances>
 </package3d>
-<package3d name="LED5MM" urn="urn:adsk.eagle:package:15824755/4" type="model" library_version="29">
+<package3d name="LED5MM" urn="urn:adsk.eagle:package:15824755/5" type="model" library_version="39">
 <description>&lt;B&gt;LED&lt;/B&gt;&lt;p&gt;
 5 mm, round</description>
 <packageinstances>
@@ -12947,7 +12943,7 @@ Mod. WenN / 2019</description>
 </symbol>
 </symbols>
 <devicesets>
-<deviceset name="LED" urn="urn:adsk.eagle:component:13582775/15" prefix="H" uservalue="yes" library_version="29">
+<deviceset name="LED" urn="urn:adsk.eagle:component:13582775/16" prefix="H" uservalue="yes" library_version="39">
 <description>&lt;b&gt;LED&lt;/b&gt;, EN-60617
 &lt;p&gt;
 &lt;u&gt;OSRAM&lt;/u&gt;:&lt;br&gt;
@@ -13070,7 +13066,7 @@ Source: www.kingbright.com</description>
 <connect gate="G$1" pin="C" pad="K"/>
 </connects>
 <package3dinstances>
-<package3dinstance package3d_urn="urn:adsk.eagle:package:15824755/4"/>
+<package3dinstance package3d_urn="urn:adsk.eagle:package:15824755/5"/>
 </package3dinstances>
 <technologies>
 <technology name=""/>
@@ -13503,7 +13499,7 @@ HTBLuVA Salzburg&lt;br&gt;
 Schuljahr: 2019-20&lt;br&gt;
 Eagle Ver. 9.x&lt;br&gt;</description>
 <packages>
-<package name="HDSP-E" urn="urn:adsk.eagle:footprint:33327846/1" library_version="7">
+<package name="HDSP-E" urn="urn:adsk.eagle:footprint:33327846/3" library_version="9">
 <description>&lt;b&gt;LED DISPLAY&lt;/b&gt;&lt;p&gt;
  10-mm 1 character 7 segment, decimal point right</description>
 <wire x1="4.953" y1="-6.477" x2="-4.953" y2="-6.477" width="0.1524" layer="21"/>
@@ -13561,14 +13557,14 @@ Eagle Ver. 9.x&lt;br&gt;</description>
 <wire x1="-1.016" y1="4.699" x2="2.413" y2="4.699" width="0.6096" layer="51"/>
 <wire x1="3.048" y1="4.064" x2="2.413" y2="0.762" width="0.6096" layer="51"/>
 <circle x="3.048" y="-4.699" radius="0.254" width="0.6096" layer="51"/>
-<pad name="CC1" x="-3.81" y="5.08" drill="0.8128" shape="square"/>
+<pad name="CC2" x="-3.81" y="0" drill="0.8128" shape="octagon"/>
 <pad name="F" x="-3.81" y="2.54" drill="0.8128" shape="octagon"/>
-<pad name="G" x="-3.81" y="0" drill="0.8128" shape="octagon"/>
+<pad name="G" x="-3.81" y="5.08" drill="0.8128" shape="square"/>
 <pad name="E" x="-3.81" y="-2.54" drill="0.8128" shape="octagon"/>
 <pad name="D" x="-3.81" y="-5.08" drill="0.8128" shape="octagon"/>
-<pad name="CC2" x="3.81" y="-5.08" drill="0.8128" shape="octagon"/>
-<pad name="DP" x="3.81" y="-2.54" drill="0.8128" shape="octagon"/>
-<pad name="C" x="3.81" y="0" drill="0.8128" shape="octagon"/>
+<pad name="CC1" x="3.81" y="0" drill="0.8128" shape="octagon"/>
+<pad name="DP" x="3.81" y="-5.08" drill="0.8128" shape="octagon"/>
+<pad name="C" x="3.81" y="-2.54" drill="0.8128" shape="octagon"/>
 <pad name="B" x="3.81" y="2.54" drill="0.8128" shape="octagon"/>
 <pad name="A" x="3.81" y="5.08" drill="0.8128" shape="octagon"/>
 <text x="-4.953" y="6.9342" size="1.27" layer="25" ratio="10">&gt;NAME</text>
@@ -13576,7 +13572,7 @@ Eagle Ver. 9.x&lt;br&gt;</description>
 </package>
 </packages>
 <packages3d>
-<package3d name="HDSP-E" urn="urn:adsk.eagle:package:20330690/4" type="model" library_version="7">
+<package3d name="HDSP-E" urn="urn:adsk.eagle:package:20330690/6" type="model" library_version="9">
 <description>&lt;b&gt;LED DISPLAY&lt;/b&gt;&lt;p&gt;
  10-mm 1 character 7 segment, decimal point right</description>
 <packageinstances>
@@ -13666,7 +13662,7 @@ Eagle Ver. 9.x&lt;br&gt;</description>
 </symbol>
 </symbols>
 <devicesets>
-<deviceset name="HD-H103" urn="urn:adsk.eagle:component:18594820/5" prefix="H" uservalue="yes" library_version="7">
+<deviceset name="HD-H103" urn="urn:adsk.eagle:component:18594820/7" prefix="H" uservalue="yes" library_version="9">
 <description>&lt;b&gt;LED DISPLAY&lt;/b&gt;&lt;p&gt;
  1-character 7 segment, decimal point right</description>
 <gates>
@@ -13678,8 +13674,8 @@ Eagle Ver. 9.x&lt;br&gt;</description>
 <connect gate="A" pin="A" pad="A"/>
 <connect gate="A" pin="B" pad="B"/>
 <connect gate="A" pin="C" pad="C"/>
-<connect gate="A" pin="CC" pad="CC2"/>
-<connect gate="A" pin="CC@1" pad="CC1"/>
+<connect gate="A" pin="CC" pad="CC1"/>
+<connect gate="A" pin="CC@1" pad="CC2"/>
 <connect gate="A" pin="D" pad="D"/>
 <connect gate="A" pin="DP" pad="DP"/>
 <connect gate="A" pin="E" pad="E"/>
@@ -13687,7 +13683,7 @@ Eagle Ver. 9.x&lt;br&gt;</description>
 <connect gate="A" pin="G" pad="G"/>
 </connects>
 <package3dinstances>
-<package3dinstance package3d_urn="urn:adsk.eagle:package:20330690/4"/>
+<package3dinstance package3d_urn="urn:adsk.eagle:package:20330690/6"/>
 </package3dinstances>
 <technologies>
 <technology name="">
@@ -13837,8 +13833,7 @@ Eagle Ver. 9.x&lt;br&gt;</description>
 </packages>
 <packages3d>
 <package3d name="TSSOP16" urn="urn:adsk.eagle:package:33494874/1" type="box" library_version="17">
-<description>&lt;b&gt;PW0016A&lt;/b&gt;&lt;br&gt;
-</description>
+<description>&lt;b&gt;PW0016A&lt;/b&gt;&lt;br&gt;</description>
 <packageinstances>
 <packageinstance name="TSSOP16"/>
 </packageinstances>
@@ -15956,13 +15951,13 @@ Eagle Ver. 9.x&lt;br&gt;</description>
 </part>
 <part name="GND30" library="supply_GruS" library_urn="urn:adsk.eagle:library:13579815" deviceset="GND" device=""/>
 <part name="GND31" library="supply_GruS" library_urn="urn:adsk.eagle:library:13579815" deviceset="GND" device=""/>
-<part name="H15" library="display_GruS" library_urn="urn:adsk.eagle:library:13570041" deviceset="HD-H103" device="" package3d_urn="urn:adsk.eagle:package:20330690/4">
+<part name="H15" library="display_GruS" library_urn="urn:adsk.eagle:library:13570041" deviceset="HD-H103" device="" package3d_urn="urn:adsk.eagle:package:20330690/6">
 <attribute name="CATEGORY" value="15"/>
 </part>
-<part name="H16" library="display_GruS" library_urn="urn:adsk.eagle:library:13570041" deviceset="HD-H103" device="" package3d_urn="urn:adsk.eagle:package:20330690/4">
+<part name="H16" library="display_GruS" library_urn="urn:adsk.eagle:library:13570041" deviceset="HD-H103" device="" package3d_urn="urn:adsk.eagle:package:20330690/6">
 <attribute name="CATEGORY" value="15"/>
 </part>
-<part name="H17" library="display_GruS" library_urn="urn:adsk.eagle:library:13570041" deviceset="HD-H103" device="" package3d_urn="urn:adsk.eagle:package:20330690/4">
+<part name="H17" library="display_GruS" library_urn="urn:adsk.eagle:library:13570041" deviceset="HD-H103" device="" package3d_urn="urn:adsk.eagle:package:20330690/6">
 <attribute name="CATEGORY" value="15"/>
 </part>
 <part name="V1" library="mfet_GruS" library_urn="urn:adsk.eagle:library:13571573" deviceset="NTR4003" device="" package3d_urn="urn:adsk.eagle:package:33327851/2">
@@ -16055,52 +16050,52 @@ Eagle Ver. 9.x&lt;br&gt;</description>
 <part name="X2" library="con-lsta" library_urn="urn:adsk.eagle:library:17400448" deviceset="FE06-1" device="" package3d_urn="urn:adsk.eagle:package:33511460/3">
 <attribute name="CATEGORY" value="18"/>
 </part>
-<part name="H18" library="led_GruS" library_urn="urn:adsk.eagle:library:13581853" deviceset="LED" device="5MM" package3d_urn="urn:adsk.eagle:package:15824755/4" value="gn">
+<part name="H18" library="led_GruS" library_urn="urn:adsk.eagle:library:13581853" deviceset="LED" device="5MM" package3d_urn="urn:adsk.eagle:package:15824755/5" value="gn">
 <attribute name="CATEGORY" value="7"/>
 </part>
-<part name="H19" library="led_GruS" library_urn="urn:adsk.eagle:library:13581853" deviceset="LED" device="5MM" package3d_urn="urn:adsk.eagle:package:15824755/4" value="gn">
+<part name="H19" library="led_GruS" library_urn="urn:adsk.eagle:library:13581853" deviceset="LED" device="5MM" package3d_urn="urn:adsk.eagle:package:15824755/5" value="gn">
 <attribute name="CATEGORY" value="7"/>
 </part>
-<part name="H20" library="led_GruS" library_urn="urn:adsk.eagle:library:13581853" deviceset="LED" device="5MM" package3d_urn="urn:adsk.eagle:package:15824755/4" value="gn">
+<part name="H20" library="led_GruS" library_urn="urn:adsk.eagle:library:13581853" deviceset="LED" device="5MM" package3d_urn="urn:adsk.eagle:package:15824755/5" value="gn">
 <attribute name="CATEGORY" value="7"/>
 </part>
-<part name="H21" library="led_GruS" library_urn="urn:adsk.eagle:library:13581853" deviceset="LED" device="5MM" package3d_urn="urn:adsk.eagle:package:15824755/4" value="gn">
+<part name="H21" library="led_GruS" library_urn="urn:adsk.eagle:library:13581853" deviceset="LED" device="5MM" package3d_urn="urn:adsk.eagle:package:15824755/5" value="gn">
 <attribute name="CATEGORY" value="7"/>
 </part>
-<part name="H22" library="led_GruS" library_urn="urn:adsk.eagle:library:13581853" deviceset="LED" device="5MM" package3d_urn="urn:adsk.eagle:package:15824755/4" value="gn">
+<part name="H22" library="led_GruS" library_urn="urn:adsk.eagle:library:13581853" deviceset="LED" device="5MM" package3d_urn="urn:adsk.eagle:package:15824755/5" value="gn">
 <attribute name="CATEGORY" value="7"/>
 </part>
-<part name="H23" library="led_GruS" library_urn="urn:adsk.eagle:library:13581853" deviceset="LED" device="5MM" package3d_urn="urn:adsk.eagle:package:15824755/4" value="gn">
+<part name="H23" library="led_GruS" library_urn="urn:adsk.eagle:library:13581853" deviceset="LED" device="5MM" package3d_urn="urn:adsk.eagle:package:15824755/5" value="gn">
 <attribute name="CATEGORY" value="7"/>
 </part>
-<part name="H24" library="led_GruS" library_urn="urn:adsk.eagle:library:13581853" deviceset="LED" device="5MM" package3d_urn="urn:adsk.eagle:package:15824755/4" value="gn">
+<part name="H24" library="led_GruS" library_urn="urn:adsk.eagle:library:13581853" deviceset="LED" device="5MM" package3d_urn="urn:adsk.eagle:package:15824755/5" value="gn">
 <attribute name="CATEGORY" value="7"/>
 </part>
-<part name="H25" library="led_GruS" library_urn="urn:adsk.eagle:library:13581853" deviceset="LED" device="5MM" package3d_urn="urn:adsk.eagle:package:15824755/4" value="gn">
+<part name="H25" library="led_GruS" library_urn="urn:adsk.eagle:library:13581853" deviceset="LED" device="5MM" package3d_urn="urn:adsk.eagle:package:15824755/5" value="gn">
 <attribute name="CATEGORY" value="7"/>
 </part>
-<part name="H26" library="led_GruS" library_urn="urn:adsk.eagle:library:13581853" deviceset="LED" device="5MM" package3d_urn="urn:adsk.eagle:package:15824755/4" value="ge">
+<part name="H26" library="led_GruS" library_urn="urn:adsk.eagle:library:13581853" deviceset="LED" device="5MM" package3d_urn="urn:adsk.eagle:package:15824755/5" value="ge">
 <attribute name="CATEGORY" value="7"/>
 </part>
-<part name="H27" library="led_GruS" library_urn="urn:adsk.eagle:library:13581853" deviceset="LED" device="5MM" package3d_urn="urn:adsk.eagle:package:15824755/4" value="ge">
+<part name="H27" library="led_GruS" library_urn="urn:adsk.eagle:library:13581853" deviceset="LED" device="5MM" package3d_urn="urn:adsk.eagle:package:15824755/5" value="ge">
 <attribute name="CATEGORY" value="7"/>
 </part>
-<part name="H28" library="led_GruS" library_urn="urn:adsk.eagle:library:13581853" deviceset="LED" device="5MM" package3d_urn="urn:adsk.eagle:package:15824755/4" value="ge">
+<part name="H28" library="led_GruS" library_urn="urn:adsk.eagle:library:13581853" deviceset="LED" device="5MM" package3d_urn="urn:adsk.eagle:package:15824755/5" value="ge">
 <attribute name="CATEGORY" value="7"/>
 </part>
-<part name="H29" library="led_GruS" library_urn="urn:adsk.eagle:library:13581853" deviceset="LED" device="5MM" package3d_urn="urn:adsk.eagle:package:15824755/4" value="ge">
+<part name="H29" library="led_GruS" library_urn="urn:adsk.eagle:library:13581853" deviceset="LED" device="5MM" package3d_urn="urn:adsk.eagle:package:15824755/5" value="ge">
 <attribute name="CATEGORY" value="7"/>
 </part>
-<part name="H30" library="led_GruS" library_urn="urn:adsk.eagle:library:13581853" deviceset="LED" device="5MM" package3d_urn="urn:adsk.eagle:package:15824755/4" value="ge">
+<part name="H30" library="led_GruS" library_urn="urn:adsk.eagle:library:13581853" deviceset="LED" device="5MM" package3d_urn="urn:adsk.eagle:package:15824755/5" value="ge">
 <attribute name="CATEGORY" value="7"/>
 </part>
-<part name="H31" library="led_GruS" library_urn="urn:adsk.eagle:library:13581853" deviceset="LED" device="5MM" package3d_urn="urn:adsk.eagle:package:15824755/4" value="ge">
+<part name="H31" library="led_GruS" library_urn="urn:adsk.eagle:library:13581853" deviceset="LED" device="5MM" package3d_urn="urn:adsk.eagle:package:15824755/5" value="ge">
 <attribute name="CATEGORY" value="7"/>
 </part>
-<part name="H32" library="led_GruS" library_urn="urn:adsk.eagle:library:13581853" deviceset="LED" device="5MM" package3d_urn="urn:adsk.eagle:package:15824755/4" value="ge">
+<part name="H32" library="led_GruS" library_urn="urn:adsk.eagle:library:13581853" deviceset="LED" device="5MM" package3d_urn="urn:adsk.eagle:package:15824755/5" value="ge">
 <attribute name="CATEGORY" value="7"/>
 </part>
-<part name="H33" library="led_GruS" library_urn="urn:adsk.eagle:library:13581853" deviceset="LED" device="5MM" package3d_urn="urn:adsk.eagle:package:15824755/4" value="ge">
+<part name="H33" library="led_GruS" library_urn="urn:adsk.eagle:library:13581853" deviceset="LED" device="5MM" package3d_urn="urn:adsk.eagle:package:15824755/5" value="ge">
 <attribute name="CATEGORY" value="7"/>
 </part>
 <part name="R1" library="rcl_GruS" library_urn="urn:adsk.eagle:library:13572313" deviceset="P160" device="LB" package3d_urn="urn:adsk.eagle:package:33302106/7" value="10k"/>
@@ -16293,7 +16288,6 @@ Eagle Ver. 9.x&lt;br&gt;</description>
 <part name="+3V38" library="supply_GruS" library_urn="urn:adsk.eagle:library:13579815" deviceset="+3V3" device=""/>
 <part name="GND4" library="supply_GruS" library_urn="urn:adsk.eagle:library:13579815" deviceset="GND" device=""/>
 <part name="GND14" library="supply_GruS" library_urn="urn:adsk.eagle:library:13579815" deviceset="GND" device=""/>
-<part name="GND54" library="supply_GruS" library_urn="urn:adsk.eagle:library:13579815" deviceset="GND" device=""/>
 <part name="GND55" library="supply_GruS" library_urn="urn:adsk.eagle:library:13579815" deviceset="GND" device=""/>
 <part name="GND57" library="supply_GruS" library_urn="urn:adsk.eagle:library:13579815" deviceset="GND" device=""/>
 <part name="GND58" library="supply_GruS" library_urn="urn:adsk.eagle:library:13579815" deviceset="GND" device=""/>
@@ -16375,6 +16369,7 @@ Eagle Ver. 9.x&lt;br&gt;</description>
 <part name="+3V9" library="supply_GruS" library_urn="urn:adsk.eagle:library:13579815" deviceset="+3V3" device=""/>
 <part name="+3V10" library="supply_GruS" library_urn="urn:adsk.eagle:library:13579815" deviceset="+3V3" device=""/>
 <part name="+3V16" library="supply_GruS" library_urn="urn:adsk.eagle:library:13579815" deviceset="+3V3" device=""/>
+<part name="+3V11" library="supply_GruS" library_urn="urn:adsk.eagle:library:13579815" deviceset="+3V3" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -17124,14 +17119,14 @@ EC-11</description>
 <attribute name="VALUE" x="116.84" y="81.28" size="1.27" layer="96" font="vector" align="bottom-center"/>
 <attribute name="CATEGORY" x="116.84" y="86.36" size="1.778" layer="96" display="off"/>
 </instance>
-<instance part="H1" gate="G$1" x="157.48" y="132.08" smashed="yes">
-<attribute name="NAME" x="155.956" y="131.318" size="1.6764" layer="95" font="vector" align="bottom-right"/>
-<attribute name="VALUE" x="155.956" y="129.286" size="1.27" layer="96" font="vector" align="bottom-right"/>
-<attribute name="CATEGORY" x="157.48" y="132.08" size="1.778" layer="96" display="off"/>
+<instance part="H1" gate="G$1" x="157.48" y="137.16" smashed="yes">
+<attribute name="NAME" x="155.956" y="136.398" size="1.6764" layer="95" font="vector" align="bottom-right"/>
+<attribute name="VALUE" x="155.956" y="134.366" size="1.27" layer="96" font="vector" align="bottom-right"/>
+<attribute name="CATEGORY" x="157.48" y="137.16" size="1.778" layer="96" display="off"/>
 </instance>
-<instance part="R9" gate="G$1" x="157.48" y="119.38" smashed="yes">
-<attribute name="NAME" x="155.956" y="119.6086" size="1.6764" layer="95" font="vector" align="bottom-right"/>
-<attribute name="VALUE" x="155.956" y="117.856" size="1.27" layer="96" font="vector" align="bottom-right"/>
+<instance part="R9" gate="G$1" x="157.48" y="124.46" smashed="yes">
+<attribute name="NAME" x="155.956" y="124.6886" size="1.6764" layer="95" font="vector" align="bottom-right"/>
+<attribute name="VALUE" x="155.956" y="122.936" size="1.27" layer="96" font="vector" align="bottom-right"/>
 </instance>
 <instance part="R1" gate="G$1" x="17.78" y="177.8" smashed="yes" rot="MR180">
 <attribute name="NAME" x="16.51" y="178.435" size="1.6764" layer="95" font="vector" rot="MR180" align="bottom-right"/>
@@ -17165,20 +17160,20 @@ EC-11</description>
 <attribute name="NAME" x="158.75" y="178.435" size="1.6764" layer="95" font="vector" rot="MR180" align="bottom-right"/>
 <attribute name="VALUE" x="158.75" y="180.086" size="1.27" layer="96" font="vector" rot="MR180" align="bottom-right"/>
 </instance>
-<instance part="H2" gate="G$1" x="167.64" y="132.08" smashed="yes">
-<attribute name="NAME" x="166.116" y="131.318" size="1.6764" layer="95" font="vector" align="bottom-right"/>
-<attribute name="VALUE" x="166.116" y="129.286" size="1.27" layer="96" font="vector" align="bottom-right"/>
-<attribute name="CATEGORY" x="167.64" y="132.08" size="1.778" layer="96" display="off"/>
+<instance part="H2" gate="G$1" x="167.64" y="137.16" smashed="yes">
+<attribute name="NAME" x="166.116" y="136.398" size="1.6764" layer="95" font="vector" align="bottom-right"/>
+<attribute name="VALUE" x="166.116" y="134.366" size="1.27" layer="96" font="vector" align="bottom-right"/>
+<attribute name="CATEGORY" x="167.64" y="137.16" size="1.778" layer="96" display="off"/>
 </instance>
-<instance part="R10" gate="G$1" x="167.64" y="119.38" smashed="yes">
-<attribute name="NAME" x="166.116" y="119.6086" size="1.6764" layer="95" font="vector" align="bottom-right"/>
-<attribute name="VALUE" x="166.116" y="117.856" size="1.27" layer="96" font="vector" align="bottom-right"/>
+<instance part="R10" gate="G$1" x="167.64" y="124.46" smashed="yes">
+<attribute name="NAME" x="166.116" y="124.6886" size="1.6764" layer="95" font="vector" align="bottom-right"/>
+<attribute name="VALUE" x="166.116" y="122.936" size="1.27" layer="96" font="vector" align="bottom-right"/>
 </instance>
-<instance part="+3V28" gate="G$1" x="167.64" y="139.7" smashed="yes">
-<attribute name="VALUE" x="167.64" y="140.462" size="1.27" layer="96" font="vector" align="bottom-center"/>
+<instance part="+3V28" gate="G$1" x="167.64" y="144.78" smashed="yes">
+<attribute name="VALUE" x="167.64" y="145.542" size="1.27" layer="96" font="vector" align="bottom-center"/>
 </instance>
-<instance part="GND63" gate="1" x="167.64" y="109.22" smashed="yes">
-<attribute name="VALUE" x="167.64" y="107.188" size="1.27" layer="96" font="vector" align="bottom-center"/>
+<instance part="GND63" gate="1" x="167.64" y="114.3" smashed="yes">
+<attribute name="VALUE" x="167.64" y="112.268" size="1.27" layer="96" font="vector" align="bottom-center"/>
 </instance>
 <instance part="D4" gate="G$1" x="93.98" y="139.7" smashed="yes">
 <attribute name="NAME" x="107.95" y="144.78" size="1.6764" layer="95" font="vector" align="bottom-center"/>
@@ -17219,9 +17214,6 @@ EC-11</description>
 </instance>
 <instance part="GND72" gate="1" x="50.8" y="116.84" smashed="yes">
 <attribute name="VALUE" x="50.8" y="114.808" size="1.27" layer="96" font="vector" align="bottom-center"/>
-</instance>
-<instance part="GND54" gate="1" x="157.48" y="109.22" smashed="yes">
-<attribute name="VALUE" x="157.48" y="107.188" size="1.27" layer="96" font="vector" align="bottom-center"/>
 </instance>
 <instance part="GND55" gate="1" x="55.88" y="78.74" smashed="yes">
 <attribute name="VALUE" x="55.88" y="76.708" size="1.27" layer="96" font="vector" align="bottom-center"/>
@@ -17349,6 +17341,9 @@ EC-11</description>
 <attribute name="VALUE" x="39.624" y="83.0326" size="1.27" layer="96" font="vector" align="bottom-right"/>
 <attribute name="CATEGORY" x="40.64" y="86.36" size="1.778" layer="96" display="off"/>
 </instance>
+<instance part="+3V11" gate="G$1" x="157.48" y="144.78" smashed="yes">
+<attribute name="VALUE" x="157.48" y="145.542" size="1.27" layer="96" font="vector" align="bottom-center"/>
+</instance>
 </instances>
 <busses>
 </busses>
@@ -17470,7 +17465,7 @@ EC-11</description>
 </segment>
 <segment>
 <pinref part="GND63" gate="1" pin="GND"/>
-<wire x1="167.64" y1="111.76" x2="167.64" y2="114.3" width="0.1524" layer="91"/>
+<wire x1="167.64" y1="116.84" x2="167.64" y2="119.38" width="0.1524" layer="91"/>
 <pinref part="R10" gate="G$1" pin="1"/>
 </segment>
 <segment>
@@ -17493,11 +17488,6 @@ EC-11</description>
 <pinref part="C4" gate="G$1" pin="2"/>
 <wire x1="50.8" y1="121.92" x2="50.8" y2="119.38" width="0.1524" layer="91"/>
 <pinref part="GND72" gate="1" pin="GND"/>
-</segment>
-<segment>
-<pinref part="R9" gate="G$1" pin="1"/>
-<wire x1="157.48" y1="114.3" x2="157.48" y2="111.76" width="0.1524" layer="91"/>
-<pinref part="GND54" gate="1" pin="GND"/>
 </segment>
 <segment>
 <pinref part="S12" gate="G$1" pin="P"/>
@@ -17671,9 +17661,9 @@ EC-11</description>
 <wire x1="96.52" y1="86.36" x2="93.98" y2="86.36" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<wire x1="157.48" y1="134.62" x2="157.48" y2="137.16" width="0.1524" layer="91"/>
-<label x="157.48" y="137.16" size="1.016" layer="95" font="vector" rot="R90" xref="yes"/>
-<pinref part="H1" gate="G$1" pin="A"/>
+<wire x1="157.48" y1="119.38" x2="157.48" y2="116.84" width="0.1524" layer="91"/>
+<label x="157.48" y="116.84" size="1.016" layer="95" font="vector" rot="R270" xref="yes"/>
+<pinref part="R9" gate="G$1" pin="1"/>
 </segment>
 </net>
 <net name="RESET_CNT" class="0">
@@ -17701,12 +17691,12 @@ EC-11</description>
 <segment>
 <pinref part="R9" gate="G$1" pin="2"/>
 <pinref part="H1" gate="G$1" pin="C"/>
-<wire x1="157.48" y1="124.46" x2="157.48" y2="127" width="0.1524" layer="91"/>
+<wire x1="157.48" y1="129.54" x2="157.48" y2="132.08" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="+3V3" class="0">
 <segment>
-<wire x1="167.64" y1="134.62" x2="167.64" y2="137.16" width="0.1524" layer="91"/>
+<wire x1="167.64" y1="139.7" x2="167.64" y2="142.24" width="0.1524" layer="91"/>
 <pinref part="+3V28" gate="G$1" pin="+3V3"/>
 <pinref part="H2" gate="G$1" pin="A"/>
 </segment>
@@ -17719,12 +17709,17 @@ EC-11</description>
 <wire x1="139.7" y1="129.54" x2="139.7" y2="132.08" width="0.1524" layer="91"/>
 <junction x="139.7" y="132.08"/>
 </segment>
+<segment>
+<wire x1="157.48" y1="139.7" x2="157.48" y2="142.24" width="0.1524" layer="91"/>
+<pinref part="+3V11" gate="G$1" pin="+3V3"/>
+<pinref part="H1" gate="G$1" pin="A"/>
+</segment>
 </net>
 <net name="N$9" class="0">
 <segment>
 <pinref part="R10" gate="G$1" pin="2"/>
 <pinref part="H2" gate="G$1" pin="C"/>
-<wire x1="167.64" y1="124.46" x2="167.64" y2="127" width="0.1524" layer="91"/>
+<wire x1="167.64" y1="129.54" x2="167.64" y2="132.08" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="SCK" class="0">

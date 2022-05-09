@@ -1,3 +1,7 @@
 {
-	"cmake.sourceDirectory": "${workspaceFolder}/src/test_spi"
+	"cmake.sourceDirectory": "${workspaceFolder}/src/test_spi",
+	"files.associations": {
+		"encoder.h": "c",
+		"stp16cp05.h": "c"
+	}
 }
