@@ -4,9 +4,9 @@
 
 typedef enum
 {
-	IODIR = 0x00,
-	IPOL = 0x01,
-	GPINTEN = 0x02,
+	IODIR = 0x00,	// IO Direction (0:OUT) (1:IN)
+	IPOL = 0x01,	
+	GPINTEN = 0x02,	
 	DEFVAL = 0x03,
 	INTCON = 0x04,
 	IOCON = 0x05,

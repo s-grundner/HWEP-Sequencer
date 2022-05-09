@@ -19,7 +19,6 @@
 #include "driver/i2s.h"
 #include "driver/gpio.h"
 #include "esp_system.h"
-#include "esp_log.h"
 
 #include "audio_config.h"
 
@@ -56,14 +55,16 @@ typedef struct
 
 /**
  * @brief Calculates Basic Wavetables now to save Processing Time
+ * 
+ * @return esp_err_t
  */
-void init_wavetables(void);
+esp_err_t init_wavetables(void);
 
 /**
  * @brief Get the wavetable of a Waveform
  * 
- * @param index 
- * @return float* 
+ * @param index		WT index defined by macros
+ * @return float* a pointer to the Wavetable
  */
 float *get_wavetable(int index);
 
@@ -102,7 +103,7 @@ sample_t process_sample(oscillator_t **osc, uint8_t osc_cnt);
 // I2S functions
 // ------------------------------------------------------------
 void i2s_init(void);
-void i2s_reset(void);
+esp_err_t i2s_reset(void);
 void send_audio_stereo(oscillator_t *osc);
 void send_audio_mono(float *f_sample);
 

@@ -28,31 +28,28 @@
 #define B (GPIO_NUM_14)
 
 #define VSPI (VSPI_HOST)
-#define VSPIQ (GPIO_NUM_19) // MISO for SPI3 (VSPI) host
-#define VSPID (GPIO_NUM_23) // MOSI for SPI3 (VSPI) host
+#define VSPIQ (GPIO_NUM_19)		// MISO for SPI3 (VSPI) host
+#define VSPID (GPIO_NUM_23)		// MOSI for SPI3 (VSPI) host
 #define VSPI_MISO (GPIO_NUM_19) // MISO for SPI3 (VSPI) host
 #define VSPI_MOSI (GPIO_NUM_23) // MOSI for SPI3 (VSPI) host
-#define VCS0 (GPIO_NUM_5)	// CS0 for SPI3 (VSPI) host
-#define VSCK (GPIO_NUM_18)	// SCK for SPI3 (VSPI) hosts
+#define VCS0 (GPIO_NUM_5)		// CS0 for SPI3 (VSPI) host
+#define VSCK (GPIO_NUM_18)		// SCK for SPI3 (VSPI) hosts
 
 #define CS_MCP23S08 (GPIO_NUM_5)
 #define CS_ADC0880S052 (GPIO_NUM_15)
 #define CS_STP16CP05 (GPIO_NUM_21)
 
-// typedef enum
-// {
-// 	CH = GPIO_NUM_33,
-// 	CZ = GPIO_NUM_25,
-// 	CE = GPIO_NUM_26,
-// } s_seg_channel_t;
+const gpio_num_t *sseg_channel = {GPIO_NUM_33, GPIO_NUM_25, GPIO_NUM_26};
+#define SEG_CNT 3
 
-#define S_SEG_CHANNEL_MASK (1ULL<<33)|(1ULL<<25)|(1ULL<<26)
+#define S_SEG_CHANNEL_MASK (1ULL << 33) | (1ULL << 25) | (1ULL << 26)
 // ------------------------------------------------------------
 // define Application Modes
 // ------------------------------------------------------------
 
 /* Every Mode Starts with an Indicator on the Hex Display until it is updated by the modes tasks */
 
+#define START_BPM 120
 #define MAX_APP_MODES 4
 
 typedef enum
@@ -69,8 +66,8 @@ typedef enum
 					  // HEX:		shows Current Key
 					  // Rotary:	Change Key (Shift Key Register)
 					  // Event:		+SHIFT Rotary: Change Mode
-					  //xndex/Cur:	Index (Yellow LEDS)
-					  //xlue LEDS: Shows on off State
+					  // xndex/Cur:	Index (Yellow LEDS)
+					  // xlue LEDS: Shows on off State
 
 	APP_MODE_ENR = 2, // Enable and Reset at Index
 					  // HEX:		-

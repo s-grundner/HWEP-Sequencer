@@ -98,7 +98,8 @@ esp_err_t adc088s052_get_raw(adc088s052_context_t *ctx, adc088s052_channel_t ch,
 		return err;
 	// *data = t.rx_data[0];
 	*data = SPI_SWAP_DATA_RX(*(uint16_t*)t.rx_data, 15);
-	*data = *data>>4;
+	*data = *data;
+	ESP_LOGD(TAG, "ADC val in ch %d: 0x%x", ch, *data);
 	spi_device_release_bus(ctx->spi);
 	return ESP_OK;
 }
