@@ -41,9 +41,6 @@
 
 #define SEG_CNT 3
 
-const gpio_num_t *sseg_channel = {GPIO_NUM_33, GPIO_NUM_25, GPIO_NUM_26};
-const uint8_t* appmode_names[SEG_CNT] = {"BPM", "KEY", "ENR", "TSP"}; 
-
 #define S_SEG_CHANNEL_MASK (1ULL << 33) | (1ULL << 25) | (1ULL << 26)
 // ------------------------------------------------------------
 // define Application Modes

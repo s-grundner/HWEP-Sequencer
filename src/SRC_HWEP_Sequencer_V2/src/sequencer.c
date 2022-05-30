@@ -1,6 +1,8 @@
 #include "sequencer.h"
 
 #include "esp_log.h"
+static const gpio_num_t sseg_channel[3] = {GPIO_NUM_33, GPIO_NUM_25, GPIO_NUM_26};
+
 static const char *TAG = "sequencer header";
 
 static void switch_cb(void *args)
@@ -29,7 +31,7 @@ static void sseg_mux(void *args)
 
 static void new_appmode(void* args)
 {
-	sseg_context_t *ctx = (sseg_context_t*) args;
+	// sseg_context_t *ctx = (sseg_context_t*) args;
 	// TODO
 }
 esp_err_t sequencer_init(sequencer_config_t **out_sqc_cfg)
@@ -193,6 +195,13 @@ esp_err_t sseg_init(sseg_context_t **out_sseg_ctx, sequencer_handle_t sqc_handle
 
 	esp_timer_handle_t timer_handle;
 
+	esp_timer_create_args_t timer_cfg = {
+		.name = "mux",
+		.callback = &sseg_mux,
+		.arg = sseg_ctx,
+	};
+	ESP_ERROR_CHECK(esp_timer_create(&timer_cfg, &timer_handle));
+
 	*sseg_ctx = (sseg_context_t) {
 		.channel = 0,
 		.data_buffer = malloc(sizeof(uint8_t) * SEG_CNT),
@@ -204,13 +213,9 @@ esp_err_t sseg_init(sseg_context_t **out_sseg_ctx, sequencer_handle_t sqc_handle
 		free(sseg_ctx);
 		return ESP_ERR_NO_MEM;
 	}
-	esp_timer_create_args_t timer_cfg = {
-		.name = "mux",
-		.callback = &sseg_mux,
-		.arg = sseg_ctx,
-	};
-	ESP_ERROR_CHECK(esp_timer_create(&timer_cfg, &sseg_ctx->mux_timer));
+	
 	ESP_ERROR_CHECK(esp_timer_start_periodic(sseg_ctx->mux_timer, 1000));
+	return ESP_OK;
 }
 
 esp_err_t sseg_write(sseg_handle_t sseg_handle, const uint8_t *data)

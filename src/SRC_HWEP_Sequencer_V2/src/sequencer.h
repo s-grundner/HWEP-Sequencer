@@ -148,4 +148,4 @@ esp_err_t sseg_write(sseg_handle_t sseg_handle, const uint8_t *data);
  * @param sqc_handle Extern handle
  * @return esp_err_t 
  */
-esp_err_t sseg_new_appmode(sequencer_handle_t sqc_handle);
+esp_err_t sseg_new_appmode(sseg_handle_t sseg_handle);

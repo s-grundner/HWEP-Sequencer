@@ -26,7 +26,7 @@ static void timer_cb(void *args)
 
 	// fix adc data arrangement
 	ESP_ERROR_CHECK(adc088s052_get_raw(ctx->adc_handle, ctx->channel, &(ctx->cur_adc_data[ctx->channel])));
-	uint16_t data = 0;
+	// uint16_t data = 0;
 
 	ESP_LOGD(TAG, "channel %d pitch: %d", ctx->channel, ctx->cur_adc_data[ctx->channel]);
 
