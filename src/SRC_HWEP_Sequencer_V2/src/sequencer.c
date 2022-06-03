@@ -2,8 +2,8 @@
 
 #include "esp_log.h"
 static const gpio_num_t sseg_channel[3] = {GPIO_NUM_33, GPIO_NUM_25, GPIO_NUM_26};
-
 static const char *TAG = "sequencer header";
+
 
 static void switch_cb(void *args)
 {
@@ -16,6 +16,7 @@ static void switch_cb(void *args)
 	encoder_write(ctx->encoder_handle, ctx->encoder_positions[ctx->cur_appmode]);
 	ESP_LOGI(TAG, "%d", ctx->cur_appmode);
 }
+
 static void rot_cb(void *args) {}
 
 static void sseg_mux(void *args)
@@ -34,6 +35,8 @@ static void new_appmode(void* args)
 	// sseg_context_t *ctx = (sseg_context_t*) args;
 	// TODO
 }
+
+
 esp_err_t sequencer_init(sequencer_config_t **out_sqc_cfg)
 {
 	sequencer_config_t *sqc_cfg = (sequencer_config_t *)malloc(sizeof(sequencer_config_t));
@@ -188,7 +191,6 @@ esp_err_t stp_cursor(sequencer_handle_t sqc_handle)
 
 esp_err_t sseg_init(sseg_context_t **out_sseg_ctx, sequencer_handle_t sqc_handle)
 {
-
 	sseg_context_t *sseg_ctx = (sseg_context_t *)malloc(sizeof(sseg_context_t));
 	if (sseg_ctx == NULL)
 		return ESP_ERR_NO_MEM;
@@ -218,8 +220,13 @@ esp_err_t sseg_init(sseg_context_t **out_sseg_ctx, sequencer_handle_t sqc_handle
 	return ESP_OK;
 }
 
-esp_err_t sseg_write(sseg_handle_t sseg_handle, const uint8_t *data)
+esp_err_t sseg_write(sseg_handle_t sseg_handle, int8_t *data)
 {
+	if(sizeof(data) > sizeof(uint8_t) * SEG_CNT)
+	{
+		ESP_LOGE(TAG, "DATA segment OVF. Please reduce input");
+		return ESP_ERR_NO_MEM;
+	}
 	ESP_ERROR_CHECK(esp_timer_stop(sseg_handle->mux_timer));
 	sseg_handle->data_buffer = data;
 	ESP_ERROR_CHECK(esp_timer_start_periodic(sseg_handle->mux_timer, 1000));
@@ -228,6 +235,7 @@ esp_err_t sseg_write(sseg_handle_t sseg_handle, const uint8_t *data)
 
 esp_err_t sseg_new_appmode(sseg_handle_t sseg_handle)
 {
+	// start newmode init on segment display
 	esp_timer_handle_t new_appm;
 	esp_timer_create_args_t timer_cfg = {
 		.name = "new mode",

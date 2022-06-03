@@ -47,18 +47,19 @@
 
 #define bpmtous(a) (0x3938700 / (a))
 
-/**
- * @brief	Sequencer Device Configurations and memory for Peripherals
- * @struct 	sequencer_config_s
- */
 typedef struct {
 	uint8_t *data_buffer;
 	uint8_t channel;
 	mcp23s08_handle_t mcp_handle;
 	esp_timer_handle_t mux_timer;
-}sseg_context_t;
+} sseg_context_t;
+
 typedef sseg_context_t* sseg_handle_t;
 
+/**
+ * @brief	Sequencer Device Configurations and memory for Peripherals
+ * @struct 	sequencer_config_s
+ */
 typedef struct sequencer_config_s
 {
 	// dev handles
@@ -88,8 +89,6 @@ typedef struct sequencer_config_s
 
 }sequencer_config_t;
 typedef sequencer_config_t* sequencer_handle_t;
-
-
 
 /**
  * @brief Initialises all busses and thier Peripherals
@@ -138,9 +137,24 @@ esp_err_t stp_index(sequencer_handle_t sqc_handle);
  */
 esp_err_t stp_cursor(sequencer_handle_t sqc_handle);
 
+/**
+ * @brief Initialises 7-Segment display  
+ * 
+ * @param out_sseg_ctx 
+ * @param sqc_handle 
+ * @return esp_err_t 
+ */
 esp_err_t sseg_init(sseg_handle_t *out_sseg_ctx, sequencer_handle_t sqc_handle);
 
-esp_err_t sseg_write(sseg_handle_t sseg_handle, const uint8_t *data);
+/**
+ * @brief writes a data buffer (3 CHARS!) into the 
+ * permanent display buffer of the 7-segment multiplexer
+ * 
+ * @param sseg_handle	7-segment handle struct. Contains databuffer 
+ * @param data 			Data to write into the 7-segment handler
+ * @return esp_err_t 
+ */
+esp_err_t sseg_write(sseg_handle_t sseg_handle, uint8_t *data);
 
 /**
  * @brief Displays the new selected Mode to the segment display and clears after 2 seconds if the display is currently on standby

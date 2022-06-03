@@ -56,7 +56,7 @@ typedef enum
 	APP_MODE_BPM = 0, // Set Beats per Minute
 					  // HEX:		shows BPM
 					  // Rotary:	changes BPM on Rotation
-					  // Event:		SHIFT Rotary: CHange Waveform
+					  // Event:		+SHIFT Rotary: CHange Waveform
 					  //			+SHIFT HEX: Shows Selected Waveform
 					  // Index/Cur:	Index (Yellow LEDS)
 					  // Blue LEDS: Shows on off State
@@ -65,8 +65,8 @@ typedef enum
 					  // HEX:		shows Current Key
 					  // Rotary:	Change Key (Shift Key Register)
 					  // Event:		+SHIFT Rotary: Change Mode
-					  // xndex/Cur:	Index (Yellow LEDS)
-					  // xlue LEDS: Shows on off State
+					  // Index/Cur:	Index (Yellow LEDS)
+					  // Blue LEDS: Shows on off State
 
 	APP_MODE_ENR = 2, // Enable and Reset at Index
 					  // HEX:		-

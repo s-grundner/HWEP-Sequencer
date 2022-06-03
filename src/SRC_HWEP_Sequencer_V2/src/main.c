@@ -40,7 +40,7 @@ typedef struct {
 	uint16_t bpm;
 	uint32_t ec_changed[ADC0880S052_CHANNEL_MAX];
 
-}data_changed;
+} data_changed_t;
 
 
 void app_main(void)
@@ -48,7 +48,7 @@ void app_main(void)
 	sequencer_handle_t sqc_handle;
 	ESP_ERROR_CHECK(sequencer_init(&sqc_handle));
 
-	data_changed dch;
+	data_changed_t dch;
 
 	esp_timer_handle_t bpm_timer;
 	esp_timer_create_args_t bpm_timer_cfg = {
@@ -75,6 +75,10 @@ void app_main(void)
 		case APP_MODE_BPM:
 			ESP_ERROR_CHECK(stp_index(sqc_handle));
 			sqc_handle->cur_bpm = START_BPM + sqc_handle->encoder_positions[sqc_handle->cur_appmode];
+			// pseudocode
+			/*
+			sseg_write()
+			*/
 			break;
 		case APP_MODE_KEY:
 			ESP_ERROR_CHECK(stp_index(sqc_handle));
