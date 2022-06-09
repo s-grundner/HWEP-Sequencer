@@ -17,7 +17,7 @@ Der Sequencer wird mit dem ESP32 32-bit Microcontroller betrieben. Der Digitale 
 
 ## BSB - Blockschaltbild
 
-![BSB](/docu/v2/BSB_Sequencer_I2S.drawio.svg)
+![BSB](/docu/github_images/BSB_Sequencer_I2S.drawio.svg)
 
 ## FUB - Funktionsbeschreibung
 #### 1. 8 Potentiometer als analoger Eingang:
