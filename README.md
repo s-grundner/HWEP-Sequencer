@@ -1,5 +1,5 @@
 # HWEP [DE]
- [HWEP] Hardware School Project with my bestest frens
+ [HWEP] Hardware School Project because the ESP is my only frend
  
 ![LOVESP](/docu/github_images/esp32.gif)
 
