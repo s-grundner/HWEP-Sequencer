@@ -59,8 +59,33 @@ typedef struct mcp23s08_context_t* mcp23s08_handle_t;
 // (Public) Functions
 // ------------------------------------------------------------
 
+/**
+ * @brief initialises the IO expander
+ * 
+ * @param out_handle provide Extern Handle
+ * @param cfg 
+ * @return esp_err_t 
+ */
 esp_err_t mcp23s08_init(mcp23s08_handle_t *out_handle, const mcp23s08_config_t *cfg);
+/**
+ * @brief 
+ * 
+ * @param handle 
+ * @param hw_adr 
+ * @param reg_adr 
+ * @param data 
+ * @return esp_err_t 
+ */
 esp_err_t mcp23s08_write(mcp23s08_handle_t handle, mcp23s08_hw_adr hw_adr, mcp23s08_reg_adr reg_adr, const uint8_t data);
+/**
+ * @brief 
+ * 
+ * @param handle 
+ * @param hw_adr 
+ * @param reg_adr 
+ * @param data 
+ * @return esp_err_t 
+ */
 esp_err_t mcp23s08_read(mcp23s08_handle_t handle, mcp23s08_hw_adr hw_adr, mcp23s08_reg_adr reg_adr, uint8_t *data);
 
 #endif // MCP23S08_H_

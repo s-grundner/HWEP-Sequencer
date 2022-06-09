@@ -6,10 +6,6 @@
 #include "esp_system.h"
 
 // ------------------------------------------------------------
-// Peripherals
-// ------------------------------------------------------------
-
-// ------------------------------------------------------------
 // Pinout
 // ------------------------------------------------------------
 
@@ -39,10 +35,14 @@
 #define CS_ADC0880S052 (GPIO_NUM_15)
 #define CS_STP16CP05 (GPIO_NUM_21)
 
-const gpio_num_t *sseg_channel = {GPIO_NUM_33, GPIO_NUM_25, GPIO_NUM_26};
 #define SEG_CNT 3
+#define SEG_CH_E (GPIO_NUM_26)
+#define SEG_CH_Z (GPIO_NUM_25)
+#define SEG_CH_H (GPIO_NUM_33)
+#define S_SEG_CHANNEL_MASK (1ULL << SEG_CH_H) | (1ULL << SEG_CH_Z) | (1ULL << SEG_CH_E)
 
-#define S_SEG_CHANNEL_MASK (1ULL << 33) | (1ULL << 25) | (1ULL << 26)
+#define BPM_TO_US(a) (0x3938700 / (a))
+
 // ------------------------------------------------------------
 // define Application Modes
 // ------------------------------------------------------------
@@ -57,7 +57,7 @@ typedef enum
 	APP_MODE_BPM = 0, // Set Beats per Minute
 					  // HEX:		shows BPM
 					  // Rotary:	changes BPM on Rotation
-					  // Event:		SHIFT Rotary: CHange Waveform
+					  // Event:		+SHIFT Rotary: CHange Waveform
 					  //			+SHIFT HEX: Shows Selected Waveform
 					  // Index/Cur:	Index (Yellow LEDS)
 					  // Blue LEDS: Shows on off State
@@ -66,8 +66,8 @@ typedef enum
 					  // HEX:		shows Current Key
 					  // Rotary:	Change Key (Shift Key Register)
 					  // Event:		+SHIFT Rotary: Change Mode
-					  // xndex/Cur:	Index (Yellow LEDS)
-					  // xlue LEDS: Shows on off State
+					  // Index/Cur:	Index (Yellow LEDS)
+					  // Blue LEDS: Shows on off State
 
 	APP_MODE_ENR = 2, // Enable and Reset at Index
 					  // HEX:		-

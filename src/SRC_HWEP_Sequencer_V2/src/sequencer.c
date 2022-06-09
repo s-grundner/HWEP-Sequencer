@@ -1,32 +1,46 @@
 #include "sequencer.h"
-
 #include "esp_log.h"
+static const gpio_num_t sseg_channel[3] = {GPIO_NUM_33, GPIO_NUM_25, GPIO_NUM_26};
 static const char *TAG = "sequencer header";
+#define MUXTIME_US 3000
+
+// ------------------------------------------------------------
+// Static functions and callbacks
+// ------------------------------------------------------------
 
 static void switch_cb(void *args)
 {
 	sequencer_config_t *ctx = (sequencer_config_t *)args;
 	ctx->encoder_positions[ctx->cur_appmode] = encoder_read(ctx->encoder_handle);
+
 	ctx->cur_appmode = encoder_read_sw(ctx->encoder_handle);
+	// sseg_new_appmode(ctx->sseg_handle);
+
 	encoder_write(ctx->encoder_handle, ctx->encoder_positions[ctx->cur_appmode]);
-	ESP_LOGI(TAG, "%d", ctx->cur_appmode);
+	ESP_LOGD(TAG, "Current mode%d", ctx->cur_appmode);
 }
+
 static void rot_cb(void *args) {}
 
 static void sseg_mux(void *args)
 {
 	sseg_context_t *ctx = (sseg_context_t *)args;
-
 	gpio_set_level(sseg_channel[ctx->channel], 0);
-	mcp23s08_write(ctx->mcp_handle, S_SEG_HW_ADR, GPIO_R, ctx->data_buffer[ctx->channel]);
 	ctx->channel = (ctx->channel + 1) % SEG_CNT;
+	mcp23s08_write(ctx->mcp_handle, S_SEG_HW_ADR, GPIO_R, get_char_segment(ctx->data_buffer[ctx->channel]));
 	gpio_set_level(sseg_channel[ctx->channel], 1);
 }
 
-static void new_appmode(void* args)
+static void new_appmode(void *args)
 {
-
+	// sseg_context_t *ctx = (sseg_context_t*) args;
+	// TODO
 }
+
+// ------------------------------------------------------------
+// Overall sequencer functions
+// ------------------------------------------------------------
+
 esp_err_t sequencer_init(sequencer_config_t **out_sqc_cfg)
 {
 	sequencer_config_t *sqc_cfg = (sequencer_config_t *)malloc(sizeof(sequencer_config_t));
@@ -99,20 +113,9 @@ esp_err_t sequencer_init(sequencer_config_t **out_sqc_cfg)
 	// Seven Segment Display and PS input Buttons (MCP23S08)
 	// ------------------------------------------------------------
 
-	gpio_config_t cf = {
-		.mode = GPIO_MODE_OUTPUT,
-		.pin_bit_mask = S_SEG_CHANNEL_MASK,
-	};
-	gpio_config(&cf);
+	sseg_handle_t sseg_handle;
+	sseg_init(&sseg_handle, sqc_cfg);
 
-	esp_timer_handle_t timer_handle;
-	esp_timer_create_args_t timer_cfg = {
-		.name = "mux",
-		.callback = &sseg_mux,
-		.arg = sqc_cfg,
-	};
-	ESP_ERROR_CHECK(esp_timer_create(&timer_cfg, &timer_handle));
-	ESP_ERROR_CHECK(esp_timer_start_periodic(timer_handle, 1000));
 	// init 7 segment muxing
 	// init interrupts on PS chip
 
@@ -133,6 +136,7 @@ esp_err_t sequencer_init(sequencer_config_t **out_sqc_cfg)
 		.encoder_handle = encoder_handle,
 		.stp_handle = stp_handle,
 		.mcp_handle = mcp_handle,
+		.sseg_handle = sseg_handle,
 
 		.channel = 0,
 		.cur_appmode = APP_MODE_BPM,
@@ -150,19 +154,12 @@ esp_err_t sequencer_init(sequencer_config_t **out_sqc_cfg)
 		.active_note_mask = 0xff,
 	};
 	*out_sqc_cfg = sqc_cfg;
-
 	return ESP_OK;
 }
 
-uint8_t get_pos_index(sequencer_handle_t sqc_handle)
-{
-	return 1 << abs(sqc_handle->encoder_positions[sqc_handle->cur_appmode] >> 1) % ADC0880S052_CHANNEL_MAX;
-}
-
-uint32_t bpm_to_us(uint16_t bpm)
-{
-	return 0x3938700 / bpm;
-}
+// ------------------------------------------------------------
+// LED row (upper and lower) specific functions
+// ------------------------------------------------------------
 
 esp_err_t stp_index(sequencer_handle_t sqc_handle)
 {
@@ -180,14 +177,33 @@ esp_err_t stp_cursor(sequencer_handle_t sqc_handle)
 		get_pos_index(sqc_handle));
 }
 
+// ------------------------------------------------------------
+// Seven Segment functions
+// ------------------------------------------------------------
+
 esp_err_t sseg_init(sseg_context_t **out_sseg_ctx, sequencer_handle_t sqc_handle)
 {
-
 	sseg_context_t *sseg_ctx = (sseg_context_t *)malloc(sizeof(sseg_context_t));
 	if (sseg_ctx == NULL)
 		return ESP_ERR_NO_MEM;
 
+	gpio_config_t cf = {
+		.mode = GPIO_MODE_OUTPUT,
+		.pin_bit_mask = S_SEG_CHANNEL_MASK,
+	};
+	gpio_config(&cf);
+
+	gpio_set_level(SEG_CH_E, 1);
+	gpio_set_level(SEG_CH_Z, 1);
+	gpio_set_level(SEG_CH_H, 1);
+
 	esp_timer_handle_t timer_handle;
+	esp_timer_create_args_t timer_cfg = {
+		.name = "mux",
+		.callback = &sseg_mux,
+		.arg = sseg_ctx,
+	};
+	ESP_ERROR_CHECK(esp_timer_create(&timer_cfg, &timer_handle));
 
 	*sseg_ctx = (sseg_context_t){
 		.channel = 0,
@@ -200,32 +216,52 @@ esp_err_t sseg_init(sseg_context_t **out_sseg_ctx, sequencer_handle_t sqc_handle
 		free(sseg_ctx);
 		return ESP_ERR_NO_MEM;
 	}
-	esp_timer_create_args_t timer_cfg = {
-		.name = "mux",
-		.callback = &sseg_mux,
-		.arg = sseg_ctx,
-	};
-	ESP_ERROR_CHECK(esp_timer_create(&timer_cfg, &sseg_ctx->mux_timer));
-	ESP_ERROR_CHECK(esp_timer_start_periodic(sseg_ctx->mux_timer, 1000));
+	sseg_ctx->data_buffer = "SQC";
+	ESP_ERROR_CHECK(esp_timer_start_periodic(sseg_ctx->mux_timer, MUXTIME_US));
+	*out_sseg_ctx = sseg_ctx;
+	return ESP_OK;
 }
 
-esp_err_t sseg_write(sseg_handle_t sseg_handle, const uint8_t *data)
+esp_err_t sseg_write(sseg_context_t *sseg_handle, char *data)
 {
-	ESP_ERROR_CHECK(esp_timer_stop(sseg_handle->mux_timer));
-	sseg_handle->data_buffer = data;
-	ESP_ERROR_CHECK(esp_timer_start_periodic(sseg_handle->mux_timer, 1000));
+	if (sizeof(data) > (sizeof(uint8_t) * SEG_CNT) + 1)
+	{
+		ESP_LOGE(TAG, "DATA segment OVF. Please reduce input");
+		return ESP_ERR_NO_MEM;
+	}
+	if (strcmp(sseg_handle->data_buffer, data))
+	{
+		ESP_ERROR_CHECK(esp_timer_stop(sseg_handle->mux_timer));
+		sseg_handle->data_buffer = data;
+		ESP_ERROR_CHECK(esp_timer_start_periodic(sseg_handle->mux_timer, MUXTIME_US));
+	}
 	return ESP_OK;
 }
 
 esp_err_t sseg_new_appmode(sseg_handle_t sseg_handle)
 {
-	// esp_timer_handle_t new_appm;
-	// esp_timer_create_args_t timer_cfg = {
-	// 	.name = "new mode",
-	// 	.callback = &new_appmode,
-	// 	.arg = sseg_handle,
-	// };
-	// ESP_ERROR_CHECK(esp_timer_create(&timer_cfg, &sseg_ctx->mux_timer));
-	// ESP_ERROR_CHECK(esp_timer_start_periodic(sseg_ctx->mux_timer, 1000));
+	// start newmode init on segment display
+	esp_timer_handle_t new_appm;
+	esp_timer_create_args_t timer_cfg = {
+		.name = "new mode",
+		.callback = &new_appmode,
+		.arg = sseg_handle,
+	};
+	ESP_ERROR_CHECK(esp_timer_create(&timer_cfg, &new_appm));
+	ESP_ERROR_CHECK(esp_timer_start_once(new_appm, 2000000));
 	return ESP_OK;
+}
+
+// ------------------------------------------------------------
+// MISC functions
+// ------------------------------------------------------------
+
+uint8_t get_pos_index(sequencer_handle_t sqc_handle)
+{
+	return 1 << abs(sqc_handle->encoder_positions[sqc_handle->cur_appmode] >> 1) % ADC0880S052_CHANNEL_MAX;
+}
+
+uint32_t bpm_to_us(uint16_t bpm)
+{
+	return 0x3938700 / bpm;
 }

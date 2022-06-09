@@ -104,7 +104,7 @@ sample_t process_sample(oscillator_t **osc, uint8_t osc_cnt);
 // ------------------------------------------------------------
 void i2s_init(void);
 esp_err_t i2s_reset(void);
-void send_audio_stereo(oscillator_t *osc);
+esp_err_t send_audio_stereo(oscillator_t *osc);
 void send_audio_mono(float *f_sample);
 
 #endif  //SYNTH_H_
