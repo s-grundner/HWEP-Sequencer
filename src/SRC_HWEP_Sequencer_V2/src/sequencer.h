@@ -45,10 +45,8 @@
 #include "scale.h"
 #include "led_strip.h"
 
-#define bpmtous(a) (0x3938700 / (a))
-
 typedef struct {
-	uint8_t *data_buffer;
+	char *data_buffer;
 	uint8_t channel;
 	mcp23s08_handle_t mcp_handle;
 	esp_timer_handle_t mux_timer;
@@ -106,22 +104,6 @@ esp_err_t sequencer_init(sequencer_handle_t *sqc_handle);
 void sequencer_exit(sequencer_handle_t sqc_handle);
 
 /**
- * @brief Calculates the channel index from the position of the encoder
- * 
- * @param sqc_handle External handle
- * @return uint8_t 
- */
-uint8_t get_pos_index(sequencer_handle_t sqc_handle);
-
-/**
- * @brief Converts beat frequency into timeperiod in microseconds
- * 
- * @param bpm Beats Per Minute to convert
- * @return uint32_t 
- */
-uint32_t bpm_to_us(uint16_t bpm);
-
-/**
  * @brief Shows the Channel Index on the blue LED row
  * 
  * @param sqc_handle External handle
@@ -154,7 +136,7 @@ esp_err_t sseg_init(sseg_handle_t *out_sseg_ctx, sequencer_handle_t sqc_handle);
  * @param data 			Data to write into the 7-segment handler
  * @return esp_err_t 
  */
-esp_err_t sseg_write(sseg_handle_t sseg_handle, uint8_t *data);
+esp_err_t sseg_write(sseg_handle_t sseg_handle, char *data);
 
 /**
  * @brief Displays the new selected Mode to the segment display and clears after 2 seconds if the display is currently on standby
@@ -163,3 +145,19 @@ esp_err_t sseg_write(sseg_handle_t sseg_handle, uint8_t *data);
  * @return esp_err_t 
  */
 esp_err_t sseg_new_appmode(sseg_handle_t sseg_handle);
+
+/**
+ * @brief Calculates the channel index from the position of the encoder
+ * 
+ * @param sqc_handle External handle
+ * @return uint8_t 
+ */
+uint8_t get_pos_index(sequencer_handle_t sqc_handle);
+
+/**
+ * @brief Converts beat frequency into timeperiod in microseconds
+ * 
+ * @param bpm Beats Per Minute to convert
+ * @return uint32_t 
+ */
+uint32_t bpm_to_us(uint16_t bpm);
