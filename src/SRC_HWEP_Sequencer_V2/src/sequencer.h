@@ -3,15 +3,12 @@
  * @author	@h-ihninger
  * @author 	@s-grundner
  * @brief	Sequencer Main header
- * @version 0.1
  * @date 	2022-05-05
  * 
  * @copyright Copyright (c) 2022
- * 
  */
 
 #pragma once
-
 
 #include "esp_system.h"
 #include "driver/rmt.h"
@@ -83,6 +80,16 @@ typedef struct sequencer_config_s
 	int32_t encoder_positions[MAX_APP_MODES];
 	uint8_t reset_at_n;
 	uint8_t active_note_mask;
+
+	// buttons
+	bool btn_event;
+	bool btn_pause;
+	bool btn_reset;
+	bool btn_defval;
+
+	// prescaler
+	uint8_t ps_bpm;
+	uint8_t ps_gate;
 
 
 }sequencer_config_t;
@@ -161,3 +168,11 @@ uint8_t get_pos_index(sequencer_handle_t sqc_handle);
  * @return uint32_t 
  */
 uint32_t bpm_to_us(uint16_t bpm);
+
+/**
+ * @brief takes care of the RGB-LED animations
+ * 
+ * @param sqc_handle sequencer data
+ * @return esp_err_t 
+ */
+esp_err_t manage_ws2812(sequencer_handle_t sqc_handle);
