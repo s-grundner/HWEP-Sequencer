@@ -7,9 +7,9 @@
 
 Der Sequenzer ist ein musisches Instrument, welches vom Benutzer einstellbare Töne nacheinander abspielt und dadurch eine Melodie erzeugt. Die Tonlage wird durch Potentiometer analog eingestellt und anschließend an die chromatische Skala angepasst. Die acht Töne werden mit jeder steigenden Flanke des Takts durchgeschaltet.
  
-Mit einem Pause-Taster kann der Zyklus pausiert werden. Mit dem Reset-Taster kann zum Anfang des Zyklus gesprungen werden.
+`Mit einem Pause-Taster kann der Zyklus pausiert werden. Mit dem Reset-Taster kann zum Anfang des Zyklus gesprungen werden.
 Der CLRR-Taster setzt das Tonleiter Register zurück in den normalen Zustand.
-Der Sequencer ist mit zwei Prescalern für Gate-Länge und Taktrate ausgestattet. Dieser teilt den Takt oder das Gate des Tones durch 1, 2, 4, 8 oder 16.
+Der Sequencer ist mit zwei Prescalern für Gate-Länge und Taktrate ausgestattet. Dieser teilt den Takt oder das Gate des Tones durch 1, 2, 4, 8 oder 16.`
  
 Zum Bedienen des Sequencers gibt es verschiedene Parameter, die mithilfe eines einzigen Dreh-Encoder gesteuert werden können. Der Dreh-Encoder hat einen integrierten Taster, mit welchem man die Parameter, die man verändern will, einstellen kann. Die Veränderung der Parameter wird je nach Modus an verschiedenen Status LEDs und Anzeigen abgezeichnet. Der Event-Taster hat je nach Modus eine andere Funktion.
  
