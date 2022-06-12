@@ -36,20 +36,17 @@ static void timer_cb(void *args)
 	ctx->channel = (ctx->channel + 1) % ctx->reset_at_n;
 }
 
-typedef struct
-{
-	uint16_t pos_changed;
-	uint32_t ec_changed[ADC0880S052_CHANNEL_MAX];
 
-} data_changed_t;
 
 void app_main(void)
 {
 	sequencer_handle_t sqc_handle;
 	ESP_ERROR_CHECK(sequencer_init(&sqc_handle));
 
-	data_changed_t dch;
-	dch.pos_changed = encoder_read(sqc_handle->encoder_handle) + 1;
+	uint32_t ec_changed[ADC0880S052_CHANNEL_MAX];
+
+	for (int i = 0; i < ADC0880S052_CHANNEL_MAX; i++)
+		ec_changed[i] = encoder_read(sqc_handle->encoder_handle) + 1;
 
 	esp_timer_handle_t bpm_timer;
 	esp_timer_create_args_t bpm_timer_cfg = {
@@ -61,9 +58,6 @@ void app_main(void)
 	ESP_ERROR_CHECK(esp_timer_create(&bpm_timer_cfg, &bpm_timer));
 	ESP_ERROR_CHECK(esp_timer_start_periodic(bpm_timer, bpm_to_us(sqc_handle->cur_bpm)));
 
-	for (int i = 0; i < ADC0880S052_CHANNEL_MAX; i++)
-		dch.ec_changed[i] = encoder_read(sqc_handle->encoder_handle) + 1;
-
 	while (1)
 	{
 		// store encoder value in sqc struct to save time
@@ -72,18 +66,18 @@ void app_main(void)
 		ESP_LOGD(TAG, "ec_pos = %d", sqc_handle->encoder_positions[sqc_handle->cur_appmode]);
 		ESP_LOGD(TAG, "bpm = %d", 0x3938700 / sqc_handle->cur_bpm);
 
+		// Main Statemachine
 		switch (sqc_handle->cur_appmode)
 		{
 		case APP_MODE_BPM:
 			ESP_ERROR_CHECK(stp_index(sqc_handle));
-
-			if (dch.ec_changed[sqc_handle->cur_appmode] != sqc_handle->encoder_positions[sqc_handle->cur_appmode])
+			if (ec_changed[sqc_handle->cur_appmode] != sqc_handle->encoder_positions[sqc_handle->cur_appmode])
 			{
-				ESP_LOGD(TAG, "EC data changed: %i -> %i", dch.ec_changed[sqc_handle->cur_appmode], sqc_handle->encoder_positions[sqc_handle->cur_appmode]);
+				ESP_LOGD(TAG, "EC data changed: %i -> %i", ec_changed[sqc_handle->cur_appmode], sqc_handle->encoder_positions[sqc_handle->cur_appmode]);
 				sqc_handle->cur_bpm = START_BPM + sqc_handle->encoder_positions[sqc_handle->cur_appmode];
 				esp_timer_stop(bpm_timer);
 				esp_timer_start_periodic(bpm_timer, bpm_to_us(sqc_handle->cur_bpm));
-				dch.ec_changed[sqc_handle->cur_appmode] = sqc_handle->encoder_positions[sqc_handle->cur_appmode];
+				ec_changed[sqc_handle->cur_appmode] = sqc_handle->encoder_positions[sqc_handle->cur_appmode];
 			}
 			sseg_write(sqc_handle->sseg_handle, "BPM");
 			break;
@@ -102,7 +96,7 @@ void app_main(void)
 		default:
 			break;
 		}
-
+		manage_ws2812(sqc_handle);
 		sqc_handle->osc.pitch = adc_to_pitch(sqc_handle->cur_adc_data[sqc_handle->channel], sqc_handle->osc.oct_offset);
 		send_audio_stereo(&sqc_handle->osc);
 		vTaskDelay(10 / portTICK_PERIOD_MS);

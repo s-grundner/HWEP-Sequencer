@@ -2,8 +2,12 @@
 #include "esp_log.h"
 static const gpio_num_t sseg_channel[3] = {GPIO_NUM_33, GPIO_NUM_25, GPIO_NUM_26};
 static const char *TAG = "sequencer header";
-#define MUXTIME_US 3000
 
+#define MUXTIME_US 3000
+#define BTN_MASK_EVENT (1 << 0)
+#define BTN_MASK_RESET (1 << 1)
+#define BTN_MASK_DEFVAL (1 << 2)
+#define BTN_MASK_PAUSE (1 << 3)
 // ------------------------------------------------------------
 // Static functions and callbacks
 // ------------------------------------------------------------
@@ -21,6 +25,37 @@ static void switch_cb(void *args)
 }
 
 static void rot_cb(void *args) {}
+
+static void mcp_cb(void *args)
+{
+	sequencer_handle_t sqc_handle = (sequencer_handle_t)args;
+	uint8_t mcp_data;
+	mcp23s08_read(sqc_handle->mcp_handle, IN_PS_HW_ADR, INTCAP, &mcp_data);
+	uint8_t ps_data = mcp_data >> 4;
+	uint8_t btn_data = ~mcp_data & 0x0f;
+
+	// prescaler data
+	if (ps_data & 0x08)
+	{
+		sqc_handle->ps_bpm = (1 << ((ps_data & 0x7) - 3));
+	}
+	else if (ps_data)
+	{
+		sqc_handle->ps_gate = (1 << (ps_data - 3));
+	}
+	sqc_handle->btn_event = btn_data & BTN_MASK_EVENT;
+	sqc_handle->btn_reset = btn_data & BTN_MASK_RESET;
+	sqc_handle->btn_defval = btn_data & BTN_MASK_DEFVAL;
+	sqc_handle->btn_pause = btn_data & BTN_MASK_PAUSE;
+
+	ESP_LOGD(TAG, "Event: %i", sqc_handle->btn_event);
+	ESP_LOGD(TAG, "Reset: %i", sqc_handle->btn_reset);
+	ESP_LOGD(TAG, "DefVal: %i", sqc_handle->btn_defval);
+	ESP_LOGD(TAG, "Pause: %i", sqc_handle->btn_pause);
+
+	ESP_LOGD(TAG, "BPM prescaler: %i", sqc_handle->ps_bpm);
+	ESP_LOGD(TAG, "Gate prescaler: %i\n", sqc_handle->ps_gate);
+}
 
 static void sseg_mux(void *args)
 {
@@ -99,16 +134,24 @@ esp_err_t sequencer_init(sequencer_config_t **out_sqc_cfg)
 	mcp23s08_config_t mcp_cfg = {
 		.cs_io = CS_MCP23S08,
 		.host = VSPI,
-		.intr_io = MCP23S08_INTR,
 		.miso_io = VSPIQ,
 		.mosi_io = VSPID,
+		.intr_io = MCP23S08_INTR,
+		.mcp_callback = mcp_cb,
+		.mcp_intr_args = sqc_cfg,
 	};
 	ESP_ERROR_CHECK(mcp23s08_init(&mcp_handle, &mcp_cfg));
-	ESP_ERROR_CHECK(mcp23s08_write(mcp_handle, 0, IOCON, (1 << HAEN)));
-	ESP_ERROR_CHECK(mcp23s08_write(mcp_handle, S_SEG_HW_ADR, IODIR, 0x00));
-	ESP_ERROR_CHECK(mcp23s08_write(mcp_handle, IN_PS_HW_ADR, IODIR, 0xff));
-	ESP_ERROR_CHECK(mcp23s08_write(mcp_handle, IN_PS_HW_ADR, GPPU, 0x0f));
+	ESP_ERROR_CHECK(mcp23s08_write(mcp_handle, 0, IOCON, (1 << HAEN) | (1 << INTPOL))); // Enable multiple MCP for same spi transaction
+	ESP_ERROR_CHECK(mcp23s08_write(mcp_handle, S_SEG_HW_ADR, IODIR, 0x00));				// Set display MCP-GPIO as Output
+	ESP_ERROR_CHECK(mcp23s08_write(mcp_handle, IN_PS_HW_ADR, IODIR, 0xff));				// Set Button MCP-GPIO as Input (Default as Input)
+	ESP_ERROR_CHECK(mcp23s08_write(mcp_handle, IN_PS_HW_ADR, GPPU, 0x0f));				// Enable Internal Pullups for Buttons (not prio buttons)
 
+	// Interrupt Settings for Input MCP
+	ESP_ERROR_CHECK(mcp23s08_write(mcp_handle, IN_PS_HW_ADR, DEFVAL, 0x0f)); // Set default values
+	ESP_ERROR_CHECK(mcp23s08_write(mcp_handle, IN_PS_HW_ADR, INTCON, 0x00)); // Interrupt on change
+
+	ESP_ERROR_CHECK(mcp23s08_write(mcp_handle, IN_PS_HW_ADR, GPINTEN, 0xff)); // Enables Interrupts for all GPI
+	ESP_ERROR_CHECK(mcp23s08_dump_intr(mcp_handle, IN_PS_HW_ADR));
 	// ------------------------------------------------------------
 	// Seven Segment Display and PS input Buttons (MCP23S08)
 	// ------------------------------------------------------------
@@ -116,8 +159,8 @@ esp_err_t sequencer_init(sequencer_config_t **out_sqc_cfg)
 	sseg_handle_t sseg_handle;
 	sseg_init(&sseg_handle, sqc_cfg);
 
-	// init 7 segment muxing
 	// init interrupts on PS chip
+	// on interrupt, read INTCAP register
 
 	// ------------------------------------------------------------
 	// ADC
@@ -224,11 +267,6 @@ esp_err_t sseg_init(sseg_context_t **out_sseg_ctx, sequencer_handle_t sqc_handle
 
 esp_err_t sseg_write(sseg_context_t *sseg_handle, char *data)
 {
-	if (sizeof(data) > (sizeof(uint8_t) * SEG_CNT) + 1)
-	{
-		ESP_LOGE(TAG, "DATA segment OVF. Please reduce input");
-		return ESP_ERR_NO_MEM;
-	}
 	if (strcmp(sseg_handle->data_buffer, data))
 	{
 		ESP_ERROR_CHECK(esp_timer_stop(sseg_handle->mux_timer));
@@ -264,4 +302,23 @@ uint8_t get_pos_index(sequencer_handle_t sqc_handle)
 uint32_t bpm_to_us(uint16_t bpm)
 {
 	return 0x3938700 / bpm;
+}
+
+esp_err_t manage_ws2812(sequencer_handle_t sqc_handle)
+{
+	// TODO
+	switch (sqc_handle->cur_appmode)
+	{
+	case APP_MODE_BPM:
+		break;
+	case APP_MODE_KEY:
+		break;
+	case APP_MODE_ENR:
+		break;
+	case APP_MODE_TSP:
+		break;
+	default:
+		break;
+	}
+	return ESP_OK;
 }

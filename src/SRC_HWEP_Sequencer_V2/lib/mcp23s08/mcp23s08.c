@@ -28,6 +28,28 @@ static void cs_low(spi_transaction_t *t)
 }
 
 // ------------------------------------------------------------
+// ISR
+// ------------------------------------------------------------
+
+static QueueHandle_t mcp_evt_queue = NULL;
+static void IRAM_ATTR mcp_isr_handler(void *arg)
+{
+	mcp23s08_context_t *context = (mcp23s08_context_t *)arg;
+	xQueueSendFromISR(mcp_evt_queue, &context, NULL);
+}
+static void mcp_in_task(void *arg)
+{
+	mcp23s08_context_t *context;
+	for (;;)
+	{
+		if (xQueueReceive(mcp_evt_queue, &context, portMAX_DELAY))
+		{
+			context->cfg.mcp_callback(context->cfg.mcp_intr_args);
+		}
+	}
+}
+
+// ------------------------------------------------------------
 // (Public) Functions
 // ------------------------------------------------------------
 
@@ -65,6 +87,11 @@ esp_err_t mcp23s08_init(mcp23s08_context_t **out_ctx, const mcp23s08_config_t *c
 			.pin_bit_mask = 1ULL << ctx->cfg.intr_io,
 		};
 		gpio_config(&intr_cfg);
+
+		mcp_evt_queue = xQueueCreate(10, sizeof(uint32_t));
+		xTaskCreate(mcp_in_task, "mcp23s08_interrupt", 2048, NULL, 10, NULL);
+	
+		gpio_isr_handler_add(ctx->cfg.intr_io, mcp_isr_handler, (void *)ctx);
 	}
 
 	err = spi_bus_add_device(ctx->cfg.host, &devcfg, &ctx->spi);
@@ -92,9 +119,8 @@ esp_err_t mcp23s08_init(mcp23s08_context_t **out_ctx, const mcp23s08_config_t *c
 esp_err_t mcp23s08_read(mcp23s08_context_t *ctx, mcp23s08_hw_adr hw_adr, mcp23s08_reg_adr reg_adr, uint8_t *data)
 {
 	esp_err_t err = ESP_OK;
-
 	uint8_t opcode = 0x41 | (hw_adr << 1);
-
+	
 	spi_transaction_t t = {
 		.cmd = opcode,
 		.addr = (uint8_t)reg_adr,
@@ -140,4 +166,23 @@ esp_err_t mcp23s08_write(mcp23s08_context_t *ctx, mcp23s08_hw_adr hw_adr, mcp23s
 	}
 
 	return err;
+}
+
+esp_err_t mcp23s08_dump_intr(mcp23s08_context_t *ctx, mcp23s08_hw_adr hw_adr)
+{
+	esp_err_t err = ESP_OK;
+	uint8_t opcode = 0x41 | (hw_adr << 1);
+	
+	spi_transaction_t t = {
+		.cmd = opcode,
+		.addr = (uint8_t)INTCAP,
+		.rxlength = 8,
+		.flags = SPI_TRANS_USE_RXDATA,
+		.user = ctx,
+	};
+	err = spi_device_polling_transmit(ctx->spi, &t);
+	ESP_ERROR_CHECK(err);
+	if (err != ESP_OK)
+		return err;
+	return ESP_OK;
 }
