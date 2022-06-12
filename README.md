@@ -1,7 +1,5 @@
 # HWEP [DE]
- [HWEP] Hardware School Project i did because the ESP is the only one who loves me
- 
-![LOVESP](/docu/github_images/esp32.gif)
+![Frontpanel](/docu/v2/Frontpanel.svg)
 
 ## KUB - Kurzbeschreibung
 
