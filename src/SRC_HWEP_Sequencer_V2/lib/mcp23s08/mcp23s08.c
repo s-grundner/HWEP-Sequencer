@@ -145,16 +145,14 @@ esp_err_t mcp23s08_read(mcp23s08_context_t *ctx, mcp23s08_hw_adr hw_adr, mcp23s0
 		.user = ctx,
 	};
 	err = spi_device_polling_transmit(ctx->spi, &t);
-	ESP_ERROR_CHECK(err);
-	if (err != ESP_OK)
-		return err;
-
-	if (err == ESP_OK)
+	
+	if ((err == ESP_OK) && (ctx->cfg.intr_io >= 0))
 		xSemaphoreTake(ctx->ready_sem, 0);
+
 	spi_device_release_bus(ctx->spi);
 
 	*data = t.rx_data[0];
-	return ESP_OK;
+	return err;
 }
 
 esp_err_t mcp23s08_write(mcp23s08_context_t *ctx, mcp23s08_hw_adr hw_adr, mcp23s08_reg_adr reg_adr, const uint8_t data)
@@ -176,7 +174,7 @@ esp_err_t mcp23s08_write(mcp23s08_context_t *ctx, mcp23s08_hw_adr hw_adr, mcp23s
 
 	err = spi_device_polling_transmit(ctx->spi, &t); // INVALID DEV HANDLE oba i woas ned warum ---> handle is NULL
 
-	if (err == ESP_OK)
+	if ((err == ESP_OK) && (ctx->cfg.intr_io >= 0))
 		xSemaphoreTake(ctx->ready_sem, 0);
 
 	spi_device_release_bus(ctx->spi);
