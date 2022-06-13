@@ -1,5 +1,5 @@
 # HWEP [DE]
-![Frontpanel](/docu/v2/Frontpanel.svg)
+![Frontpanel](/docu/v2/assets/Frontpanel.svg)
 
 ## KUB - Kurzbeschreibung
 
@@ -16,7 +16,7 @@ Der Sequencer wird mit dem einem RTOS am ESP32 32-bit Microcontroller betrieben.
 
 ## BSB - Blockschaltbild
 
-![BSB](/docu/v2/BSB_Sequencer_I2S.drawio_dark.svg)
+![BSB](/docu/v2/assets/BSB_Sequencer_I2S.drawio_dark.svg)
 
 ## FUB - Funktionsbeschreibung
 #### 1. 8 Potentiometer als analoger Eingang:
