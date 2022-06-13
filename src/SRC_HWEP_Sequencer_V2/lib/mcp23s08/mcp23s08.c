@@ -45,7 +45,7 @@ static void mcp_intr_task(void *arg)
 	{
 		if (xQueueReceive(mcp_evt_queue, &ctx, portMAX_DELAY))
 		{
-    		xSemaphoreGive(ctx->ready_sem);
+			xSemaphoreTake(ctx->ready_sem, 2);
 			ctx->cfg.mcp_callback(ctx->cfg.mcp_intr_args);
 		}
 	}
@@ -82,11 +82,11 @@ esp_err_t mcp23s08_init(mcp23s08_context_t **out_ctx, const mcp23s08_config_t *c
 	if (ctx->cfg.intr_io >= 0)
 	{
 		ctx->ready_sem = xSemaphoreCreateBinary();
-        if (ctx->ready_sem == NULL) {
-            err = ESP_ERR_NO_MEM;
-            goto cleanup;
-        }
-
+		if (ctx->ready_sem == NULL)
+		{
+			err = ESP_ERR_NO_MEM;
+			goto cleanup;
+		}
 		gpio_config_t intr_cfg = {
 			.intr_type = GPIO_INTR_POSEDGE,
 			.pull_down_en = 1,
@@ -134,7 +134,7 @@ esp_err_t mcp23s08_read(mcp23s08_context_t *ctx, mcp23s08_hw_adr hw_adr, mcp23s0
 	err = spi_device_acquire_bus(ctx->spi, portMAX_DELAY);
 	if (err != ESP_OK)
 		return err;
-		
+
 	uint8_t opcode = 0x41 | (hw_adr << 1);
 
 	spi_transaction_t t = {
@@ -145,11 +145,11 @@ esp_err_t mcp23s08_read(mcp23s08_context_t *ctx, mcp23s08_hw_adr hw_adr, mcp23s0
 		.user = ctx,
 	};
 	err = spi_device_polling_transmit(ctx->spi, &t);
-	
-	if ((err == ESP_OK) && (ctx->cfg.intr_io >= 0))
-		xSemaphoreTake(ctx->ready_sem, 0);
 
-	spi_device_release_bus(ctx->spi);
+	if ((err == ESP_OK) && (ctx->cfg.intr_io >= 0))
+		xSemaphoreGive(ctx->ready_sem);
+
+		spi_device_release_bus(ctx->spi);
 
 	*data = t.rx_data[0];
 	return err;
@@ -172,12 +172,12 @@ esp_err_t mcp23s08_write(mcp23s08_context_t *ctx, mcp23s08_hw_adr hw_adr, mcp23s
 		.user = ctx,
 	};
 
-	err = spi_device_polling_transmit(ctx->spi, &t); // INVALID DEV HANDLE oba i woas ned warum ---> handle is NULL
+	err = spi_device_polling_transmit(ctx->spi, &t);
 
 	if ((err == ESP_OK) && (ctx->cfg.intr_io >= 0))
-		xSemaphoreTake(ctx->ready_sem, 0);
+		xSemaphoreGive(ctx->ready_sem);
 
-	spi_device_release_bus(ctx->spi);
+		spi_device_release_bus(ctx->spi);
 	return err;
 }
 
@@ -195,7 +195,14 @@ esp_err_t mcp23s08_dump_intr(mcp23s08_context_t *ctx, mcp23s08_hw_adr hw_adr)
 	};
 	err = spi_device_polling_transmit(ctx->spi, &t);
 	ESP_ERROR_CHECK(err);
-	if (err != ESP_OK)
-		return err;
-	return ESP_OK;
+	return err;
+}
+
+void mcp23s08_take_sem(mcp23s08_context_t *ctx)
+{
+	xSemaphoreTake(ctx->ready_sem, (TickType_t)2);
+}
+void mcp23s08_give_sem(mcp23s08_context_t *ctx)
+{
+	xSemaphoreGive(ctx->ready_sem);
 }

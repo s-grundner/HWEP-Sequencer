@@ -3,7 +3,7 @@
 static const gpio_num_t sseg_channel[3] = {GPIO_NUM_33, GPIO_NUM_25, GPIO_NUM_26};
 static const char *TAG = "sequencer header";
 
-#define MUXTIME_US 1500000
+#define MUXTIME_US 5000
 #define BTN_MASK_EVENT (1 << 0)
 #define BTN_MASK_RESET (1 << 1)
 #define BTN_MASK_DEFVAL (1 << 2)
@@ -63,10 +63,12 @@ static void mcp_cb(void *args)
 static void sseg_mux(void *args)
 {
 	sseg_context_t *ctx = (sseg_context_t *)args;
+	mcp23s08_take_sem(ctx->mcp_handle);
 	gpio_set_level(sseg_channel[ctx->channel], 0);
 	ctx->channel = (ctx->channel + 1) % SEG_CNT;
 	mcp23s08_write(ctx->mcp_handle, S_SEG_HW_ADR, GPIO_R, get_char_segment(ctx->data_buffer[ctx->channel]));
 	gpio_set_level(sseg_channel[ctx->channel], 1);
+	mcp23s08_give_sem(ctx->mcp_handle);
 }
 
 static void new_appmode(void *args)
@@ -155,13 +157,6 @@ esp_err_t sequencer_init(sequencer_config_t **out_sqc_cfg)
 
 	ESP_ERROR_CHECK(mcp23s08_write(mcp_handle, IN_PS_HW_ADR, GPINTEN, 0xff)); // Enables Interrupts for all GPI
 	ESP_ERROR_CHECK(mcp23s08_dump_intr(mcp_handle, IN_PS_HW_ADR));
-
-	uint8_t data;
-	ESP_ERROR_CHECK(mcp23s08_read(mcp_handle, S_SEG_HW_ADR, IODIR, &data)); // Enables Interrupts for all GPI
-	ESP_LOGI(TAG, "%02x", data);
-	ESP_ERROR_CHECK(mcp23s08_read(mcp_handle, IN_PS_HW_ADR, IODIR, &data)); // Enables Interrupts for all GPI
-	ESP_LOGI(TAG, "%02x", data);
-
 
 	// ------------------------------------------------------------
 	// Seven Segment Display and PS input Buttons (MCP23S08)
@@ -274,7 +269,7 @@ esp_err_t sseg_init(sseg_context_t **out_sseg_ctx, sequencer_handle_t sqc_handle
 		return ESP_ERR_NO_MEM;
 	}
 	sseg_ctx->data_buffer = "SQC";
-	ESP_ERROR_CHECK(esp_timer_start_periodic(sseg_ctx->mux_timer, MUXTIME_US));
+	// ESP_ERROR_CHECK(esp_timer_start_periodic(sseg_ctx->mux_timer, MUXTIME_US));
 	*out_sseg_ctx = sseg_ctx;
 	return ESP_OK;
 }
@@ -283,9 +278,9 @@ esp_err_t sseg_write(sseg_context_t *sseg_handle, char *data)
 {
 	if (strcmp(sseg_handle->data_buffer, data))
 	{
-		ESP_ERROR_CHECK(esp_timer_stop(sseg_handle->mux_timer));
-		sseg_handle->data_buffer = data;
-		ESP_ERROR_CHECK(esp_timer_start_periodic(sseg_handle->mux_timer, MUXTIME_US));
+		// ESP_ERROR_CHECK(esp_timer_stop(sseg_handle->mux_timer));
+		// sseg_handle->data_buffer = data;
+		// ESP_ERROR_CHECK(esp_timer_start_periodic(sseg_handle->mux_timer, MUXTIME_US));
 	}
 	return ESP_OK;
 }

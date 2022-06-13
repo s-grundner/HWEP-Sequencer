@@ -97,4 +97,9 @@ esp_err_t mcp23s08_read(mcp23s08_handle_t handle, mcp23s08_hw_adr hw_adr, mcp23s
  * @return esp_err_t 
  */
 esp_err_t mcp23s08_dump_intr(mcp23s08_handle_t handle, mcp23s08_hw_adr hw_adr);
+
+void mcp23s08_take_sem(mcp23s08_handle_t handle);
+
+void mcp23s08_give_sem(mcp23s08_handle_t handle);
+
 #endif // MCP23S08_H_
