@@ -36,8 +36,6 @@ static void timer_cb(void *args)
 	ctx->channel = (ctx->channel + 1) % ctx->reset_at_n;
 }
 
-
-
 void app_main(void)
 {
 	sequencer_handle_t sqc_handle;
@@ -79,19 +77,19 @@ void app_main(void)
 				esp_timer_start_periodic(bpm_timer, bpm_to_us(sqc_handle->cur_bpm));
 				ec_changed[sqc_handle->cur_appmode] = sqc_handle->encoder_positions[sqc_handle->cur_appmode];
 			}
-			sseg_write(sqc_handle->sseg_handle, "BPM");
+			// sseg_write(sqc_handle->sseg_handle, "BPM");
 			break;
 		case APP_MODE_KEY:
 			ESP_ERROR_CHECK(stp_index(sqc_handle));
-			sseg_write(sqc_handle->sseg_handle, "KEY");
+			// sseg_write(sqc_handle->sseg_handle, "KEY");
 			break;
 		case APP_MODE_ENR:
 			ESP_ERROR_CHECK(stp_cursor(sqc_handle));
-			sseg_write(sqc_handle->sseg_handle, "ENR");
+			// sseg_write(sqc_handle->sseg_handle, "ENR");
 			break;
 		case APP_MODE_TSP:
 			ESP_ERROR_CHECK(stp_index(sqc_handle));
-			sseg_write(sqc_handle->sseg_handle, "TSP");
+			// sseg_write(sqc_handle->sseg_handle, "TSP");
 			break;
 		default:
 			break;

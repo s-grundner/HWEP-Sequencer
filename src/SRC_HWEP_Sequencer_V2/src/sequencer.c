@@ -3,7 +3,7 @@
 static const gpio_num_t sseg_channel[3] = {GPIO_NUM_33, GPIO_NUM_25, GPIO_NUM_26};
 static const char *TAG = "sequencer header";
 
-#define MUXTIME_US 3000
+#define MUXTIME_US 1500000
 #define BTN_MASK_EVENT (1 << 0)
 #define BTN_MASK_RESET (1 << 1)
 #define BTN_MASK_DEFVAL (1 << 2)
@@ -34,6 +34,10 @@ static void mcp_cb(void *args)
 	uint8_t ps_data = mcp_data >> 4;
 	uint8_t btn_data = ~mcp_data & 0x0f;
 
+	ESP_LOGI(TAG, "%02x", mcp_data);
+	ESP_LOGI(TAG, "%02x", ps_data);
+	ESP_LOGI(TAG, "%02x\n", btn_data);
+
 	// prescaler data
 	if (ps_data & 0x08)
 	{
@@ -52,7 +56,6 @@ static void mcp_cb(void *args)
 	ESP_LOGD(TAG, "Reset: %i", sqc_handle->btn_reset);
 	ESP_LOGD(TAG, "DefVal: %i", sqc_handle->btn_defval);
 	ESP_LOGD(TAG, "Pause: %i", sqc_handle->btn_pause);
-
 	ESP_LOGD(TAG, "BPM prescaler: %i", sqc_handle->ps_bpm);
 	ESP_LOGD(TAG, "Gate prescaler: %i\n", sqc_handle->ps_gate);
 }
@@ -152,6 +155,14 @@ esp_err_t sequencer_init(sequencer_config_t **out_sqc_cfg)
 
 	ESP_ERROR_CHECK(mcp23s08_write(mcp_handle, IN_PS_HW_ADR, GPINTEN, 0xff)); // Enables Interrupts for all GPI
 	ESP_ERROR_CHECK(mcp23s08_dump_intr(mcp_handle, IN_PS_HW_ADR));
+
+	uint8_t data;
+	ESP_ERROR_CHECK(mcp23s08_read(mcp_handle, S_SEG_HW_ADR, IODIR, &data)); // Enables Interrupts for all GPI
+	ESP_LOGI(TAG, "%02x", data);
+	ESP_ERROR_CHECK(mcp23s08_read(mcp_handle, IN_PS_HW_ADR, IODIR, &data)); // Enables Interrupts for all GPI
+	ESP_LOGI(TAG, "%02x", data);
+
+
 	// ------------------------------------------------------------
 	// Seven Segment Display and PS input Buttons (MCP23S08)
 	// ------------------------------------------------------------
@@ -195,6 +206,9 @@ esp_err_t sequencer_init(sequencer_config_t **out_sqc_cfg)
 
 		.reset_at_n = ADC0880S052_CHANNEL_MAX,
 		.active_note_mask = 0xff,
+
+		.ps_bpm = 1,
+		.ps_gate = 1,
 	};
 	*out_sqc_cfg = sqc_cfg;
 	return ESP_OK;

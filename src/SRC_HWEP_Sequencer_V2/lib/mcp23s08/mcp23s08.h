@@ -6,7 +6,7 @@
  * @date 	2022-05-06
  * 
  * @copyright Copyright (c) 2022
- * 
+ * https://ww1.microchip.com/downloads/en/DeviceDoc/MCP23008-MCP23S08-Data-Sheet-20001919F.pdf
  */
 
 #ifndef MCP23S08_H_
@@ -27,12 +27,6 @@
 #include "sdkconfig.h"
 
 #include "mcp23s08_io.h"
-
-// ------------------------------------------------------------
-// Datasheet
-// ------------------------------------------------------------
-
-// https://ww1.microchip.com/downloads/en/DeviceDoc/MCP23008-MCP23S08-Data-Sheet-20001919F.pdf
 
 // ------------------------------------------------------------
 // Structs

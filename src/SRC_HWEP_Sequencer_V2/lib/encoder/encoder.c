@@ -106,10 +106,6 @@ static void init_intr(encoder_context_t *ec)
 	gpio_config(&ec_ab);
 	gpio_config(&ec_sw);
 
-	gpio_set_intr_type(ec->cfg.pin_a, GPIO_INTR_ANYEDGE);
-	gpio_set_intr_type(ec->cfg.pin_b, GPIO_INTR_ANYEDGE);
-	gpio_set_intr_type(ec->cfg.pin_sw, GPIO_INTR_NEGEDGE);
-
 	ec_evt_queue = xQueueCreate(10, sizeof(uint32_t));
 	xTaskCreate(ec_task, "encoder_interrupt", 2048, NULL, 10, NULL);
 
