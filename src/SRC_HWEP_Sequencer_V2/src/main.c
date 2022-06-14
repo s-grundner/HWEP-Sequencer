@@ -13,28 +13,7 @@
 #include "sequencer.h"
 #include "esp_log.h"
 
-#define DEBUG
-
 static const char *TAG = "sequencer_main";
-static const char *INTR_TAG = "intrs";
-
-static void timer_cb(void *args)
-{
-	ESP_LOGD(INTR_TAG, "BPM Timer Interrupt");
-
-	sequencer_config_t *ctx = (sequencer_config_t *)args;
-
-	// fix adc data arrangement
-	ESP_ERROR_CHECK(adc088s052_get_raw(ctx->adc_handle, ctx->channel, &(ctx->cur_adc_data[ctx->channel])));
-	// uint16_t data = 0;
-
-	ESP_LOGD(TAG, "channel %d pitch: %d", ctx->channel, ctx->cur_adc_data[ctx->channel]);
-
-	ESP_LOGD(INTR_TAG, "%d", ctx->channel);
-	ESP_LOGD(INTR_TAG, "%d", ctx->reset_at_n);
-
-	ctx->channel = (ctx->channel + 1) % ctx->reset_at_n;
-}
 
 void app_main(void)
 {
@@ -45,16 +24,6 @@ void app_main(void)
 
 	for (int i = 0; i < ADC0880S052_CHANNEL_MAX; i++)
 		ec_changed[i] = encoder_read(sqc_handle->encoder_handle) + 1;
-
-	esp_timer_handle_t bpm_timer;
-	esp_timer_create_args_t bpm_timer_cfg = {
-		.name = "bpm",
-		.callback = &timer_cb,
-		.arg = sqc_handle,
-	};
-
-	ESP_ERROR_CHECK(esp_timer_create(&bpm_timer_cfg, &bpm_timer));
-	ESP_ERROR_CHECK(esp_timer_start_periodic(bpm_timer, bpm_to_us(sqc_handle->cur_bpm)));
 
 	while (1)
 	{
@@ -72,9 +41,7 @@ void app_main(void)
 			if (ec_changed[sqc_handle->cur_appmode] != sqc_handle->encoder_positions[sqc_handle->cur_appmode])
 			{
 				ESP_LOGD(TAG, "EC data changed: %i -> %i", ec_changed[sqc_handle->cur_appmode], sqc_handle->encoder_positions[sqc_handle->cur_appmode]);
-				sqc_handle->cur_bpm = START_BPM + sqc_handle->encoder_positions[sqc_handle->cur_appmode];
-				esp_timer_stop(bpm_timer);
-				esp_timer_start_periodic(bpm_timer, bpm_to_us(sqc_handle->cur_bpm));
+				update_bpm(sqc_handle);
 				ec_changed[sqc_handle->cur_appmode] = sqc_handle->encoder_positions[sqc_handle->cur_appmode];
 			}
 			// sseg_write(sqc_handle->sseg_handle, "BPM");

@@ -41,6 +41,7 @@
 #define SEG_CH_H (GPIO_NUM_33)
 #define S_SEG_CHANNEL_MASK (1ULL << SEG_CH_H) | (1ULL << SEG_CH_Z) | (1ULL << SEG_CH_E)
 
+#define DEF_BPM 120
 #define BPM_TO_US(a) (0x3938700 / (a))
 
 // ------------------------------------------------------------

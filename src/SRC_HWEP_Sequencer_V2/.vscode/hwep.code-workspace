@@ -1,0 +1,46 @@
+{
+	"folders": [
+		{
+			"path": "..\\..\\..\\.."
+		},
+		{
+			"name": "SRC_HWEP_Sequencer_V2",
+			"path": ".."
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"interrupt.h": "c",
+			"xutility": "c",
+			"math.h": "c",
+			"corecrt_math.h": "c",
+			"corecrt_math_defines.h": "c",
+			"stdio.h": "c",
+			"ios": "c",
+			"xiosbase": "c",
+			"btree.h": "c",
+			"charconv": "c",
+			"system_error": "c",
+			"sequencer.h": "c",
+			"i2s.h": "c",
+			"config.h": "c",
+			"task.h": "c",
+			"freertos.h": "c",
+			"esp_log.h": "c",
+			"esp_system.h": "c",
+			"chrono": "c",
+			"future": "c",
+			"xlocale": "c",
+			"adc088s052.h": "c",
+			"mcp23s08_io.h": "c",
+			"array": "c",
+			"vector": "c",
+			"xstring": "c",
+			"led_strip.h": "c",
+			"stp16cp05.h": "c",
+			"mcp23s08.h": "c",
+			"random": "c",
+			"cstdlib": "c"
+		}
+	}
+}

@@ -3,11 +3,12 @@
 static const gpio_num_t sseg_channel[3] = {GPIO_NUM_33, GPIO_NUM_25, GPIO_NUM_26};
 static const char *TAG = "sequencer header";
 
-#define MUXTIME_US 1500000
-#define BTN_MASK_EVENT (1 << 0)
+#define MUXTIME_US 5000
+#define BTN_MASK_PAUSE (1 << 0)
 #define BTN_MASK_RESET (1 << 1)
 #define BTN_MASK_DEFVAL (1 << 2)
-#define BTN_MASK_PAUSE (1 << 3)
+#define BTN_MASK_EVENT (1 << 3)
+#define PRIO_BIT (1 << 3)
 // ------------------------------------------------------------
 // Static functions and callbacks
 // ------------------------------------------------------------
@@ -39,7 +40,7 @@ static void mcp_cb(void *args)
 	ESP_LOGI(TAG, "%02x\n", btn_data);
 
 	// prescaler data
-	if (ps_data & 0x08)
+	if (ps_data & PRIO_BIT)
 	{
 		sqc_handle->ps_bpm = (1 << ((ps_data & 0x7) - 3));
 	}
@@ -52,12 +53,26 @@ static void mcp_cb(void *args)
 	sqc_handle->btn_defval = btn_data & BTN_MASK_DEFVAL;
 	sqc_handle->btn_pause = btn_data & BTN_MASK_PAUSE;
 
-	ESP_LOGD(TAG, "Event: %i", sqc_handle->btn_event);
-	ESP_LOGD(TAG, "Reset: %i", sqc_handle->btn_reset);
-	ESP_LOGD(TAG, "DefVal: %i", sqc_handle->btn_defval);
-	ESP_LOGD(TAG, "Pause: %i", sqc_handle->btn_pause);
-	ESP_LOGD(TAG, "BPM prescaler: %i", sqc_handle->ps_bpm);
-	ESP_LOGD(TAG, "Gate prescaler: %i\n", sqc_handle->ps_gate);
+	ESP_LOGI(TAG, "%02x\n", sqc_handle->btn_event);
+
+	switch (sqc_handle->cur_appmode)
+	{
+	case APP_MODE_BPM:
+		break;
+	case APP_MODE_KEY:
+		break;
+	case APP_MODE_ENR:
+		if (sqc_handle->btn_event)
+		{
+			sqc_handle->active_note_mask = sqc_handle->active_note_mask ^ get_pos_index(sqc_handle);
+			sqc_handle->cur_stp_upper = sqc_handle->active_note_mask;
+		}
+		break;
+	case APP_MODE_TSP:
+		break;
+	default:
+		break;
+	}
 }
 
 static void sseg_mux(void *args)
@@ -73,6 +88,24 @@ static void new_appmode(void *args)
 {
 	// sseg_context_t *ctx = (sseg_context_t*) args;
 	// TODO
+}
+
+static void bpm_timer_cb(void *args)
+{
+	ESP_LOGD(TAG, "BPM Timer Interrupt");
+
+	sequencer_config_t *ctx = (sequencer_config_t *)args;
+
+	// fix adc data arrangement
+	ESP_ERROR_CHECK(adc088s052_get_raw(ctx->adc_handle, ctx->channel, &(ctx->cur_adc_data[ctx->channel])));
+	// uint16_t data = 0;
+
+	ESP_LOGD(TAG, "channel %d pitch: %lf", ctx->channel, adc_to_pitch(ctx->cur_adc_data[ctx->channel], 0));
+
+	ESP_LOGD(TAG, "%d", ctx->channel);
+	ESP_LOGD(TAG, "%d", ctx->reset_at_n);
+
+	ctx->channel = (ctx->channel + 1) % ctx->reset_at_n;
 }
 
 // ------------------------------------------------------------
@@ -185,16 +218,34 @@ esp_err_t sequencer_init(sequencer_config_t **out_sqc_cfg)
 	};
 	ESP_ERROR_CHECK(adc088s052_init(&adc_handle, &adc_cfg));
 
+	// ------------------------------------------------------------
+	// BPM Cycle Timer
+	// ------------------------------------------------------------
+
+	esp_timer_handle_t bpm_timer;
+	esp_timer_create_args_t bpm_timer_cfg = {
+		.name = "bpm",
+		.callback = &bpm_timer_cb,
+		.arg = sqc_cfg,
+	};
+	ESP_ERROR_CHECK(esp_timer_create(&bpm_timer_cfg, &bpm_timer));
+	ESP_ERROR_CHECK(esp_timer_start_periodic(bpm_timer, bpm_to_us(DEF_BPM)));
+
+	// ------------------------------------------------------------
+	// Default Assignments
+	// ------------------------------------------------------------
+
 	*sqc_cfg = (sequencer_config_t){
 		.adc_handle = adc_handle,
 		.encoder_handle = encoder_handle,
 		.stp_handle = stp_handle,
 		.mcp_handle = mcp_handle,
 		.sseg_handle = sseg_handle,
+		.bpm_timer = bpm_timer,
 
 		.channel = 0,
 		.cur_appmode = APP_MODE_BPM,
-		.cur_bpm = 120,
+		.cur_bpm = DEF_BPM,
 		.cur_stp_upper = 0x00,
 
 		.osc = {
@@ -204,12 +255,18 @@ esp_err_t sequencer_init(sequencer_config_t **out_sqc_cfg)
 			.oct_offset = 0,
 		},
 
+		.encoder_positions[APP_MODE_ENR] = 2 * ADC0880S052_CHANNEL_MAX - 1,
 		.reset_at_n = ADC0880S052_CHANNEL_MAX,
 		.active_note_mask = 0xff,
 
 		.ps_bpm = 1,
 		.ps_gate = 1,
 	};
+
+	// ------------------------------------------------------------
+	// Store data in the out-handle
+	// ------------------------------------------------------------
+
 	*out_sqc_cfg = sqc_cfg;
 	return ESP_OK;
 }
@@ -335,4 +392,11 @@ esp_err_t manage_ws2812(sequencer_handle_t sqc_handle)
 		break;
 	}
 	return ESP_OK;
+}
+
+void update_bpm(sequencer_handle_t sqc_handle)
+{
+	sqc_handle->cur_bpm = START_BPM + sqc_handle->encoder_positions[sqc_handle->cur_appmode];
+	ESP_ERROR_CHECK(esp_timer_stop(sqc_handle->bpm_timer));
+	ESP_ERROR_CHECK(esp_timer_start_periodic(sqc_handle->bpm_timer, bpm_to_us(sqc_handle->cur_bpm)));
 }
