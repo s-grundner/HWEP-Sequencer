@@ -63,12 +63,12 @@ static void mcp_cb(void *args)
 static void sseg_mux(void *args)
 {
 	sseg_context_t *ctx = (sseg_context_t *)args;
-	mcp23s08_take_sem(ctx->mcp_handle);
+	// mcp23s08_take_sem(ctx->mcp_handle);
 	gpio_set_level(sseg_channel[ctx->channel], 0);
 	ctx->channel = (ctx->channel + 1) % SEG_CNT;
 	mcp23s08_write(ctx->mcp_handle, S_SEG_HW_ADR, GPIO_R, get_char_segment(ctx->data_buffer[ctx->channel]));
 	gpio_set_level(sseg_channel[ctx->channel], 1);
-	mcp23s08_give_sem(ctx->mcp_handle);
+	// mcp23s08_give_sem(ctx->mcp_handle);
 }
 
 static void new_appmode(void *args)
@@ -198,7 +198,8 @@ esp_err_t sequencer_init(sequencer_config_t **out_sqc_cfg)
 			.sample_pos = 0,
 			.oct_offset = 0,
 		},
-
+		
+		.encoder_positions[APP_MODE_ENR] = 2*ADC0880S052_CHANNEL_MAX-1,
 		.reset_at_n = ADC0880S052_CHANNEL_MAX,
 		.active_note_mask = 0xff,
 

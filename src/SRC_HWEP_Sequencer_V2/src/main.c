@@ -28,10 +28,10 @@ static void timer_cb(void *args)
 	ESP_ERROR_CHECK(adc088s052_get_raw(ctx->adc_handle, ctx->channel, &(ctx->cur_adc_data[ctx->channel])));
 	// uint16_t data = 0;
 
-	ESP_LOGD(TAG, "channel %d pitch: %d", ctx->channel, ctx->cur_adc_data[ctx->channel]);
+	ESP_LOGI(TAG, "channel %d pitch: %lf", ctx->channel, adc_to_pitch(ctx->cur_adc_data[ctx->channel],0));
 
-	ESP_LOGD(INTR_TAG, "%d", ctx->channel);
-	ESP_LOGD(INTR_TAG, "%d", ctx->reset_at_n);
+	ESP_LOGI(INTR_TAG, "%d", ctx->channel);
+	ESP_LOGI(INTR_TAG, "%d", ctx->reset_at_n);
 
 	ctx->channel = (ctx->channel + 1) % ctx->reset_at_n;
 }
@@ -78,10 +78,12 @@ void app_main(void)
 				ec_changed[sqc_handle->cur_appmode] = sqc_handle->encoder_positions[sqc_handle->cur_appmode];
 			}
 			sseg_write(sqc_handle->sseg_handle, "BPM");
+			sqc_handle->reset_at_n = (((sqc_handle->encoder_positions[APP_MODE_ENR]>>1)%8)+1);
 			break;
 		case APP_MODE_KEY:
 			ESP_ERROR_CHECK(stp_index(sqc_handle));
 			sseg_write(sqc_handle->sseg_handle, "KEY");
+			sqc_handle->reset_at_n = (((sqc_handle->encoder_positions[APP_MODE_ENR]>>1)%8)+1);
 			break;
 		case APP_MODE_ENR:
 			ESP_ERROR_CHECK(stp_cursor(sqc_handle));
@@ -90,6 +92,7 @@ void app_main(void)
 		case APP_MODE_TSP:
 			ESP_ERROR_CHECK(stp_index(sqc_handle));
 			sseg_write(sqc_handle->sseg_handle, "TSP");
+			sqc_handle->reset_at_n = (((sqc_handle->encoder_positions[APP_MODE_ENR]>>1)%8)+1);
 			break;
 		default:
 			break;
