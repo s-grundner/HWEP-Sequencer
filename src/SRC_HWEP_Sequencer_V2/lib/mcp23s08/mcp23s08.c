@@ -47,6 +47,7 @@ static void mcp_intr_task(void *arg)
 		{
 			xSemaphoreTake(ctx->ready_sem, 2);
 			ctx->cfg.mcp_callback(ctx->cfg.mcp_intr_args);
+			
 		}
 	}
 }
@@ -95,9 +96,10 @@ esp_err_t mcp23s08_init(mcp23s08_context_t **out_ctx, const mcp23s08_config_t *c
 			.pin_bit_mask = 1ULL << ctx->cfg.intr_io,
 		};
 		gpio_config(&intr_cfg);
-
 		mcp_evt_queue = xQueueCreate(10, sizeof(uint32_t));
 		xTaskCreate(mcp_intr_task, "mcp23s08_interrupt", 2048, NULL, 10, NULL);
+
+		// gpio_install_isr_service(ESP_INTR_FLAG_EDGE);
 
 		gpio_isr_handler_add(ctx->cfg.intr_io, mcp_isr_handler, (void *)ctx);
 	}
@@ -149,7 +151,7 @@ esp_err_t mcp23s08_read(mcp23s08_context_t *ctx, mcp23s08_hw_adr hw_adr, mcp23s0
 	if ((err == ESP_OK) && (ctx->cfg.intr_io >= 0))
 		xSemaphoreGive(ctx->ready_sem);
 
-		spi_device_release_bus(ctx->spi);
+	spi_device_release_bus(ctx->spi);
 
 	*data = t.rx_data[0];
 	return err;
