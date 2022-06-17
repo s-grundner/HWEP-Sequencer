@@ -1,5 +1,5 @@
 # HWEP [DE]
-![Frontpanel](/docu/v2/Frontpanel.svg)
+![Frontpanel](/docu/v2/assets/Frontpanel.svg)
 
 ## KUB - Kurzbeschreibung
 
@@ -10,13 +10,13 @@ Der Deafult-Key-Taster setzt Einstellungen von Tonleiter bzw. Transponierung der
 Der Sequencer ist mit zwei Prescalern für Gate-Länge und Taktrate ausgestattet. Dieser teilt den Takt oder das Gate des Tones durch 1, 2, 4, 8 oder 16.
 Außerdem verfügt der Sequencer über eine Umschalttaste, die das Funktionsspektrum erweitern. Die Dokumentation für die Taster befindet sich in der Funktionsbeschreibung.
 
-Zum Bedienen des Sequencers gibt es verschiedene Parameter, die mithilfe eines einzigen Dreh-Encoder gesteuert werden können. Der Dreh-Encoder hat einen integrierten Taster, mit welchem man die Parameter, die man verändern will, einstellen kann. Die Veränderung der Parameter wird je nach Modus an verschiedenen Status LEDs und Anzeigen abgezeichnet. Der Event-Taster hat je nach Modus eine andere Funktion.
+Zum Bedienen des Sequencers gibt es verschiedene Parameter, die mithilfe eines Dreh-Encoders gesteuert werden können. Der Dreh-Encoder hat einen integrierten Taster, mit welchem man die Parameter, die man verändern will, einstellen kann. Die Veränderung der Parameter wird je nach Modus an verschiedenen Status LEDs und Anzeigen abgezeichnet. Der Event-Taster hat je nach Modus eine andere Funktion.
  
 Der Sequencer wird mit dem einem RTOS am ESP32 32-bit Microcontroller betrieben. Der Digitale Audioausgang erfolgt über das I²S (Inter-IC-Sound) Protokoll und kann 16-Bit Sounds bei einer Abtastrate von 44.1kHz übertragen und durch einen I²S-DAC (PCM5102a) direkt als Audio-Signal ausgegeben werden.
 
 ## BSB - Blockschaltbild
 
-![BSB](/docu/v2/BSB_Sequencer_I2S.drawio_dark.svg)
+![BSB](/docu/v2/assets/BSB_Sequencer_I2S.drawio_dark.svg)
 
 ## FUB - Funktionsbeschreibung
 #### 1. 8 Potentiometer als analoger Eingang:
