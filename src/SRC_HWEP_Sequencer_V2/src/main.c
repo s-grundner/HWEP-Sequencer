@@ -16,17 +16,16 @@
 
 static const char *TAG = "sequencer_main";
 
-void app_main(void)
+static void fsm(void *args)
 {
-	sequencer_handle_t sqc_handle;
-	ESP_ERROR_CHECK(sequencer_init(&sqc_handle));
-
+	sequencer_handle_t sqc_handle = (sequencer_handle_t)args;
 	uint32_t ec_changed[ADC0880S052_CHANNEL_MAX];
+	
 
 	for (int i = 0; i < ADC0880S052_CHANNEL_MAX; i++)
 		ec_changed[i] = encoder_read(sqc_handle->encoder_handle) + 1;
 
-	while (1)
+	for (;;)
 	{
 		// // store encoder value in sqc struct to save time
 		sqc_handle->encoder_positions[sqc_handle->cur_appmode] = encoder_read(sqc_handle->encoder_handle);
@@ -65,13 +64,29 @@ void app_main(void)
 		default:
 			break;
 		}
-		manage_ws2812(sqc_handle);
-		sqc_handle->osc.pitch = adc_to_pitch(sqc_handle->cur_adc_data[sqc_handle->channel], sqc_handle->osc.oct_offset);
+
+		// manage_ws2812(sqc_handle);
+		// manage_audio_data(sqc_handle); 
 
 		if (sqc_handle->active_note_mask & (1 << sqc_handle->channel))
 		{
 			send_audio_stereo(&sqc_handle->osc);
 		}
-		vTaskDelay(10 / portTICK_PERIOD_MS);
 	}
+}
+
+void app_main(void)
+{
+	sequencer_handle_t sqc_handle;
+	ESP_ERROR_CHECK(sequencer_init(&sqc_handle));
+
+	if (xTaskCreatePinnedToCore(&fsm, "main_fsm", 2048, sqc_handle, 10, NULL, 1) == pdTRUE)
+	{
+		while (1)
+			vTaskDelay(10 / portTICK_PERIOD_MS);
+	} else
+	{
+		ESP_LOGE(TAG, "Failed to create Main FSM.\n Abort.");
+	}
+	
 }

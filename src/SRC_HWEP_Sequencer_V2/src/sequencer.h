@@ -23,6 +23,8 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "freertos/queue.h"
+#include "freertos/timers.h"
+#include "freertos/semphr.h"
 
 #include "esp_intr_alloc.h"
 
@@ -47,6 +49,7 @@ typedef struct {
 	uint8_t channel;
 	mcp23s08_handle_t mcp_handle;
 	esp_timer_handle_t mux_timer;
+	bool sseg_refreshable;
 } sseg_context_t;
 
 typedef sseg_context_t* sseg_handle_t;
@@ -89,7 +92,6 @@ typedef struct sequencer_config_s
 	// prescaler
 	uint8_t ps_bpm;
 	uint8_t ps_gate;
-
 
 }sequencer_config_t;
 typedef sequencer_config_t* sequencer_handle_t;
@@ -150,7 +152,7 @@ esp_err_t sseg_write(sseg_handle_t sseg_handle, char *data);
  * @param sqc_handle Extern handle
  * @return esp_err_t 
  */
-esp_err_t sseg_new_appmode(sseg_handle_t sseg_handle);
+esp_err_t sseg_new_appmode(sequencer_handle_t sqc_handle);
 
 /**
  * @brief Calculates the channel index from the position of the encoder

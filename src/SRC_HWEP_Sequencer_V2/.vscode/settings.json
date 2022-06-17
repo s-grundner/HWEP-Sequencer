@@ -1,6 +1,7 @@
 {
 	"files.associations": {
-		"led_strip.h": "c"
+		"led_strip.h": "c",
+		"sequencer.h": "c"
 	},
 	"idf.adapterTargetName": "esp32c3",
 	"idf.openOcdConfigs": [
