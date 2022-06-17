@@ -1,29 +1,9 @@
-#include "mcp23s08.h"
+#include "sequencer.h"
+#include "esp_log.h"
 #include "config.h"
-
 
 void app_main(void)
 {
-	mcp23s08_handle_t mcp_handle;
-	mcp23s08_config_t mcp_cfg = {
-		.cs_io = CS_MCP23S08,
-		.host = VSPI,
-		.miso_io = VSPIQ,
-		.mosi_io = VSPID,
-		.intr_io = MCP23S08_INTR,
-		.mcp_callback = mcp_cb,
-		.mcp_intr_args = sqc_cfg,
-	};
-	ESP_ERROR_CHECK(mcp23s08_init(&mcp_handle, &mcp_cfg));
-	ESP_ERROR_CHECK(mcp23s08_write(mcp_handle, 0, IOCON, (1 << HAEN) | (1 << INTPOL))); // Enable multiple MCP for same spi transaction
-	ESP_ERROR_CHECK(mcp23s08_write(mcp_handle, S_SEG_HW_ADR, IODIR, 0x00));				// Set display MCP-GPIO as Output
-	ESP_ERROR_CHECK(mcp23s08_write(mcp_handle, IN_PS_HW_ADR, IODIR, 0xff));				// Set Button MCP-GPIO as Input (Default as Input)
-	ESP_ERROR_CHECK(mcp23s08_write(mcp_handle, IN_PS_HW_ADR, GPPU, 0x0f));				// Enable Internal Pullups for Buttons (not prio buttons)
-
-	// Interrupt Settings for Input MCP
-	ESP_ERROR_CHECK(mcp23s08_write(mcp_handle, IN_PS_HW_ADR, DEFVAL, 0x0f)); // Set default values
-	ESP_ERROR_CHECK(mcp23s08_write(mcp_handle, IN_PS_HW_ADR, INTCON, 0x00)); // Interrupt on change
-
-	ESP_ERROR_CHECK(mcp23s08_write(mcp_handle, IN_PS_HW_ADR, GPINTEN, 0xff)); // Enables Interrupts for all GPI
-	ESP_ERROR_CHECK(mcp23s08_dump_intr(mcp_handle, IN_PS_HW_ADR));
+	sequencer_handle_t s;
+	sequencer_init(&s);
 }

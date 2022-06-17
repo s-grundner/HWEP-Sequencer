@@ -81,7 +81,6 @@ esp_err_t adc088s052_init(adc088s052_context_t **out_ctx, const adc088s052_confi
 esp_err_t adc088s052_get_raw(adc088s052_context_t *ctx, adc088s052_channel_t ch, uint16_t *data)
 {
 	esp_err_t err = ESP_OK;
-	ESP_LOGD(TAG, "Aquiring host %d with CS %d", ctx->cfg.host, ctx->cfg.cs_io);
 	err = spi_device_acquire_bus(ctx->spi, portMAX_DELAY);
 	ESP_ERROR_CHECK(err);
 	spi_transaction_t t = {
@@ -91,20 +90,17 @@ esp_err_t adc088s052_get_raw(adc088s052_context_t *ctx, adc088s052_channel_t ch,
 		.flags = SPI_TRANS_USE_RXDATA,
 		.user = ctx,
 	};
-
 	err = spi_device_polling_transmit(ctx->spi, &t);
 	ESP_ERROR_CHECK(err);
 	if (err != ESP_OK)
 		return err;
-	// *data = t.rx_data[0];
-	*data = SPI_SWAP_DATA_RX(*(uint16_t*)t.rx_data, 15);
-	*data = *data;
-	ESP_LOGD(TAG, "ADC val in ch %d: 0x%x", ch, *data);
+	*data = (t.rx_data[0]) | (t.rx_data[1]);
 	spi_device_release_bus(ctx->spi);
 	return ESP_OK;
 }
 
 void adc088s052_exit(adc088s052_handle_t handle)
 {
+	// release device from bus first (todo)
 	free(handle);
 }

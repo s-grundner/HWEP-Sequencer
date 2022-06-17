@@ -1,6 +1,7 @@
 #include "sequencer.h"
 #include "esp_log.h"
 static const gpio_num_t sseg_channel[3] = {GPIO_NUM_33, GPIO_NUM_25, GPIO_NUM_26};
+static char app_mode_names[4][3] = {"BPM", "KEY", "ENR", "TSP"};
 static const char *TAG = "sequencer header";
 
 #define MUXTIME_US 5000
@@ -9,6 +10,27 @@ static const char *TAG = "sequencer header";
 #define BTN_MASK_DEFVAL (1 << 2)
 #define BTN_MASK_EVENT (1 << 3)
 #define PRIO_BIT (1 << 3)
+
+// ------------------------------------------------------------
+// Timer Tasks, since Hardware Timers are not sent to a queue
+// ------------------------------------------------------------
+
+SemaphoreHandle_t timer_sem;
+
+QueueHandle_t sseg_mux_q = NULL;
+static void IRAM_ATTR sseg_mux_isr(void *arg)
+{
+	sseg_context_t *ctx = (sseg_context_t *)arg;
+	xQueueSendFromISR(sseg_mux_q, &ctx, NULL);
+}
+
+QueueHandle_t bpm_timer_q = NULL;
+static void IRAM_ATTR bpm_timer_isr(void *arg)
+{
+	sequencer_handle_t ctx = (sequencer_handle_t)arg;
+	xQueueSendFromISR(bpm_timer_q, &ctx, NULL);
+}
+
 // ------------------------------------------------------------
 // Static functions and callbacks
 // ------------------------------------------------------------
@@ -19,7 +41,7 @@ static void switch_cb(void *args)
 	ctx->encoder_positions[ctx->cur_appmode] = encoder_read(ctx->encoder_handle);
 
 	ctx->cur_appmode = encoder_read_sw(ctx->encoder_handle);
-	// sseg_new_appmode(ctx->sseg_handle);
+	sseg_new_appmode(ctx);
 
 	encoder_write(ctx->encoder_handle, ctx->encoder_positions[ctx->cur_appmode]);
 	ESP_LOGD(TAG, "Current mode%d", ctx->cur_appmode);
@@ -30,82 +52,97 @@ static void rot_cb(void *args) {}
 static void mcp_cb(void *args)
 {
 	sequencer_handle_t sqc_handle = (sequencer_handle_t)args;
-	uint8_t mcp_data;
-	mcp23s08_read(sqc_handle->mcp_handle, IN_PS_HW_ADR, INTCAP, &mcp_data);
-	uint8_t ps_data = mcp_data >> 4;
-	uint8_t btn_data = ~mcp_data & 0x0f;
-
-	ESP_LOGI(TAG, "%02x", mcp_data);
-	ESP_LOGI(TAG, "%02x", ps_data);
-	ESP_LOGI(TAG, "%02x\n", btn_data);
-
-	// prescaler data
-	if (ps_data & PRIO_BIT)
+	if (xSemaphoreTake(timer_sem, 3) == pdTRUE)
 	{
-		sqc_handle->ps_bpm = (1 << ((ps_data & 0x7) - 3));
-	}
-	else if (ps_data)
-	{
-		sqc_handle->ps_gate = (1 << (ps_data - 3));
-	}
-	sqc_handle->btn_event = btn_data & BTN_MASK_EVENT;
-	sqc_handle->btn_reset = btn_data & BTN_MASK_RESET;
-	sqc_handle->btn_defval = btn_data & BTN_MASK_DEFVAL;
-	sqc_handle->btn_pause = btn_data & BTN_MASK_PAUSE;
+		uint8_t mcp_data;
+		mcp23s08_read(sqc_handle->mcp_handle, IN_PS_HW_ADR, INTCAP, &mcp_data);
+		uint8_t ps_data = mcp_data >> 4;
+		uint8_t btn_data = ~mcp_data & 0x0f;
 
-	ESP_LOGI(TAG, "%02x\n", sqc_handle->btn_event);
+		ESP_LOGI(TAG, "%02x", mcp_data);
+		ESP_LOGI(TAG, "%02x", ps_data);
+		ESP_LOGI(TAG, "%02x\n", btn_data);
 
-	switch (sqc_handle->cur_appmode)
-	{
-	case APP_MODE_BPM:
-		break;
-	case APP_MODE_KEY:
-		break;
-	case APP_MODE_ENR:
-		if (sqc_handle->btn_event)
+		// prescaler data
+		if (ps_data & PRIO_BIT)
 		{
-			sqc_handle->active_note_mask = sqc_handle->active_note_mask ^ get_pos_index(sqc_handle);
-			sqc_handle->cur_stp_upper = sqc_handle->active_note_mask;
+			sqc_handle->ps_bpm = (1 << ((ps_data & 0x7) - 3));
+			update_bpm(sqc_handle);
 		}
-		break;
-	case APP_MODE_TSP:
-		break;
-	default:
-		break;
+		else if (ps_data)
+		{
+			sqc_handle->ps_gate = (1 << (ps_data - 3));
+		}
+		sqc_handle->btn_event = btn_data & BTN_MASK_EVENT;
+		sqc_handle->btn_reset = btn_data & BTN_MASK_RESET;
+		sqc_handle->btn_defval = btn_data & BTN_MASK_DEFVAL;
+		sqc_handle->btn_pause = btn_data & BTN_MASK_PAUSE;
+
+		switch (sqc_handle->cur_appmode)
+		{
+		case APP_MODE_BPM:
+			break;
+		case APP_MODE_KEY:
+			break;
+		case APP_MODE_ENR:
+			if (sqc_handle->btn_event)
+				sqc_handle->active_note_mask = sqc_handle->active_note_mask ^ get_pos_index(sqc_handle);
+			break;
+		case APP_MODE_TSP:
+			break;
+		default:
+			break;
+		}
+		xSemaphoreGive(timer_sem);
 	}
 }
 
-static void sseg_mux(void *args)
+/* DEVNOTE: change to Software timer
+ * low priority task
+ * just needs to happen fast enough
+ * precise timing not important
+ */
+static void sseg_mux_task(void *args)
 {
 	sseg_context_t *ctx = (sseg_context_t *)args;
-	gpio_set_level(sseg_channel[ctx->channel], 0);
-	ctx->channel = (ctx->channel + 1) % SEG_CNT;
-	mcp23s08_write(ctx->mcp_handle, S_SEG_HW_ADR, GPIO_R, get_char_segment(ctx->data_buffer[ctx->channel]));
-	gpio_set_level(sseg_channel[ctx->channel], 1);
+	for (;;)
+	{
+		if (xQueueReceive(sseg_mux_q, &ctx, portMAX_DELAY) == pdTRUE)
+		{
+			if (xSemaphoreTake(timer_sem, 3) == pdTRUE)
+			{
+				gpio_set_level(sseg_channel[ctx->channel], 0);
+				ctx->channel = (ctx->channel + 1) % SEG_CNT;
+				mcp23s08_write(ctx->mcp_handle, S_SEG_HW_ADR, GPIO_R, get_char_segment(ctx->data_buffer[ctx->channel]));
+				gpio_set_level(sseg_channel[ctx->channel], 1);
+				xSemaphoreGive(timer_sem);
+			}
+		}
+	}
 }
 
-static void new_appmode(void *args)
+static void new_appmode(TimerHandle_t new_app_timer)
 {
 	// sseg_context_t *ctx = (sseg_context_t*) args;
 	// TODO
+	ESP_LOGI("test", "timercb");
 }
 
-static void bpm_timer_cb(void *args)
+static void bpm_timer_task(void *args)
 {
-	ESP_LOGD(TAG, "BPM Timer Interrupt");
-
 	sequencer_config_t *ctx = (sequencer_config_t *)args;
+	for (;;)
+	{
+		if (xQueueReceive(bpm_timer_q, &ctx, portMAX_DELAY) == pdTRUE)
+		{
 
-	// fix adc data arrangement
-	ESP_ERROR_CHECK(adc088s052_get_raw(ctx->adc_handle, ctx->channel, &(ctx->cur_adc_data[ctx->channel])));
-	// uint16_t data = 0;
-
-	ESP_LOGD(TAG, "channel %d pitch: %lf", ctx->channel, adc_to_pitch(ctx->cur_adc_data[ctx->channel], 0));
-
-	ESP_LOGD(TAG, "%d", ctx->channel);
-	ESP_LOGD(TAG, "%d", ctx->reset_at_n);
-
-	ctx->channel = (ctx->channel + 1) % ctx->reset_at_n;
+			ctx->channel = (ctx->channel + 1) % ctx->reset_at_n;
+		}
+		for (uint8_t i = 0; i < ADC0880S052_CHANNEL_MAX; i++)
+		{
+			ESP_ERROR_CHECK(adc088s052_get_raw(ctx->adc_handle, ctx->channel, &(ctx->cur_adc_data[i])));
+		}
+	}
 }
 
 // ------------------------------------------------------------
@@ -117,6 +154,18 @@ esp_err_t sequencer_init(sequencer_config_t **out_sqc_cfg)
 	sequencer_config_t *sqc_cfg = (sequencer_config_t *)malloc(sizeof(sequencer_config_t));
 	if (!sqc_cfg)
 		return ESP_ERR_NO_MEM;
+
+	// ------------------------------------------------------------
+	// init Queues and create tasks
+	// ------------------------------------------------------------
+
+	vSemaphoreCreateBinary(timer_sem);
+
+	sseg_mux_q = xQueueCreate(10, sizeof(sseg_handle_t));
+	bpm_timer_q = xQueueCreate(10, sizeof(sequencer_handle_t));
+
+	xTaskCreate(bpm_timer_task, "bpm_timer_task", 2048, NULL, 10, NULL);
+	xTaskCreate(sseg_mux_task, "sseg_mux_task", 2048, NULL, 10, NULL);
 
 	// ------------------------------------------------------------
 	// Audio
@@ -151,18 +200,6 @@ esp_err_t sequencer_init(sequencer_config_t **out_sqc_cfg)
 	};
 	ESP_ERROR_CHECK(encoder_init(&encoder_handle, &ec_cfg));
 
-	// ----------------------------------------------------------
-	// STP LED Driver
-	// ------------------------------------------------------------
-	stp16cp05_handle_t stp_handle;
-	stp16cp05_config_t stp_cfg = {
-		.cs_io = CS_STP16CP05,
-		.host = VSPI,
-		.miso_io = VSPIQ,
-		.mosi_io = VSPID,
-	};
-	ESP_ERROR_CHECK(stp16cp05_init(&stp_handle, &stp_cfg));
-
 	// ------------------------------------------------------------
 	// Seven Segment Display and PS input Buttons (MCP23S08)
 	// ------------------------------------------------------------
@@ -189,12 +226,17 @@ esp_err_t sequencer_init(sequencer_config_t **out_sqc_cfg)
 	ESP_ERROR_CHECK(mcp23s08_write(mcp_handle, IN_PS_HW_ADR, GPINTEN, 0xff)); // Enables Interrupts for all GPI
 	ESP_ERROR_CHECK(mcp23s08_dump_intr(mcp_handle, IN_PS_HW_ADR));
 
-	uint8_t data;
-	ESP_ERROR_CHECK(mcp23s08_read(mcp_handle, S_SEG_HW_ADR, IODIR, &data)); // Enables Interrupts for all GPI
-	ESP_LOGI(TAG, "%02x", data);
-	ESP_ERROR_CHECK(mcp23s08_read(mcp_handle, IN_PS_HW_ADR, IODIR, &data)); // Enables Interrupts for all GPI
-	ESP_LOGI(TAG, "%02x", data);
-
+	// ----------------------------------------------------------
+	// STP LED Driver
+	// ------------------------------------------------------------
+	stp16cp05_handle_t stp_handle;
+	stp16cp05_config_t stp_cfg = {
+		.cs_io = CS_STP16CP05,
+		.host = VSPI,
+		.miso_io = VSPIQ,
+		.mosi_io = VSPID,
+	};
+	ESP_ERROR_CHECK(stp16cp05_init(&stp_handle, &stp_cfg));
 
 	// ------------------------------------------------------------
 	// Seven Segment Display and PS input Buttons (MCP23S08)
@@ -225,11 +267,11 @@ esp_err_t sequencer_init(sequencer_config_t **out_sqc_cfg)
 	esp_timer_handle_t bpm_timer;
 	esp_timer_create_args_t bpm_timer_cfg = {
 		.name = "bpm",
-		.callback = &bpm_timer_cb,
+		.callback = &bpm_timer_isr,
 		.arg = sqc_cfg,
 	};
 	ESP_ERROR_CHECK(esp_timer_create(&bpm_timer_cfg, &bpm_timer));
-	ESP_ERROR_CHECK(esp_timer_start_periodic(bpm_timer, bpm_to_us(DEF_BPM)));
+	ESP_ERROR_CHECK(esp_timer_start_periodic(bpm_timer, bpm_to_us(START_BPM)));
 
 	// ------------------------------------------------------------
 	// Default Assignments
@@ -245,8 +287,7 @@ esp_err_t sequencer_init(sequencer_config_t **out_sqc_cfg)
 
 		.channel = 0,
 		.cur_appmode = APP_MODE_BPM,
-		.cur_bpm = DEF_BPM,
-		.cur_stp_upper = 0x00,
+		.cur_bpm = START_BPM,
 
 		.osc = {
 			.wavetable = get_wavetable(SINE_WT),
@@ -314,7 +355,7 @@ esp_err_t sseg_init(sseg_context_t **out_sseg_ctx, sequencer_handle_t sqc_handle
 	esp_timer_handle_t timer_handle;
 	esp_timer_create_args_t timer_cfg = {
 		.name = "mux",
-		.callback = &sseg_mux,
+		.callback = &sseg_mux_isr,
 		.arg = sseg_ctx,
 	};
 	ESP_ERROR_CHECK(esp_timer_create(&timer_cfg, &timer_handle));
@@ -347,17 +388,18 @@ esp_err_t sseg_write(sseg_context_t *sseg_handle, char *data)
 	return ESP_OK;
 }
 
-esp_err_t sseg_new_appmode(sseg_handle_t sseg_handle)
+esp_err_t sseg_new_appmode(sequencer_handle_t sqc_handle)
 {
 	// start newmode init on segment display
-	esp_timer_handle_t new_appm;
-	esp_timer_create_args_t timer_cfg = {
-		.name = "new mode",
-		.callback = &new_appmode,
-		.arg = sseg_handle,
-	};
-	ESP_ERROR_CHECK(esp_timer_create(&timer_cfg, &new_appm));
-	ESP_ERROR_CHECK(esp_timer_start_once(new_appm, 2000000));
+	sseg_write(sqc_handle->sseg_handle, app_mode_names[sqc_handle->cur_appmode]);
+	TimerHandle_t new_app_timer = xTimerCreate(
+		"new_app_timer",
+		1000 / portTICK_PERIOD_MS,
+		pdFALSE,
+		NULL,
+		new_appmode
+	);
+	xTimerStartFromISR(new_app_timer, pdFALSE);
 	return ESP_OK;
 }
 
@@ -372,31 +414,28 @@ uint8_t get_pos_index(sequencer_handle_t sqc_handle)
 
 uint32_t bpm_to_us(uint16_t bpm)
 {
-	return 0x3938700 / bpm;
-}
-
-esp_err_t manage_ws2812(sequencer_handle_t sqc_handle)
-{
-	// TODO
-	switch (sqc_handle->cur_appmode)
-	{
-	case APP_MODE_BPM:
-		break;
-	case APP_MODE_KEY:
-		break;
-	case APP_MODE_ENR:
-		break;
-	case APP_MODE_TSP:
-		break;
-	default:
-		break;
-	}
-	return ESP_OK;
+	return 0x3938700 / (bpm ? bpm : START_BPM);
 }
 
 void update_bpm(sequencer_handle_t sqc_handle)
 {
 	sqc_handle->cur_bpm = START_BPM + sqc_handle->encoder_positions[sqc_handle->cur_appmode];
 	ESP_ERROR_CHECK(esp_timer_stop(sqc_handle->bpm_timer));
-	ESP_ERROR_CHECK(esp_timer_start_periodic(sqc_handle->bpm_timer, bpm_to_us(sqc_handle->cur_bpm)));
+	ESP_ERROR_CHECK(esp_timer_start_periodic(sqc_handle->bpm_timer, bpm_to_us(sqc_handle->cur_bpm * sqc_handle->ps_bpm)));
 }
+
+// ------------------------------------------------------------
+// Manager functions
+// ------------------------------------------------------------
+
+// esp_err_t manage_sseg(sequencer_handle_t sqc_handle)
+// {
+
+// }
+
+
+// manage audio 
+// manage ws2812
+// manage sseg
+
+

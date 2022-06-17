@@ -23,6 +23,8 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "freertos/queue.h"
+#include "freertos/timers.h"
+#include "freertos/semphr.h"
 
 #include "esp_intr_alloc.h"
 
@@ -47,6 +49,7 @@ typedef struct {
 	uint8_t channel;
 	mcp23s08_handle_t mcp_handle;
 	esp_timer_handle_t mux_timer;
+	bool sseg_refreshable;
 } sseg_context_t;
 
 typedef sseg_context_t* sseg_handle_t;
@@ -66,18 +69,15 @@ typedef struct sequencer_config_s
 
 	esp_timer_handle_t bpm_timer;
 
-	// adc data
+	// adc specific data
 	uint16_t cur_adc_data[ADC0880S052_CHANNEL_MAX];
 	uint8_t channel; // 0 to max channels
 
-	// stp data
-	uint8_t cur_stp_upper;
-
 	// Audio data
 	oscillator_t osc;
+	uint16_t cur_bpm;
 
 	// general
-	uint16_t cur_bpm;
 	app_mode_t cur_appmode;
 	int32_t encoder_positions[MAX_APP_MODES];
 	uint8_t reset_at_n;
@@ -92,7 +92,8 @@ typedef struct sequencer_config_s
 	// prescaler
 	uint8_t ps_bpm;
 	uint8_t ps_gate;
-} sequencer_config_t;
+
+}sequencer_config_t;
 typedef sequencer_config_t* sequencer_handle_t;
 
 /**
@@ -151,7 +152,7 @@ esp_err_t sseg_write(sseg_handle_t sseg_handle, char *data);
  * @param sqc_handle Extern handle
  * @return esp_err_t 
  */
-esp_err_t sseg_new_appmode(sseg_handle_t sseg_handle);
+esp_err_t sseg_new_appmode(sequencer_handle_t sqc_handle);
 
 /**
  * @brief Calculates the channel index from the position of the encoder
@@ -178,7 +179,7 @@ uint32_t bpm_to_us(uint16_t bpm);
 esp_err_t manage_ws2812(sequencer_handle_t sqc_handle);
 
 /**
- * @brief stops current bpm timer and restarts it with the base bpm + the encoder position
+ * @brief 
  * 
  * @param sqc_handle 
  */

@@ -6,7 +6,6 @@
 
 static void encoder_update(encoder_context_t *arg)
 {
-	arg->cfg.rot_callback(arg->cfg.rot_args ? arg->cfg.rot_args : arg);
 	uint8_t s = arg->state & 3;
 	if (gpio_get_level(arg->cfg.pin_a))
 		s |= 4;
@@ -40,11 +39,12 @@ static void encoder_update(encoder_context_t *arg)
 		break;
 	}
 	arg->state = (s >> 2);
+	arg->cfg.rot_callback(arg->cfg.rot_args ? arg->cfg.rot_args : arg);
 }
 static void encoder_switch_update(encoder_context_t *arg)
 {
-	arg->cfg.sw_callback(arg->cfg.sw_args ? arg->cfg.sw_args : arg);
 	arg->sw_state = (arg->sw_state >= arg->cfg.sw_max) ? 0 : arg->sw_state + 1;
+	arg->cfg.sw_callback(arg->cfg.sw_args ? arg->cfg.sw_args : arg);
 }
 
 // ------------------------------------------------------------

@@ -17,7 +17,7 @@
 #include <stdio.h>
 
 #define CONCERT_PITCH	440.0
-#define ADC_MAX_VAL 	255
+#define ADC_MAX_VAL 	255.0
 #define A0_NUM			49
 
 double get_pitch_hz(uint8_t key_num);

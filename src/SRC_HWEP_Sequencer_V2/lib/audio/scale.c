@@ -29,5 +29,5 @@ double adc_to_pitch(uint8_t adc_val, uint8_t oct_offset)
 
 uint8_t adc_to_num(uint8_t adc_val, uint8_t oct_offset)
 {
-	return 12 * (oct_offset + 2 * (adc_val / ADC_MAX_VAL));
+	return (12.0 * ((float)oct_offset + 2.0 * ((float)adc_val / ADC_MAX_VAL)))+0.5;
 }
