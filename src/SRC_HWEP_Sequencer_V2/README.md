@@ -1,4 +1,4 @@
-# Software DOCS
+# Software DOCS [DE]
 ![RTOS](/docu/v2/Software_docs/RTOS_dark.drawio.svg)
 
 
