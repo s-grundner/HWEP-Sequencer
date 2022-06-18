@@ -8,12 +8,12 @@ static const char *TAG = "sequencer header";
 #define NEW_MODE_TIMEOUT_MS 2000
 #define BTN_MASK_PAUSE (1 << 0)
 #define BTN_MASK_RESET (1 << 1)
-#define BTN_MASK_DEFVAL (1 << 2)
+#define BTN_MASK_SHKEY (1 << 2)
 #define BTN_MASK_SHIFT (1 << 3)
 #define PRIO_BIT (1 << 3)
 
 // ------------------------------------------------------------
-// Timer Tasks, since Hardware Timers are not sent to a queue
+// Timer Tasks
 // ------------------------------------------------------------
 
 SemaphoreHandle_t timer_sem;
@@ -25,9 +25,9 @@ static void IRAM_ATTR refresh_isr(void *arg)
 	xQueueSendFromISR(refresh_q, &ctx, NULL);
 }
 
-static void IRAM_ATTR bpm_timer_isr(TimerHandle_t bpm_timer)
+static void IRAM_ATTR bpm_timer_task(TimerHandle_t bpm_timer)
 {
-	sequencer_handle_t ctx = (sequencer_handle_t) pvTimerGetTimerID(bpm_timer);
+	sequencer_handle_t ctx = (sequencer_handle_t)pvTimerGetTimerID(bpm_timer);
 	ctx->channel = (ctx->channel + 1) % ctx->reset_at_n;
 }
 
@@ -37,7 +37,7 @@ static void IRAM_ATTR bpm_timer_isr(TimerHandle_t bpm_timer)
 
 static void switch_cb(void *args)
 {
-	sequencer_config_t *ctx = (sequencer_config_t *)args;
+	sequencer_handle_t ctx = (sequencer_handle_t)args;
 	// ctx->encoder_positions[ctx->cur_appmode] = encoder_read(ctx->encoder_handle);
 
 	ctx->cur_appmode = encoder_read_sw(ctx->encoder_handle);
@@ -49,7 +49,7 @@ static void switch_cb(void *args)
 
 static void rot_cb(void *args)
 {
-	sequencer_handle_t sqc_handle = (sequencer_handle_t) args;
+	sequencer_handle_t sqc_handle = (sequencer_handle_t)args;
 	sqc_handle->sseg_handle->sseg_refreshable = true;
 }
 
@@ -79,7 +79,7 @@ static void mcp_cb(void *args)
 		}
 		sqc_handle->btn_shift = btn_data & BTN_MASK_SHIFT;
 		sqc_handle->btn_reset = btn_data & BTN_MASK_RESET;
-		sqc_handle->btn_defval = btn_data & BTN_MASK_DEFVAL;
+		sqc_handle->btn_shkey = btn_data & BTN_MASK_SHKEY;
 		sqc_handle->btn_pause = btn_data & BTN_MASK_PAUSE;
 
 		switch (sqc_handle->cur_appmode)
@@ -104,7 +104,7 @@ static void mcp_cb(void *args)
 #define SSEG_H (ctx->sseg_handle)
 static void refresh_task(void *args)
 {
-	sequencer_handle_t ctx = (sequencer_handle_t )args;
+	sequencer_handle_t ctx = (sequencer_handle_t)args;
 	for (;;)
 	{
 		if (xQueueReceive(refresh_q, &ctx, portMAX_DELAY) == pdTRUE)
@@ -142,7 +142,7 @@ static void refresh_task(void *args)
 
 static void new_appmode(TimerHandle_t new_app_timer)
 {
-	sequencer_handle_t sqc_handle = (sequencer_handle_t) pvTimerGetTimerID(new_app_timer);
+	sequencer_handle_t sqc_handle = (sequencer_handle_t)pvTimerGetTimerID(new_app_timer);
 	sqc_handle->sseg_handle->sseg_refreshable = true;
 }
 
@@ -260,14 +260,13 @@ esp_err_t sequencer_init(sequencer_config_t **out_sqc_cfg)
 		(bpm_to_ms(START_BPM) / portTICK_PERIOD_MS),
 		pdTRUE,
 		sqc_cfg,
-		bpm_timer_isr
-	);
+		bpm_timer_task);
 	xTimerStart(bpm_timer, 2);
 
 	// ------------------------------------------------------------
 	// Default Assignments
 	// ------------------------------------------------------------
-	*sqc_cfg = (sequencer_config_t) {
+	*sqc_cfg = (sequencer_config_t){
 		.adc_handle = adc_handle,
 		.encoder_handle = encoder_handle,
 		.stp_handle = stp_handle,
@@ -346,8 +345,7 @@ esp_err_t sseg_init(sseg_context_t **out_sseg_ctx, sequencer_handle_t sqc_handle
 		NEW_MODE_TIMEOUT_MS / portTICK_PERIOD_MS,
 		pdFALSE,
 		sqc_handle,
-		new_appmode
-	);
+		new_appmode);
 
 	esp_timer_handle_t timer_handle;
 	esp_timer_create_args_t timer_cfg = {
@@ -371,7 +369,7 @@ esp_err_t sseg_init(sseg_context_t **out_sseg_ctx, sequencer_handle_t sqc_handle
 	}
 	sseg_ctx->data_buffer = "BPM";
 	xTimerStart(new_mode_timer, 0);
-	
+
 	ESP_ERROR_CHECK(esp_timer_start_periodic(sseg_ctx->mux_timer, MUXTIME_US));
 	*out_sseg_ctx = sseg_ctx;
 	return ESP_OK;
@@ -431,9 +429,6 @@ void update_bpm(sequencer_handle_t sqc_handle)
 
 // }
 
-
-// manage audio 
+// manage audio
 // manage ws2812
 // manage sseg
-
-

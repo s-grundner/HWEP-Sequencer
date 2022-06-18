@@ -91,7 +91,7 @@ typedef struct sequencer_config_s
 	bool btn_shift;
 	bool btn_pause;
 	bool btn_reset;
-	bool btn_defval;
+	bool btn_shkey;
 
 	// prescaler
 	uint8_t ps_bpm;

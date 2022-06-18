@@ -40,12 +40,6 @@ static void fsm(void *args)
 		{
 			sqc_handle->encoder_positions[sqc_handle->cur_appmode] += encoder_read(sqc_handle->encoder_handle);
 		}
-		// check if encoder data has changed
-		if (ec_changed[sqc_handle->cur_appmode] != sqc_handle->encoder_positions[sqc_handle->cur_appmode])
-		{
-			ESP_LOGI("data changed", "%d -> %d", ec_changed[sqc_handle->cur_appmode], sqc_handle->encoder_positions[sqc_handle->cur_appmode]);
-			ec_changed[sqc_handle->cur_appmode] = sqc_handle->encoder_positions[sqc_handle->cur_appmode];
-		}
 
 		// Main Statemachine
 		switch (sqc_handle->cur_appmode)
@@ -57,7 +51,6 @@ static void fsm(void *args)
 			// check if encoder data has changed
 			if (ec_changed[sqc_handle->cur_appmode] != sqc_handle->encoder_positions[sqc_handle->cur_appmode])
 			{
-				ESP_LOGI("data changed", "%d -> %d", ec_changed[sqc_handle->cur_appmode], sqc_handle->encoder_positions[sqc_handle->cur_appmode]);
 				update_bpm(sqc_handle);
 				ec_changed[sqc_handle->cur_appmode] = sqc_handle->encoder_positions[sqc_handle->cur_appmode];
 			}
@@ -79,12 +72,12 @@ static void fsm(void *args)
 				// write display data
 				sseg_write(sqc_handle->sseg_handle, sqc_handle->btn_shift ? get_wt_name(sqc_handle->osc.wt_index) : itoa(sqc_handle->cur_bpm, str, 10));
 			}
-
+			
+			
 			break;
 		case APP_MODE_KEY:
 			// reset at n index takes effect
 			sqc_handle->reset_at_n = (((sqc_handle->encoder_positions[APP_MODE_ENR] >> 1) % 8) + 1);
-
 			break;
 		case APP_MODE_ENR:
 			break;
