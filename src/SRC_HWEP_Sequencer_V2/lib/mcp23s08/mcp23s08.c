@@ -147,10 +147,6 @@ esp_err_t mcp23s08_read(mcp23s08_context_t *ctx, mcp23s08_hw_adr hw_adr, mcp23s0
 	};
 	err = spi_device_polling_transmit(ctx->spi, &t);
 	ESP_ERROR_CHECK_WITHOUT_ABORT(err);
-	if ((err == ESP_OK) && (ctx->cfg.intr_io >= 0))
-	{
-		// xSemaphoreGive(ctx->ready_sem);
-	}
 	spi_device_release_bus(ctx->spi);
 
 	*data = t.rx_data[1] | t.rx_data[0];
@@ -160,7 +156,7 @@ esp_err_t mcp23s08_read(mcp23s08_context_t *ctx, mcp23s08_hw_adr hw_adr, mcp23s0
 esp_err_t mcp23s08_write(mcp23s08_context_t *ctx, mcp23s08_hw_adr hw_adr, mcp23s08_reg_adr reg_adr, const uint8_t data)
 {
 	esp_err_t err = ESP_OK;
-	// err = spi_device_acquire_bus(ctx->spi, portMAX_DELAY);
+	err = spi_device_acquire_bus(ctx->spi, portMAX_DELAY);
 	ESP_ERROR_CHECK_WITHOUT_ABORT(err);
 	if (err != ESP_OK)
 		return err;
@@ -177,12 +173,7 @@ esp_err_t mcp23s08_write(mcp23s08_context_t *ctx, mcp23s08_hw_adr hw_adr, mcp23s
 
 	spi_device_polling_transmit(ctx->spi, &t);
 	ESP_ERROR_CHECK_WITHOUT_ABORT(err);
-	if ((err == ESP_OK) && (ctx->cfg.intr_io >= 0))
-	{
-		// xSemaphoreGive(ctx->ready_sem);
-		// mcp_wait_done()
-	}
-	// spi_device_release_bus(ctx->spi);
+	spi_device_release_bus(ctx->spi);
 	return err;
 }
 

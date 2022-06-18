@@ -68,7 +68,7 @@ typedef struct sequencer_config_s
 	mcp23s08_handle_t mcp_handle;
 	sseg_handle_t sseg_handle;
 
-	esp_timer_handle_t bpm_timer;
+	TimerHandle_t bpm_timer;
 
 	// adc specific data
 	uint16_t cur_adc_data[ADC0880S052_CHANNEL_MAX];
@@ -173,6 +173,14 @@ uint8_t get_pos_index(sequencer_handle_t sqc_handle);
  * @return uint32_t 
  */
 uint32_t bpm_to_us(uint16_t bpm);
+
+/**
+ * @brief Converts beat frequency into timeperiod in milliseconds
+ * 
+ * @param bpm Beats Per Minute to convert
+ * @return uint32_t 
+ */
+uint32_t bpm_to_ms(uint16_t bpm);
 
 /**
  * @brief updates the bpm timer

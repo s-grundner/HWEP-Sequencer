@@ -106,10 +106,10 @@ static void init_intr(encoder_context_t *ec)
 	gpio_config(&ec_ab);
 	gpio_config(&ec_sw);
 
-	ec_evt_queue = xQueueCreate(10, sizeof(uint32_t));
-	xTaskCreate(ec_task, "encoder_interrupt", 2048, NULL, 10, NULL);
+	ec_evt_queue = xQueueCreate(10, sizeof(encoder_context_t *));
+	xTaskCreate(ec_task, "encoder_interrupt", 2048, NULL, 14, NULL);
 
-	sw_evt_queue = xQueueCreate(10, sizeof(uint32_t));
+	sw_evt_queue = xQueueCreate(10, sizeof(encoder_context_t *));
 	xTaskCreate(sw_task, "sw_input_interrupt", 2048, NULL, 10, NULL);
 
 	gpio_install_isr_service(0);

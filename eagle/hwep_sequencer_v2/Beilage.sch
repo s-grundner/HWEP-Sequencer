@@ -10792,7 +10792,8 @@ Eagle Ver. 9.x&lt;br&gt;</description>
 </packages>
 <packages3d>
 <package3d name="EC11" urn="urn:adsk.eagle:package:33306160/7" type="model" library_version="50">
-<description>&lt;b&gt;EC11E09244BS&lt;/b&gt;&lt;br&gt;</description>
+<description>&lt;b&gt;EC11E09244BS&lt;/b&gt;&lt;br&gt;
+</description>
 <packageinstances>
 <packageinstance name="EC11"/>
 </packageinstances>
@@ -11213,13 +11214,15 @@ Source: http://www.semiconductors.philips.com/acrobat_download/datasheets/PCF857
 </packages>
 <packages3d>
 <package3d name="TSSOP24" urn="urn:adsk.eagle:package:33324059/2" type="model" library_version="42">
-<description>&lt;b&gt;TSSOP24&lt;/b&gt;&lt;br&gt;</description>
+<description>&lt;b&gt;TSSOP24&lt;/b&gt;&lt;br&gt;
+</description>
 <packageinstances>
 <packageinstance name="TSSOP24"/>
 </packageinstances>
 </package3d>
 <package3d name="SO18W" urn="urn:adsk.eagle:package:33327837/3" type="model" library_version="42">
-<description>&lt;b&gt;(SO) - Wide, 7.50 mm (.300 In.) Body [SOIC&lt;/b&gt;&lt;br&gt;</description>
+<description>&lt;b&gt;(SO) - Wide, 7.50 mm (.300 In.) Body [SOIC&lt;/b&gt;&lt;br&gt;
+</description>
 <packageinstances>
 <packageinstance name="SO18W"/>
 </packageinstances>
@@ -11232,7 +11235,8 @@ Source: http://www.semiconductors.philips.com/acrobat_download/datasheets/PCF857
 </packageinstances>
 </package3d>
 <package3d name="SO24" urn="urn:adsk.eagle:package:33306208/2" type="box" library_version="42">
-<description>&lt;b&gt;SO-24_&lt;/b&gt;&lt;br&gt;</description>
+<description>&lt;b&gt;SO-24_&lt;/b&gt;&lt;br&gt;
+</description>
 <packageinstances>
 <packageinstance name="SO24"/>
 </packageinstances>
@@ -13833,7 +13837,8 @@ Eagle Ver. 9.x&lt;br&gt;</description>
 </packages>
 <packages3d>
 <package3d name="TSSOP16" urn="urn:adsk.eagle:package:33494874/1" type="box" library_version="17">
-<description>&lt;b&gt;PW0016A&lt;/b&gt;&lt;br&gt;</description>
+<description>&lt;b&gt;PW0016A&lt;/b&gt;&lt;br&gt;
+</description>
 <packageinstances>
 <packageinstance name="TSSOP16"/>
 </packageinstances>
@@ -19717,13 +19722,13 @@ PL-9823-F5 LEDs</description>
 <instance part="GND21" gate="1" x="99.06" y="185.42" smashed="yes">
 <attribute name="VALUE" x="99.06" y="183.388" size="1.27" layer="96" font="vector" align="bottom-center"/>
 </instance>
-<instance part="C25" gate="G$1" x="68.58" y="139.7" smashed="yes">
-<attribute name="NAME" x="67.564" y="139.1666" size="1.6764" layer="95" font="vector" align="bottom-right"/>
-<attribute name="VALUE" x="67.564" y="136.3726" size="1.27" layer="96" font="vector" align="bottom-right"/>
-<attribute name="CATEGORY" x="68.58" y="139.7" size="1.778" layer="96" display="off"/>
+<instance part="C25" gate="G$1" x="66.04" y="139.7" smashed="yes">
+<attribute name="NAME" x="65.024" y="139.1666" size="1.6764" layer="95" font="vector" align="bottom-right"/>
+<attribute name="VALUE" x="65.024" y="136.3726" size="1.27" layer="96" font="vector" align="bottom-right"/>
+<attribute name="CATEGORY" x="66.04" y="139.7" size="1.778" layer="96" display="off"/>
 </instance>
-<instance part="GND22" gate="1" x="68.58" y="129.54" smashed="yes">
-<attribute name="VALUE" x="68.58" y="127.508" size="1.27" layer="96" font="vector" align="bottom-center"/>
+<instance part="GND22" gate="1" x="66.04" y="129.54" smashed="yes">
+<attribute name="VALUE" x="66.04" y="127.508" size="1.27" layer="96" font="vector" align="bottom-center"/>
 </instance>
 <instance part="GND23" gate="1" x="114.3" y="114.3" smashed="yes">
 <attribute name="VALUE" x="114.3" y="112.268" size="1.27" layer="96" font="vector" align="bottom-center"/>
@@ -19842,7 +19847,7 @@ PL-9823-F5 LEDs</description>
 <segment>
 <pinref part="C25" gate="G$1" pin="2"/>
 <pinref part="GND22" gate="1" pin="GND"/>
-<wire x1="68.58" y1="132.08" x2="68.58" y2="134.62" width="0.1524" layer="91"/>
+<wire x1="66.04" y1="132.08" x2="66.04" y2="134.62" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="D9" gate="G$1" pin="GND"/>
@@ -20111,8 +20116,8 @@ PL-9823-F5 LEDs</description>
 <pinref part="C25" gate="G$1" pin="1"/>
 <pinref part="+3V48" gate="G$1" pin="+3V3"/>
 <wire x1="71.12" y1="144.78" x2="71.12" y2="147.32" width="0.1524" layer="91"/>
-<wire x1="68.58" y1="142.24" x2="68.58" y2="144.78" width="0.1524" layer="91"/>
-<wire x1="68.58" y1="144.78" x2="71.12" y2="144.78" width="0.1524" layer="91"/>
+<wire x1="66.04" y1="142.24" x2="66.04" y2="144.78" width="0.1524" layer="91"/>
+<wire x1="66.04" y1="144.78" x2="71.12" y2="144.78" width="0.1524" layer="91"/>
 <junction x="71.12" y="144.78"/>
 </segment>
 </net>

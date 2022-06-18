@@ -40,19 +40,24 @@ static void fsm(void *args)
 		{
 			sqc_handle->encoder_positions[sqc_handle->cur_appmode] += encoder_read(sqc_handle->encoder_handle);
 		}
+		// check if encoder data has changed
+		if (ec_changed[sqc_handle->cur_appmode] != sqc_handle->encoder_positions[sqc_handle->cur_appmode])
+		{
+			ESP_LOGI("data changed", "%d -> %d", ec_changed[sqc_handle->cur_appmode], sqc_handle->encoder_positions[sqc_handle->cur_appmode]);
+			ec_changed[sqc_handle->cur_appmode] = sqc_handle->encoder_positions[sqc_handle->cur_appmode];
+		}
 
 		// Main Statemachine
 		switch (sqc_handle->cur_appmode)
 		{
 		case APP_MODE_BPM:
-			// ESP_ERROR_CHECK(stp_index(sqc_handle));
-
 			// reset at n index takes effect
 			sqc_handle->reset_at_n = (((sqc_handle->encoder_positions[APP_MODE_ENR] >> 1) % 8) + 1);
 
 			// check if encoder data has changed
 			if (ec_changed[sqc_handle->cur_appmode] != sqc_handle->encoder_positions[sqc_handle->cur_appmode])
 			{
+				ESP_LOGI("data changed", "%d -> %d", ec_changed[sqc_handle->cur_appmode], sqc_handle->encoder_positions[sqc_handle->cur_appmode]);
 				update_bpm(sqc_handle);
 				ec_changed[sqc_handle->cur_appmode] = sqc_handle->encoder_positions[sqc_handle->cur_appmode];
 			}
@@ -60,8 +65,11 @@ static void fsm(void *args)
 			// check if shift-encoder-data has changed
 			if (shift_ec_changed[sqc_handle->cur_appmode] != sqc_handle->shift_encoder_positions[sqc_handle->cur_appmode])
 			{
+				// update wavetable
 				sqc_handle->osc.wt_index = abs(sqc_handle->shift_encoder_positions[sqc_handle->cur_appmode] / 2) % WAVEFORM_TYPE_COUNT;
 				sqc_handle->osc.wavetable = get_wavetable(sqc_handle->osc.wt_index);
+				
+				// reset changed state
 				shift_ec_changed[sqc_handle->cur_appmode] = sqc_handle->shift_encoder_positions[sqc_handle->cur_appmode];
 			}
 
@@ -74,17 +82,13 @@ static void fsm(void *args)
 
 			break;
 		case APP_MODE_KEY:
-			// ESP_ERROR_CHECK(stp_index(sqc_handle));
-
 			// reset at n index takes effect
 			sqc_handle->reset_at_n = (((sqc_handle->encoder_positions[APP_MODE_ENR] >> 1) % 8) + 1);
 
 			break;
 		case APP_MODE_ENR:
-			// ESP_ERROR_CHECK(stp_cursor(sqc_handle));
 			break;
 		case APP_MODE_TSP:
-			// ESP_ERROR_CHECK(stp_index(sqc_handle));
 			// reset at n index takes effect
 			sqc_handle->reset_at_n = (((sqc_handle->encoder_positions[APP_MODE_ENR] >> 1) % 8) + 1);
 			break;
@@ -94,7 +98,6 @@ static void fsm(void *args)
 
 		encoder_write(sqc_handle->encoder_handle, 0);
 
-
 		// manage_ws2812(sqc_handle);
 		// manage_audio_data(sqc_handle);
 
@@ -102,6 +105,7 @@ static void fsm(void *args)
 		{
 			send_audio_stereo(&sqc_handle->osc);
 		}
+		vTaskDelay(10 / portTICK_PERIOD_MS);
 	}
 }
 
@@ -110,7 +114,7 @@ void app_main(void)
 	sequencer_handle_t sqc_handle;
 	ESP_ERROR_CHECK(sequencer_init(&sqc_handle));
 
-	if (xTaskCreatePinnedToCore(&fsm, "main_fsm", 2048, sqc_handle, 10, NULL, 1) == pdTRUE)
+	if (xTaskCreatePinnedToCore(&fsm, "main_fsm", 2048, sqc_handle, 10, NULL, 0) == pdTRUE)
 	{
 		while (1)
 			vTaskDelay(10 / portTICK_PERIOD_MS);

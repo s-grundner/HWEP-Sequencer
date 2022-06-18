@@ -79,7 +79,7 @@ esp_err_t stp16cp05_init(stp16cp05_context_t **out_ctx, const stp16cp05_config_t
 esp_err_t stp16cp05_write(stp16cp05_context_t *ctx, const uint8_t data_top, const uint8_t data_bot)
 {
 	esp_err_t err = ESP_OK;
-	// err = spi_device_acquire_bus(ctx->spi, portMAX_DELAY);
+	err = spi_device_acquire_bus(ctx->spi, portMAX_DELAY);
 	ESP_ERROR_CHECK_WITHOUT_ABORT(err);
 	if (err != ESP_OK)
 		return err;
@@ -102,6 +102,6 @@ esp_err_t stp16cp05_write(stp16cp05_context_t *ctx, const uint8_t data_top, cons
 
 	err = spi_device_polling_transmit(ctx->spi, &t);
 	ESP_ERROR_CHECK_WITHOUT_ABORT(err);
-	// spi_device_release_bus(ctx->spi);
+	spi_device_release_bus(ctx->spi);
 	return err;
 }
