@@ -6,7 +6,7 @@
 Der Sequenzer ist ein musisches Instrument, welches vom Benutzer einstellbare Töne nacheinander abspielt und dadurch eine Melodie erzeugt. Die Tonlage wird durch Potentiometer analog eingestellt und anschließend an die chromatische Skala angepasst. Die acht Töne werden mit jeder steigenden Flanke des Takts durchgeschaltet.
  
 Mit einem Pause-Taster kann der Zyklus pausiert werden. Mit dem Reset-Taster kann zum Anfang des Zyklus gesprungen werden.
-Der Deafult-Key-Taster setzt Einstellungen von Tonleiter bzw. Transponierung der Tonlage auf ihre Anfangswerte zurück.
+Der "Show Key" Taster ziegt bei betätigung die Gespielten Noten am Display an.
 Der Sequencer ist mit zwei Prescalern für Gate-Länge und Taktrate ausgestattet. Dieser teilt den Takt oder das Gate des Tones durch 1, 2, 4, 8 oder 16.
 Außerdem verfügt der Sequencer über eine Umschalttaste (Shift), die das Funktionsspektrum erweitern. Die Dokumentation für die Taster befindet sich in der Funktionsbeschreibung.
 
@@ -42,7 +42,7 @@ Der Sequencer wird mit dem einem RTOS am ESP32 32-bit Microcontroller betrieben.
 > Jeder Taster wird mittels eines MCP23S08 via SPI eingelesen.
  - **Pause:** pausiert den Zyklus
  - **Reset:** setzt den Zyklus asynchron zurück
- - **Default Key:** setzt die Tonleitereinstellungen auf Default Settings (C4 Moll)
+ - **Show Keys:** zeigt die gespielten Noten am Display
  - **Shift:** zum Einstellen der Parameter der verschiedenen Modi
  - **Prescaler:** einstellen von zwei verschiedenen Prescalern für Gate und Takt
    - 5 Taster für jeden Prescaler
