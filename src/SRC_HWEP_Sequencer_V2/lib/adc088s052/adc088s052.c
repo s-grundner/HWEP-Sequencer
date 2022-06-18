@@ -82,7 +82,7 @@ esp_err_t adc088s052_get_raw(adc088s052_context_t *ctx, adc088s052_channel_t ch,
 {
 	esp_err_t err = ESP_OK;
 	err = spi_device_acquire_bus(ctx->spi, portMAX_DELAY);
-	ESP_ERROR_CHECK(err);
+	ESP_ERROR_CHECK_WITHOUT_ABORT(err);
 	spi_transaction_t t = {
 		.cmd = 0,
 		.addr = (ch+1) << 3,
@@ -91,7 +91,7 @@ esp_err_t adc088s052_get_raw(adc088s052_context_t *ctx, adc088s052_channel_t ch,
 		.user = ctx,
 	};
 	err = spi_device_polling_transmit(ctx->spi, &t);
-	ESP_ERROR_CHECK(err);
+	ESP_ERROR_CHECK_WITHOUT_ABORT(err);
 	if (err != ESP_OK)
 		return err;
 	*data = (t.rx_data[0]) | (t.rx_data[1]);

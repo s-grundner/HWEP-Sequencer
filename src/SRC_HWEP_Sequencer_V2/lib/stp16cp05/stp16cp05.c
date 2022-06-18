@@ -79,21 +79,29 @@ esp_err_t stp16cp05_init(stp16cp05_context_t **out_ctx, const stp16cp05_config_t
 esp_err_t stp16cp05_write(stp16cp05_context_t *ctx, const uint8_t data_top, const uint8_t data_bot)
 {
 	esp_err_t err = ESP_OK;
-	ESP_LOGD(TAG, "Aquiring host %d with CS %d", ctx->cfg.host, ctx->cfg.cs_io);
-	err = spi_device_acquire_bus(ctx->spi, portMAX_DELAY);
+	// err = spi_device_acquire_bus(ctx->spi, portMAX_DELAY);
+	ESP_ERROR_CHECK_WITHOUT_ABORT(err);
 	if (err != ESP_OK)
 		return err;
 
-	// printf("stp data : 0x%04x\n", data);
-
-	spi_transaction_t t = { 
-		.cmd = data_top,
-		.addr = data_bot,
-		.length = 0,
+	spi_transaction_t t = {
+		.cmd = 0,
+		.addr = 0,
+		.length = 16,
+		.flags = SPI_TRANS_USE_TXDATA,
+		.tx_data = {data_top,data_bot},
 		.user = ctx,
 	};
 
+	// spi_transaction_t t = { 
+	// 	.cmd = data_top,
+	// 	.addr = data_bot,
+	// 	.length = 0,
+	// 	.user = ctx,
+	// };
+
 	err = spi_device_polling_transmit(ctx->spi, &t);
-	spi_device_release_bus(ctx->spi);
+	ESP_ERROR_CHECK_WITHOUT_ABORT(err);
+	// spi_device_release_bus(ctx->spi);
 	return err;
 }

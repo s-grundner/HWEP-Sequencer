@@ -5,7 +5,7 @@
  * @brief 	Basic Functions for Frequency calculation
  * @version 0.1
  * @date 	2022-05-05
- * 
+ *
  * @copyright Copyright (c) 2022
  */
 
@@ -16,9 +16,33 @@
 #include <math.h>
 #include <stdio.h>
 
-#define CONCERT_PITCH	440.0
-#define ADC_MAX_VAL 	255.0
-#define A0_NUM			49
+#define CONCERT_PITCH 440.0
+#define ADC_MAX_VAL 255.0
+#define A0_NUM 49
+
+typedef enum
+{
+	KEY_A = 0,
+	KEY_AS = 1,
+	KEY_B = 2,
+	KEY_C = 3,
+	KEY_CS = 4,
+	KEY_D = 5,
+	KEY_DS = 6,
+	KEY_E = 7,
+	KEY_F = 8,
+	KEY_FS = 9,
+	KEY_G = 10,
+	KEY_GS  = 11,
+} key_names_t;
+
+typedef enum
+{
+	MAJ = 0, // Major
+	MIN = 1, // Minor
+	HMJ = 2, // Harmonic Major
+	HMN = 3, // Harmonic Minor
+} modal_names_t;
 
 double get_pitch_hz(uint8_t key_num);
 uint8_t get_key_num(double freq);
