@@ -4,15 +4,13 @@
 ## KUB - Kurzbeschreibung
 
 Der Sequenzer ist ein musisches Instrument, welches vom Benutzer einstellbare Töne nacheinander abspielt und dadurch eine Melodie erzeugt. Die Tonlage wird durch Potentiometer analog eingestellt und anschließend an die chromatische Skala angepasst. Die acht Töne werden mit jeder steigenden Flanke des Takts durchgeschaltet.
- 
-Mit einem Pause-Taster kann der Zyklus pausiert werden. Mit dem Reset-Taster kann zum Anfang des Zyklus gesprungen werden.
-Der "Show Key" Taster ziegt bei betätigung die Gespielten Noten am Display an.
-Der Sequencer ist mit zwei Prescalern für Gate-Länge und Taktrate ausgestattet. Dieser teilt den Takt oder das Gate des Tones durch 1, 2, 4, 8 oder 16.
-Außerdem verfügt der Sequencer über eine Umschalttaste (Shift), die das Funktionsspektrum erweitern. Die Dokumentation für die Taster befindet sich in der Funktionsbeschreibung.
+
+Mit einem Pause-Taster kann der Zyklus pausiert werden. Mit dem Reset-Taster kann zum Anfang des Zyklus gesprungen werden. Der "Show Key" Taster zeigt bei Betätigung die Gespielten Noten am Display an. Der Sequencer ist mit zwei Prescalern für Gate-Länge und Taktrate ausgestattet. Dieser teilt den Takt oder das Gate des Tones durch 1, 2, 4, 8 oder 16. Außerdem verfügt der Sequencer über eine Umschalttaste (Shift), die das Funktionsspektrum erweitern. Die Dokumentation für die Taster befindet sich in der Funktionsbeschreibung.
 
 Zum Bedienen des Sequencers gibt es verschiedene Parameter, die mithilfe eines Dreh-Encoders gesteuert werden können. Der Dreh-Encoder hat einen integrierten Taster, mit welchem man die Parameter, die man verändern will, einstellen kann. Die Veränderung der Parameter wird je nach Modus an verschiedenen Status LEDs und Anzeigen abgezeichnet.
- 
+
 Der Sequencer wird mit dem einem RTOS am ESP32 32-bit Microcontroller betrieben. Der Digitale Audioausgang erfolgt über das I²S (Inter-IC-Sound) Protokoll und kann 16-Bit Sounds bei einer Abtastrate von 44.1kHz übertragen und durch einen I²S-DAC (PCM5102a) direkt als Audio-Signal ausgegeben werden.
+
 
 ## BSB - Blockschaltbild
 
