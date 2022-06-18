@@ -29,7 +29,7 @@ Der Sequencer wird mit dem einem RTOS am ESP32 32-bit Microcontroller betrieben.
    - zeigen an, welcher Ton spielen wird oder stummgeschalten ist (LED aus)
  - 8 Index/Cursor-LED’s:
    - **Index:** zeigen an, welcher Ton gerade spielt
-   - **Cursor:** bzw. dient zum Anzeigen eines Cursors
+   - **Cursor:** dient zum Anzeigen eines Cursors
 #### 3. 3x 7-Segent Display:
  - nützen zur Anzeige von Parametern
  - werden mit einem MCP23S08 via die SPI Schnittstelle seriell angesteuert
