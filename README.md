@@ -8,9 +8,9 @@ Der Sequenzer ist ein musisches Instrument, welches vom Benutzer einstellbare T�
 Mit einem Pause-Taster kann der Zyklus pausiert werden. Mit dem Reset-Taster kann zum Anfang des Zyklus gesprungen werden.
 Der Deafult-Key-Taster setzt Einstellungen von Tonleiter bzw. Transponierung der Tonlage auf ihre Anfangswerte zurück.
 Der Sequencer ist mit zwei Prescalern für Gate-Länge und Taktrate ausgestattet. Dieser teilt den Takt oder das Gate des Tones durch 1, 2, 4, 8 oder 16.
-Außerdem verfügt der Sequencer über eine Umschalttaste, die das Funktionsspektrum erweitern. Die Dokumentation für die Taster befindet sich in der Funktionsbeschreibung.
+Außerdem verfügt der Sequencer über eine Umschalttaste (Shift), die das Funktionsspektrum erweitern. Die Dokumentation für die Taster befindet sich in der Funktionsbeschreibung.
 
-Zum Bedienen des Sequencers gibt es verschiedene Parameter, die mithilfe eines Dreh-Encoders gesteuert werden können. Der Dreh-Encoder hat einen integrierten Taster, mit welchem man die Parameter, die man verändern will, einstellen kann. Die Veränderung der Parameter wird je nach Modus an verschiedenen Status LEDs und Anzeigen abgezeichnet. Der Event-Taster hat je nach Modus eine andere Funktion.
+Zum Bedienen des Sequencers gibt es verschiedene Parameter, die mithilfe eines Dreh-Encoders gesteuert werden können. Der Dreh-Encoder hat einen integrierten Taster, mit welchem man die Parameter, die man verändern will, einstellen kann. Die Veränderung der Parameter wird je nach Modus an verschiedenen Status LEDs und Anzeigen abgezeichnet.
  
 Der Sequencer wird mit dem einem RTOS am ESP32 32-bit Microcontroller betrieben. Der Digitale Audioausgang erfolgt über das I²S (Inter-IC-Sound) Protokoll und kann 16-Bit Sounds bei einer Abtastrate von 44.1kHz übertragen und durch einen I²S-DAC (PCM5102a) direkt als Audio-Signal ausgegeben werden.
 
@@ -43,7 +43,7 @@ Der Sequencer wird mit dem einem RTOS am ESP32 32-bit Microcontroller betrieben.
  - **Pause:** pausiert den Zyklus
  - **Reset:** setzt den Zyklus asynchron zurück
  - **Default Key:** setzt die Tonleitereinstellungen auf Default Settings (C4 Moll)
- - **Event:** zum Einstellen der Parameter der verschiedenen Modi
+ - **Shift:** zum Einstellen der Parameter der verschiedenen Modi
  - **Prescaler:** einstellen von zwei verschiedenen Prescalern für Gate und Takt
    - 5 Taster für jeden Prescaler
    - Tasten werden auf 4 bit Prioritäts Encodiert
@@ -55,23 +55,23 @@ Der Sequencer wird mit dem einem RTOS am ESP32 32-bit Microcontroller betrieben.
    - **7-Segment Display:** zeigt die eingestellten BPM an und die Wellenform
    - **Index/Cursor:** zeigt den Index an
    - **Drehencoder:** zum Verändern der BPM
-   - **Event Taster:** Drehencoder verändert die Wellenform
+   - **Shift Taster:** Drehencoder verändert die Wellenform
  - Tonleiter Einstellungen:
    - **7-Segment Display:** zeigt den Ton an, der gerade spielt
    - **Index/Cursor:** zeigt den Index an
    - **Drehencoder:** zum Verändern den Tonleiter
-   - **Event Taster:** verändert den Modus des Tonleiters (Dur,Moll…)
+   - **Shift Taster:** verändert den Modus des Tonleiters (Dur,Moll…)
  - Enable/Reset:
    - **7-Segment Display:**
    - **Index/Cursor:** zeigt den Cursor an
    - **Drehencoder:** bewegt den Cursor. Dort wo der Cursor stehen bleibt, setzt sich der Zyklus zurück.
-   - **Event Taster:** stummt/entstummt einen Ton an der Cursorstellung
+   - **Shift Taster:** stummt/entstummt einen Ton an der Cursorstellung
  
  - Transpose:
    - **7-Segment Display:** zeigt an um wieviel Halbtöne die Melodie transponiert wird
    - **Index/Cursor:** zeigt den Index an
    - **Drehencoder:** zum Verändern der Tonlage
-   - **Event Taster:** Drehencoder verändert die Tonlage um eine Oktave
+   - **Shift Taster:** Drehencoder verändert die Tonlage um eine Oktave
  
 #### 7. ESP32 32-Bit Microcontroller:
  - Zentrale Recheneinheit für den Sequenzer
