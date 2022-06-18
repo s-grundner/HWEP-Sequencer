@@ -35,9 +35,11 @@
 typedef struct
 {
 	float *wavetable;
+	uint8_t wt_index;
 	double sample_pos;
 	double pitch;
-	int8_t oct_offset;
+	uint8_t oct_offset;
+	uint8_t transpose;
 	float detune;
 	float pan;
 	float level;
@@ -66,7 +68,9 @@ esp_err_t init_wavetables(void);
  * @param index		WT index defined by macros
  * @return float* a pointer to the Wavetable
  */
-float *get_wavetable(int index);
+float *get_wavetable(uint8_t index);
+
+char *get_wt_name(uint8_t wt_index);
 
 // ------------------------------------------------------------
 // Audio Processing

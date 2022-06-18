@@ -49,6 +49,7 @@ typedef struct {
 	uint8_t channel;
 	mcp23s08_handle_t mcp_handle;
 	esp_timer_handle_t mux_timer;
+	TimerHandle_t new_mode_timer;
 	bool sseg_refreshable;
 } sseg_context_t;
 
@@ -67,7 +68,7 @@ typedef struct sequencer_config_s
 	mcp23s08_handle_t mcp_handle;
 	sseg_handle_t sseg_handle;
 
-	esp_timer_handle_t bpm_timer;
+	TimerHandle_t bpm_timer;
 
 	// adc specific data
 	uint16_t cur_adc_data[ADC0880S052_CHANNEL_MAX];
@@ -76,15 +77,18 @@ typedef struct sequencer_config_s
 	// Audio data
 	oscillator_t osc;
 	uint16_t cur_bpm;
+	uint8_t cur_key;
+	uint8_t cur_modal;
 
 	// general
 	app_mode_t cur_appmode;
 	int32_t encoder_positions[MAX_APP_MODES];
+	int32_t shift_encoder_positions[MAX_APP_MODES];
 	uint8_t reset_at_n;
 	uint8_t active_note_mask;
 
 	// buttons
-	bool btn_event;
+	bool btn_shift;
 	bool btn_pause;
 	bool btn_reset;
 	bool btn_defval;
@@ -171,7 +175,22 @@ uint8_t get_pos_index(sequencer_handle_t sqc_handle);
 uint32_t bpm_to_us(uint16_t bpm);
 
 /**
- * @brief takes care of the RGB-LED animations
+ * @brief Converts beat frequency into timeperiod in milliseconds
+ * 
+ * @param bpm Beats Per Minute to convert
+ * @return uint32_t 
+ */
+uint32_t bpm_to_ms(uint16_t bpm);
+
+/**
+ * @brief updates the bpm timer
+ * 
+ * @param sqc_handle 
+ */
+void update_bpm(sequencer_handle_t sqc_handle);
+
+/**
+ * @brief manages the RGB-LED animations
  * 
  * @param sqc_handle sequencer data
  * @return esp_err_t 
@@ -179,8 +198,8 @@ uint32_t bpm_to_us(uint16_t bpm);
 esp_err_t manage_ws2812(sequencer_handle_t sqc_handle);
 
 /**
- * @brief 
+ * @brief manages the data to display
  * 
- * @param sqc_handle 
+ * @param sqdc_handle 
+ * @return esp_err_t 
  */
-void update_bpm(sequencer_handle_t sqc_handle);

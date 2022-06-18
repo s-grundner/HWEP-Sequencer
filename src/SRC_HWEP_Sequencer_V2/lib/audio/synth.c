@@ -15,6 +15,7 @@
 // calculated wavetable pointers
 // ------------------------------------------------------------
 float *waveFormLookUp[WAVEFORM_TYPE_COUNT];
+char wav_names[WAVEFORM_TYPE_COUNT][3] = {"SIN", "SAW", "SQR", "TRI", "MUT"};
 
 esp_err_t init_wavetables(void)
 {
@@ -54,9 +55,14 @@ void exit_wavetables(void)
 	free(waveFormLookUp[SILENCE]);
 }
 
-float *get_wavetable(int index)
+float *get_wavetable(uint8_t index)
 {
 	return waveFormLookUp[index];
+}
+
+char *get_wt_name(uint8_t wt_index)
+{
+	return wav_names[wt_index];
 }
 
 // ------------------------------------------------------------

@@ -28,16 +28,6 @@ static void cs_low(spi_transaction_t *t)
 	gpio_set_level(CS_MCP23S08, 0);
 }
 
-static void mcp_wait_done(mcp23s08_context_t *ctx)
-{
-	xSemaphoreTake(ctx->ready_sem, 0);
-	gpio_set_level(ctx->cfg.cs_io, 1);
-	BaseType_t ret = xSemaphoreTake(ctx->ready_sem, 2);
-	gpio_set_level(ctx->cfg.cs_io, 0);
-	if (ret != pdTRUE)
-		return ESP_ERR_TIMEOUT;
-}
-
 // ------------------------------------------------------------
 // ISR Task and Queue
 // ------------------------------------------------------------
@@ -143,6 +133,7 @@ esp_err_t mcp23s08_read(mcp23s08_context_t *ctx, mcp23s08_hw_adr hw_adr, mcp23s0
 {
 	esp_err_t err = ESP_OK;
 	err = spi_device_acquire_bus(ctx->spi, portMAX_DELAY);
+	ESP_ERROR_CHECK_WITHOUT_ABORT(err);
 	if (err != ESP_OK)
 		return err;
 
@@ -155,11 +146,7 @@ esp_err_t mcp23s08_read(mcp23s08_context_t *ctx, mcp23s08_hw_adr hw_adr, mcp23s0
 		.user = ctx,
 	};
 	err = spi_device_polling_transmit(ctx->spi, &t);
-
-	if ((err == ESP_OK) && (ctx->cfg.intr_io >= 0))
-	{
-		// xSemaphoreGive(ctx->ready_sem);
-	}
+	ESP_ERROR_CHECK_WITHOUT_ABORT(err);
 	spi_device_release_bus(ctx->spi);
 
 	*data = t.rx_data[1] | t.rx_data[0];
@@ -170,6 +157,7 @@ esp_err_t mcp23s08_write(mcp23s08_context_t *ctx, mcp23s08_hw_adr hw_adr, mcp23s
 {
 	esp_err_t err = ESP_OK;
 	err = spi_device_acquire_bus(ctx->spi, portMAX_DELAY);
+	ESP_ERROR_CHECK_WITHOUT_ABORT(err);
 	if (err != ESP_OK)
 		return err;
 
@@ -184,12 +172,7 @@ esp_err_t mcp23s08_write(mcp23s08_context_t *ctx, mcp23s08_hw_adr hw_adr, mcp23s
 	};
 
 	spi_device_polling_transmit(ctx->spi, &t);
-
-	if ((err == ESP_OK) && (ctx->cfg.intr_io >= 0))
-	{
-		// xSemaphoreGive(ctx->ready_sem);
-		// mcp_wait_done()
-	}
+	ESP_ERROR_CHECK_WITHOUT_ABORT(err);
 	spi_device_release_bus(ctx->spi);
 	return err;
 }
