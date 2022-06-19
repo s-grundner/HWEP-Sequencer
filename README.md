@@ -7,12 +7,10 @@ Der **Sequencer** ist ein Schulprojekt der [HTBLuVA Salzburg](http://www.htl-sal
 
 |           Neueste Renderung der Platine         |            Assemblierter Prototyp               |
 |:-----------------------------------------------:|:-----------------------------------------------:|
-| todo | todo |
+|      ![render](/docu/v2/assets/render.png)      |      ![prototype](/docu/v2/assets/prot.jpg)     |
 
 ## Projektstatus
 Das Projekt ist derzeit unvollständig, dennoch Funktionstüchtig. Alle Angeführten Features sind verfügbar. CAD dateien e.g. Gehäuse sind noch nicht im Projekt inkludiert.
-
-## Repository Struktur
 
 ## KUB - Kurzbeschreibung
 

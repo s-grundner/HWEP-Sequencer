@@ -43,6 +43,8 @@ static void fsm(void *args)
 		}
 		encoder_write(sqc_handle->encoder_handle, 0);
 
+		
+
 		// Main Statemachine
 		switch (sqc_handle->cur_appmode)
 		{
