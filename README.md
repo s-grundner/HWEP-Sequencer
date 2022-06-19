@@ -1,4 +1,6 @@
 # HWEP [DE]
+[![Built with: platformio](https://img.shields.io/badge/built%20with-platformio-orange)](https://platformio.org/)
+[![GitHub commit activity](https://img.shields.io/github/commit-activity/m/RespiraWorks/Ventilator)](https://github.com/RespiraWorks/Ventilator/pulse)
 ![Frontpanel](/docu/v2/assets/Frontpanel.svg)
 
 ## KUB - Kurzbeschreibung
