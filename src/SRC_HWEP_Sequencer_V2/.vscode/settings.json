@@ -3,7 +3,8 @@
 		"led_strip.h": "c",
 		"sequencer.h": "c",
 		"mcp23s08.h": "c",
-		"*.ipp": "c"
+		"*.ipp": "c",
+		"audio_config.h": "c"
 	},
 	"idf.adapterTargetName": "esp32c3",
 	"idf.openOcdConfigs": [

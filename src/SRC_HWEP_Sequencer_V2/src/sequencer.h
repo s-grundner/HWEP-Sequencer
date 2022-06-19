@@ -43,6 +43,7 @@
 #include "synth.h"
 #include "scale.h"
 #include "led_strip.h"
+#include "audio_config.h"
 
 typedef struct {
 	char *data_buffer;
@@ -71,7 +72,7 @@ typedef struct sequencer_config_s
 	TimerHandle_t bpm_timer;
 
 	// adc specific data
-	uint16_t cur_adc_data[ADC0880S052_CHANNEL_MAX];
+	uint8_t cur_adc_data[ADC0880S052_CHANNEL_MAX];
 	uint8_t channel; // 0 to max channels
 
 	// Audio data
@@ -79,6 +80,8 @@ typedef struct sequencer_config_s
 	uint16_t cur_bpm;
 	uint8_t cur_key;
 	uint8_t cur_modal;
+	bool shkey_flag;
+	bool pause_flag;
 
 	// general
 	app_mode_t cur_appmode;
@@ -198,8 +201,12 @@ void update_bpm(sequencer_handle_t sqc_handle);
 esp_err_t manage_ws2812(sequencer_handle_t sqc_handle);
 
 /**
- * @brief manages the data to display
+ * @brief 
  * 
- * @param sqdc_handle 
+ * @param sqc_handle 
  * @return esp_err_t 
  */
+void manage_display(sequencer_handle_t sqc_handle);
+
+
+void manage_audio(sequencer_handle_t sqc_handle);
