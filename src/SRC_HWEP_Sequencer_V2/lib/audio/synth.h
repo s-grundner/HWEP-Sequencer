@@ -38,8 +38,9 @@ typedef struct
 	uint8_t wt_index;
 	double sample_pos;
 	double pitch;
-	uint8_t oct_offset;
-	uint8_t transpose;
+	int8_t oct_offset;
+	int8_t transpose;
+	uint8_t is_on;
 	float detune;
 	float pan;
 	float level;

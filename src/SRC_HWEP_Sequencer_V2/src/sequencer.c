@@ -28,7 +28,8 @@ static void IRAM_ATTR refresh_isr(void *arg)
 static void IRAM_ATTR bpm_timer_task(TimerHandle_t bpm_timer)
 {
 	sequencer_handle_t ctx = (sequencer_handle_t)pvTimerGetTimerID(bpm_timer);
-	ctx->channel = (ctx->channel + 1) % ctx->reset_at_n;
+	if(!ctx->pause_flag)
+		ctx->channel = (ctx->channel + 1) % ctx->reset_at_n;
 }
 
 // ------------------------------------------------------------
@@ -63,14 +64,11 @@ static void mcp_cb(void *args)
 		uint8_t ps_data = mcp_data >> 4;
 		uint8_t btn_data = ~mcp_data & 0x0f;
 
-		ESP_LOGI(TAG, "%02x", mcp_data);
-		ESP_LOGI(TAG, "%02x", ps_data);
-		ESP_LOGI(TAG, "%02x\n", btn_data);
-
 		// prescaler data
-		if (ps_data & PRIO_BIT)
+		if ((ps_data & PRIO_BIT) && (ps_data != 0x08))
 		{
 			sqc_handle->ps_bpm = (1 << ((ps_data & 0x7) - 3));
+			ESP_LOGI(TAG, "ps: %02x", ps_data);
 			update_bpm(sqc_handle);
 		}
 		else if (ps_data)
@@ -82,21 +80,16 @@ static void mcp_cb(void *args)
 		sqc_handle->btn_shkey = btn_data & BTN_MASK_SHKEY;
 		sqc_handle->btn_pause = btn_data & BTN_MASK_PAUSE;
 
-		switch (sqc_handle->cur_appmode)
-		{
-		case APP_MODE_BPM:
-			break;
-		case APP_MODE_KEY:
-			break;
-		case APP_MODE_ENR:
-			if (sqc_handle->btn_shift)
-				sqc_handle->active_note_mask = sqc_handle->active_note_mask ^ get_pos_index(sqc_handle);
-			break;
-		case APP_MODE_TSP:
-			break;
-		default:
-			break;
-		}
+		sqc_handle->shkey_flag ^= sqc_handle->btn_shkey;
+		sqc_handle->pause_flag ^= sqc_handle->btn_pause;
+		sqc_handle->osc.is_on = !sqc_handle->pause_flag;
+
+		if (sqc_handle->btn_reset)
+			sqc_handle->channel = 0;
+
+		if (sqc_handle->btn_shift && (sqc_handle->cur_appmode == APP_MODE_ENR))
+			sqc_handle->active_note_mask = sqc_handle->active_note_mask ^ get_pos_index(sqc_handle);
+
 		xSemaphoreGive(timer_sem);
 	}
 }
@@ -111,16 +104,16 @@ static void refresh_task(void *args)
 		{
 			if (xSemaphoreTake(timer_sem, 3) == pdTRUE)
 			{
+				// Segment Multiplexing
 				gpio_set_level(sseg_channel[SSEG_H->channel], 0);
 				SSEG_H->channel = (SSEG_H->channel + 1) % SEG_CNT;
 				mcp23s08_write(SSEG_H->mcp_handle, S_SEG_HW_ADR, GPIO_R, get_char_segment(SSEG_H->data_buffer[SSEG_H->channel]));
 				gpio_set_level(sseg_channel[SSEG_H->channel], 1);
 
-				for (uint8_t i = 0; i < ADC0880S052_CHANNEL_MAX; i++)
-				{
-					ESP_ERROR_CHECK(adc088s052_get_raw(ctx->adc_handle, ctx->channel, &(ctx->cur_adc_data[i])));
-				}
+				// ADC reading
+				ESP_ERROR_CHECK(adc088s052_get_raw(ctx->adc_handle, ctx->channel, &(ctx->cur_adc_data[ctx->channel])));
 
+				// STP
 				switch (ctx->cur_appmode)
 				{
 				case APP_MODE_BPM:
@@ -134,6 +127,7 @@ static void refresh_task(void *args)
 				default:
 					break;
 				}
+				ctx->osc.is_on = (ctx->active_note_mask & (1 << ctx->channel)) ? 1 : 0;
 				xSemaphoreGive(timer_sem);
 			}
 		}
@@ -424,11 +418,43 @@ void update_bpm(sequencer_handle_t sqc_handle)
 // Manager functions
 // ------------------------------------------------------------
 
-// esp_err_t manage_sseg(sequencer_handle_t sqc_handle)
-// {
+void manage_display(sequencer_handle_t sqc_handle)
+{
+	if (sqc_handle->shkey_flag)
+	{
+		sseg_write(sqc_handle->sseg_handle, get_key_name(get_key_num(sqc_handle->osc.pitch)));
+	}
+	else if (sqc_handle->sseg_handle->sseg_refreshable)
+	{
+		char str[]= "   ";
+		switch (sqc_handle->cur_appmode)
+		{
+		case APP_MODE_BPM:
+			// write display data
+			sseg_write(sqc_handle->sseg_handle, sqc_handle->btn_shift ? get_wt_name(sqc_handle->osc.wt_index) : itoa(sqc_handle->cur_bpm, str, 10));
+			break;
+		case APP_MODE_KEY:
+			// write display data
+			sseg_write(sqc_handle->sseg_handle, sqc_handle->btn_shift ? get_modal_name(sqc_handle->cur_modal) : get_key_name(sqc_handle->cur_key));
+			break;
+		case APP_MODE_ENR:
+			break;
+		case APP_MODE_TSP:
+			// write display data
+			sseg_write(sqc_handle->sseg_handle, sqc_handle->btn_shift ? itoa(sqc_handle->osc.oct_offset, str, 10) : itoa(sqc_handle->osc.transpose, str, 10));
+			break;
+		default:
+			break;
+		}
+	}
+}
 
-// }
+#define OSC (sqc_handle->osc)
+void manage_audio(sequencer_handle_t sqc_handle)
+{
+	OSC.pitch = get_pitch_hz(adc_to_num(sqc_handle->cur_adc_data[sqc_handle->channel], OSC.oct_offset) + OSC.transpose);
+	send_audio_stereo(&sqc_handle->osc);
+}
 
-// manage audio
 // manage ws2812
 // manage sseg

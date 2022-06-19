@@ -39,7 +39,7 @@ esp_err_t adc088s052_init(adc088s052_context_t **out_ctx, const adc088s052_confi
 	if (!ctx)
 		return ESP_ERR_NO_MEM;
 
-	*ctx = (adc088s052_context_t){
+	*ctx = (adc088s052_context_t) {
 		.cfg = *cfg,
 	};
 
@@ -78,14 +78,14 @@ esp_err_t adc088s052_init(adc088s052_context_t **out_ctx, const adc088s052_confi
 	return ESP_OK;
 }
 
-esp_err_t adc088s052_get_raw(adc088s052_context_t *ctx, adc088s052_channel_t ch, uint16_t *data)
+esp_err_t adc088s052_get_raw(adc088s052_context_t *ctx, adc088s052_channel_t ch, uint8_t *data)
 {
 	esp_err_t err = ESP_OK;
 	err = spi_device_acquire_bus(ctx->spi, portMAX_DELAY);
 	ESP_ERROR_CHECK_WITHOUT_ABORT(err);
 	spi_transaction_t t = {
 		.cmd = 0,
-		.addr = (ch+1) << 3,
+		.addr = ch << 3,
 		.rxlength = 16,
 		.flags = SPI_TRANS_USE_RXDATA,
 		.user = ctx,
@@ -94,7 +94,7 @@ esp_err_t adc088s052_get_raw(adc088s052_context_t *ctx, adc088s052_channel_t ch,
 	ESP_ERROR_CHECK_WITHOUT_ABORT(err);
 	if (err != ESP_OK)
 		return err;
-	*data = (t.rx_data[0]) | (t.rx_data[1]);
+	*data = 0xff - ((t.rx_data[0] >> 4) | (t.rx_data[1] << 4)); // flip data bc Pots are reverse
 	spi_device_release_bus(ctx->spi);
 	return ESP_OK;
 }

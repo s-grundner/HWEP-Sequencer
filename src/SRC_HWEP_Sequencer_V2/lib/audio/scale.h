@@ -33,8 +33,10 @@ typedef enum
 	KEY_F = 8,
 	KEY_FS = 9,
 	KEY_G = 10,
-	KEY_GS  = 11,
-} key_names_t;
+	KEY_GS = 11,
+} key_name_t;
+
+#define MODAL_COUNT 4
 
 typedef enum
 {
@@ -42,12 +44,13 @@ typedef enum
 	MIN = 1, // Minor
 	HMJ = 2, // Harmonic Major
 	HMN = 3, // Harmonic Minor
-} modal_names_t;
+} modal_name_t;
 
 double get_pitch_hz(uint8_t key_num);
 uint8_t get_key_num(double freq);
 void print_key_name(uint8_t key_num);
 double adc_to_pitch(uint8_t adc_val, uint8_t oct_offset);
 uint8_t adc_to_num(uint8_t adc_val, uint8_t oct_offset);
-
+char* get_key_name(uint8_t key_num);
+char* get_modal_name(uint8_t modal_num);
 #endif // SCALE_H_

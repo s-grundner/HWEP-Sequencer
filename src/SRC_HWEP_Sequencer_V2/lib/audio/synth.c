@@ -82,9 +82,10 @@ esp_err_t send_audio_stereo(oscillator_t *osc)
 	for (int n = 0; n < WT_SIZE; n++)
 	{
 		sample_val = 0;
-		sample_val += (uint16_t)(mul * interpol_float(osc->wavetable, osc->sample_pos));
+		sample_val += (uint16_t)((osc->is_on ? mul : 1) * interpol_float(osc->wavetable, osc->sample_pos));
 		sample_val = sample_val << 16;
-		sample_val += (uint16_t)(mul * interpol_float(osc->wavetable, osc->sample_pos));
+		sample_val += (uint16_t)((osc->is_on ? mul : 1) * interpol_float(osc->wavetable, osc->sample_pos));
+
 		samples_data[n] = sample_val;
 
 		osc->sample_pos += indexIncr;
