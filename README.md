@@ -3,6 +3,17 @@
 
 ![Frontpanel](/docu/v2/assets/Frontpanel.svg)
 
+Der **Sequencer** ist ein Schulprojekt der [HTBLuVA Salzburg](http://www.htl-salzburg.ac.at/startseite.html) aus dem Fach Hardware Entwicklung und wurde von den Schülern aus der Abteilung der [Höheren Elektronik](http://www.htl-salzburg.ac.at/elektronik-technische-informatik.html), [Simon Grundner](https://github.com/s-grundner) und [Hanna Ihninger](https://github.com/h-ihninger) Entwickelt. 
+
+|           Neueste Renderung der Platine         |            Assemblierter Prototyp               |
+|:-----------------------------------------------:|:-----------------------------------------------:|
+| todo | todo |
+
+## Projektstatus
+Das Projekt ist derzeit unvollständig, dennoch Funktionstüchtig. Alle Angeführten Features sind verfügbar. CAD dateien e.g. Gehäuse sind noch nicht im Projekt inkludiert.
+
+## Repository Struktur
+
 ## KUB - Kurzbeschreibung
 
 Der Sequenzer ist ein musisches Instrument, welches vom Benutzer einstellbare Töne nacheinander abspielt und dadurch eine Melodie erzeugt. Die Tonlage wird durch Potentiometer analog eingestellt und anschließend an die chromatische Skala angepasst. Die acht Töne werden mit jeder steigenden Flanke des Takts durchgeschaltet.
