@@ -1,13 +1,13 @@
 # HWEP [DE]
 [![Built with: platformio](https://img.shields.io/badge/built%20with-platformio-orange)](https://platformio.org/)
 
-![Frontpanel](/docu/v2/assets/Frontpanel.svg)
+![Frontpanel](/docu/assets/Frontpanel.svg)
 
 Der **Sequencer** ist ein Schulprojekt der [HTBLuVA Salzburg](http://www.htl-salzburg.ac.at/startseite.html) aus dem Fach Hardware Entwicklung und wurde von den Schülern aus der Abteilung der [Höheren Elektronik](http://www.htl-salzburg.ac.at/elektronik-technische-informatik.html), [Simon Grundner](https://github.com/s-grundner) und [Hanna Ihninger](https://github.com/h-ihninger) Entwickelt. 
 
 |           Neueste Renderung der Platine         |            Assemblierter Prototyp               |
 |:-----------------------------------------------:|:-----------------------------------------------:|
-|<img src="/docu/v2/assets/render.png" alt="render" width="700"/>|<img src="/docu/v2/assets/prot.jpg" alt="prototype" width="700"/>|
+|<img src="/docu/assets/render.png" alt="render" width="700"/>|<img src="/docu/assets/prot.jpg" alt="prototype" width="700"/>|
 
 
 
@@ -28,9 +28,12 @@ Der Sequencer wird mit dem einem RTOS am ESP32 32-bit Microcontroller betrieben.
 
 ## BSB - Blockschaltbild
 
-![BSB](/docu/v2/assets/BSB_Sequencer_I2S.drawio_dark.svg)
+![BSB](/docu/assets/BSB_Sequencer_I2S.drawio_dark.svg)
 
 ## FUB - Funktionsbeschreibung
+
+![Button_desc](/docu/assets/Frontpanel_nums_dark.drawio.svg)
+
 #### 1. 8 Potentiometer als analoger Eingang:
  - dient als analoger Eingang für die Tonlage der einzelnen Töne
  - jedes Potentiometer umfasst 24 Halbtöne bzw. zwei Oktaven
