@@ -1,4 +1,4 @@
-# HWEP [DE]
+# HWEP - Sequencer [DE]
 [![Built with: platformio](https://img.shields.io/badge/built%20with-platformio-orange)](https://platformio.org/)
 
 ![Frontpanel](/docu/assets/Frontpanel.svg)
@@ -13,6 +13,12 @@ Der **Sequencer** ist ein Schulprojekt der [HTBLuVA Salzburg](http://www.htl-sal
 ## Projektstatus
 Das Projekt ist derzeit unvollständig, dennoch Funktionstüchtig. Alle Angeführten Features sind verfügbar. CAD dateien e.g. Gehäuse sind noch nicht im Projekt inkludiert.
 Um die Diagramme in der Dokumentation gut erkennen zu können, wird empfohlen, das Dark-Mode-Theme von GitHub zu Verwenden.
+
+## Repository Struktur
+
+ - [**Hardware DOCS**](manufacturing/hwep_sequencer_v2)
+
+ - [**Software DOCS**](src/SRC_HWEP_Sequencer_V2)
 
 ## KUB - Kurzbeschreibung
 
