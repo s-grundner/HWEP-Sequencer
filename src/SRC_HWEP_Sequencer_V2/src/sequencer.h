@@ -201,12 +201,13 @@ void update_bpm(sequencer_handle_t sqc_handle);
 esp_err_t manage_ws2812(sequencer_handle_t sqc_handle);
 
 /**
- * @brief 
- * 
- * @param sqc_handle 
- * @return esp_err_t 
+ * @brief displays the data on the display 
+ * @param sqc_handle sequencer data
  */
 void manage_display(sequencer_handle_t sqc_handle);
 
-
+/**
+ * @brief calculates the oscillator pitch from sequencer data
+ * @param sqc_handle sequencer data
+ */
 void manage_audio(sequencer_handle_t sqc_handle);

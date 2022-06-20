@@ -28,7 +28,7 @@ static void IRAM_ATTR refresh_isr(void *arg)
 static void IRAM_ATTR bpm_timer_task(TimerHandle_t bpm_timer)
 {
 	sequencer_handle_t ctx = (sequencer_handle_t)pvTimerGetTimerID(bpm_timer);
-	if(!ctx->pause_flag)
+	if (!ctx->pause_flag)
 		ctx->channel = (ctx->channel + 1) % ctx->reset_at_n;
 }
 
@@ -420,31 +420,34 @@ void update_bpm(sequencer_handle_t sqc_handle)
 
 void manage_display(sequencer_handle_t sqc_handle)
 {
-	if (sqc_handle->shkey_flag)
+	if (sqc_handle->sseg_handle->sseg_refreshable)
 	{
-		sseg_write(sqc_handle->sseg_handle, get_key_name(get_key_num(sqc_handle->osc.pitch)));
-	}
-	else if (sqc_handle->sseg_handle->sseg_refreshable)
-	{
-		char str[]= "   ";
-		switch (sqc_handle->cur_appmode)
+		if (sqc_handle->shkey_flag)
 		{
-		case APP_MODE_BPM:
-			// write display data
-			sseg_write(sqc_handle->sseg_handle, sqc_handle->btn_shift ? get_wt_name(sqc_handle->osc.wt_index) : itoa(sqc_handle->cur_bpm, str, 10));
-			break;
-		case APP_MODE_KEY:
-			// write display data
-			sseg_write(sqc_handle->sseg_handle, sqc_handle->btn_shift ? get_modal_name(sqc_handle->cur_modal) : get_key_name(sqc_handle->cur_key));
-			break;
-		case APP_MODE_ENR:
-			break;
-		case APP_MODE_TSP:
-			// write display data
-			sseg_write(sqc_handle->sseg_handle, sqc_handle->btn_shift ? itoa(sqc_handle->osc.oct_offset, str, 10) : itoa(sqc_handle->osc.transpose, str, 10));
-			break;
-		default:
-			break;
+			sseg_write(sqc_handle->sseg_handle, get_key_name(get_key_num(sqc_handle->osc.pitch)));
+		}
+		else
+		{
+			char str[] = "   ";
+			switch (sqc_handle->cur_appmode)
+			{
+			case APP_MODE_BPM:
+				// write display data
+				sseg_write(sqc_handle->sseg_handle, sqc_handle->btn_shift ? get_wt_name(sqc_handle->osc.wt_index) : itoa(sqc_handle->cur_bpm, str, 10));
+				break;
+			case APP_MODE_KEY:
+				// write display data
+				sseg_write(sqc_handle->sseg_handle, sqc_handle->btn_shift ? get_modal_name(sqc_handle->cur_modal) : get_key_name(sqc_handle->cur_key));
+				break;
+			case APP_MODE_ENR:
+				break;
+			case APP_MODE_TSP:
+				// write display data
+				sseg_write(sqc_handle->sseg_handle, sqc_handle->btn_shift ? itoa(sqc_handle->osc.oct_offset, str, 10) : itoa(sqc_handle->osc.transpose, str, 10));
+				break;
+			default:
+				break;
+			}
 		}
 	}
 }
