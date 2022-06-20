@@ -10,8 +10,6 @@ Der **Sequencer** ist ein Schulprojekt der [HTBLuVA Salzburg](http://www.htl-sal
 |<img src="/docu/assets/render.png" alt="render" width="700"/>|<img src="/docu/assets/prot.jpg" alt="prototype" width="700"/>|
 
 
-
-
 ## Projektstatus
 Das Projekt ist derzeit unvollständig, dennoch Funktionstüchtig. Alle Angeführten Features sind verfügbar. CAD dateien e.g. Gehäuse sind noch nicht im Projekt inkludiert.
 
@@ -24,11 +22,6 @@ Mit einem Pause-Taster kann der Zyklus pausiert werden. Mit dem Reset-Taster kan
 Zum Bedienen des Sequencers gibt es verschiedene Parameter, die mithilfe eines Dreh-Encoders gesteuert werden können. Der Dreh-Encoder hat einen integrierten Taster, mit welchem man die Parameter, die man verändern will, einstellen kann. Die Veränderung der Parameter wird je nach Modus an verschiedenen Status LEDs und Anzeigen abgezeichnet.
 
 Der Sequencer wird mit dem einem RTOS am ESP32 32-bit Microcontroller betrieben. Der Digitale Audioausgang erfolgt über das I²S (Inter-IC-Sound) Protokoll und kann 16-Bit Sounds bei einer Abtastrate von 44.1kHz übertragen und durch einen I²S-DAC (PCM5102a) direkt als Audio-Signal ausgegeben werden.
-
-
-## BSB - Blockschaltbild
-
-![BSB](/docu/assets/BSB_Sequencer_I2S.drawio_dark.svg)
 
 ## FUB - Funktionsbeschreibung
 
