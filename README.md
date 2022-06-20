@@ -12,6 +12,7 @@ Der **Sequencer** ist ein Schulprojekt der [HTBLuVA Salzburg](http://www.htl-sal
 
 ## Projektstatus
 Das Projekt ist derzeit unvollständig, dennoch Funktionstüchtig. Alle Angeführten Features sind verfügbar. CAD dateien e.g. Gehäuse sind noch nicht im Projekt inkludiert.
+Um die Diagramme in der Dokumentation gut erkennen zu können, wird empfohlen, das Dark-Mode-Theme von GitHub zu Verwenden.
 
 ## KUB - Kurzbeschreibung
 
