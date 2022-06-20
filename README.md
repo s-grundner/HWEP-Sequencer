@@ -39,13 +39,14 @@ Der Sequencer wird mit dem einem RTOS am ESP32 32-bit Microcontroller betrieben.
  - 8 Index/Cursor-LED’s:
    - **Index:** zeigen an, welcher Ton gerade spielt
    - **Cursor:** dient zum Anzeigen eines Cursors
+
 #### 3. 3x 7-Segent Display:
  - nützen zur Anzeige von Parametern
  - werden mit einem MCP23S08 via die SPI Schnittstelle seriell angesteuert
  
 #### 4. Dreh-Encoder:
  - zum Einstellen der Parameter der verschiedenen Modi
- - um den Drehencoder befinden sich 12 RBG-LED’s, welche den Rotationstatus anzeigen
+ - um den Drehencoder befinden sich 12 RGB-LED’s, welche den Rotationstatus anzeigen
  
 #### 5. Taster: 
 > Jeder Taster wird mittels eines MCP23S08 via SPI eingelesen.
@@ -55,18 +56,18 @@ Der Sequencer wird mit dem einem RTOS am ESP32 32-bit Microcontroller betrieben.
  - **Shift:** zum Einstellen der Parameter der verschiedenen Modi
  - **Prescaler:** einstellen von zwei verschiedenen Prescalern für Gate und Takt
    - 5 Taster für jeden Prescaler
-   - Tasten werden auf 4 bit Prioritäts Encodiert
+   - Tasten werden auf 4-Bit Priorität-Encodiert
  
 #### 6. 4 Modi
 > Jeder Modus verändert die Anzeigen an den Status LED’s und Displays bzw. die Funktionalität verschiedener Eingaben. Nach wechseln eines Modus wird der aktuelle Modus am 7-Segment Display angezeigt, bis die Anzeige benötigt wird, um einen Parameter anzuzeigen.
  
  - BPM:
-   - **7-Segment Display:** zeigt die eingestellten BPM an und die Wellenform
+   - **7-Segment Display:** zeigt die eingestellten BPM bzw. die Wellenform an
    - **Index/Cursor:** zeigt den Index an
    - **Drehencoder:** zum Verändern der BPM
    - **Shift Taster:** Drehencoder verändert die Wellenform
  - Tonleiter Einstellungen:
-   - **7-Segment Display:** zeigt den Ton an, der gerade spielt
+   - **7-Segment Display:** zeigt den Tonleiter bzw. den Modalen Tonleiter an.
    - **Index/Cursor:** zeigt den Index an
    - **Drehencoder:** zum Verändern den Tonleiter
    - **Shift Taster:** verändert den Modus des Tonleiters (Dur,Moll…)
@@ -79,7 +80,7 @@ Der Sequencer wird mit dem einem RTOS am ESP32 32-bit Microcontroller betrieben.
  - Transpose:
    - **7-Segment Display:** zeigt an um wieviel Halbtöne die Melodie transponiert wird
    - **Index/Cursor:** zeigt den Index an
-   - **Drehencoder:** zum Verändern der Tonlage
+   - **Drehencoder:** Transponiert die Tonlage um einen Halbton
    - **Shift Taster:** Drehencoder verändert die Tonlage um eine Oktave
  
 #### 7. ESP32 32-Bit Microcontroller:
