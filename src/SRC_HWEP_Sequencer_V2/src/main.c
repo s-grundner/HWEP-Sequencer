@@ -14,6 +14,8 @@
 #include "sequencer.h"
 #include "esp_log.h"
 
+#define LED_BRIGHTNESS 1.0
+
 #define CHASE_SPEED_MS (100)
 
 static const char *TAG = "sequencer_main";
@@ -101,7 +103,7 @@ static void fsm(void *args)
 			// check if encoder data has changed
 			if (ec_changed[sqc_handle->cur_appmode] != sqc_handle->encoder_positions[sqc_handle->cur_appmode])
 			{
-				sqc_handle->osc.transpose = sqc_handle->encoder_positions[sqc_handle->cur_appmode] / 2;
+				sqc_handle->osc.transpose = (sqc_handle->encoder_positions[sqc_handle->cur_appmode]-1) / 2;
 				if (sqc_handle->osc.transpose >= 12)
 				{
 					sqc_handle->osc.transpose -= 12;
@@ -208,7 +210,7 @@ static void led_task(void *args)
 				hue = j * 360 / 12 + start_rgb;
 				led_strip_hsv2rgb(hue, 100, 100, &red, &green, &blue);
 				// Write RGB values to strip driver
-				ESP_ERROR_CHECK(strip->set_pixel(strip, j, red * 0.1, green * 0.1, blue * 0.1));
+				ESP_ERROR_CHECK(strip->set_pixel(strip, j, red * LED_BRIGHTNESS, green * LED_BRIGHTNESS, blue * LED_BRIGHTNESS));
 			}
 			// Flush RGB values to LEDs
 			ESP_ERROR_CHECK(strip->refresh(strip, 100));

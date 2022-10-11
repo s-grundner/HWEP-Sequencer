@@ -455,7 +455,7 @@ void manage_display(sequencer_handle_t sqc_handle)
 #define OSC (sqc_handle->osc)
 void manage_audio(sequencer_handle_t sqc_handle)
 {
-	OSC.pitch = get_pitch_hz(adc_to_num(sqc_handle->cur_adc_data[sqc_handle->channel], OSC.oct_offset) + OSC.transpose);
+	OSC.pitch = get_pitch_hz(adc_to_num(sqc_handle->cur_adc_data[sqc_handle->channel], OSC.oct_offset) + (OSC.transpose));
 	send_audio_stereo(&sqc_handle->osc);
 }
 
