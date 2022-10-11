@@ -60,7 +60,7 @@ Der Sequencer wird mit dem einem RTOS am ESP32 32-bit Microcontroller betrieben.
  - **Reset:** setzt den Zyklus asynchron zurück
  - **Show Keys:** zeigt die gespielten Noten am Display
  - **Shift:** zum Einstellen der Parameter der verschiedenen Modi
- - **Prescaler:** einstellen von zwei verschiedenen Prescalern für Gate und Takt
+ - e. **Prescaler:** einstellen von zwei verschiedenen Prescalern für Gate und Takt
    - 5 Taster für jeden Prescaler
    - Tasten werden auf 4-Bit Priorität-Encodiert
  
