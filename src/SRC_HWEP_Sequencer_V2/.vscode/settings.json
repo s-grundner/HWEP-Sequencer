@@ -4,7 +4,8 @@
 		"sequencer.h": "c",
 		"mcp23s08.h": "c",
 		"*.ipp": "c",
-		"audio_config.h": "c"
+		"audio_config.h": "c",
+		"encoder.h": "c"
 	},
 	"idf.adapterTargetName": "esp32c3",
 	"idf.openOcdConfigs": [

@@ -1,5 +1,4 @@
 #pragma once
-#include "esp_system.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>

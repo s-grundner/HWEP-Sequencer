@@ -1,7 +1,7 @@
 #include "encoder.h"
 
 // ------------------------------------------------------------
-// private functions
+// static functions
 // ------------------------------------------------------------
 
 static void encoder_update(encoder_context_t *arg)
@@ -120,7 +120,7 @@ static void init_intr(encoder_context_t *ec)
 }
 
 // ------------------------------------------------------------
-// public functions
+// non-static functions
 // ------------------------------------------------------------
 
 esp_err_t encoder_init(encoder_context_t **ec_out, encoder_config_t *ec_cfg)

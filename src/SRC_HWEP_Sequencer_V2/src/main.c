@@ -45,8 +45,6 @@ static void fsm(void *args)
 		}
 		encoder_write(sqc_handle->encoder_handle, 0);
 
-		
-
 		// Main Statemachine
 		switch (sqc_handle->cur_appmode)
 		{
@@ -103,7 +101,7 @@ static void fsm(void *args)
 			// check if encoder data has changed
 			if (ec_changed[sqc_handle->cur_appmode] != sqc_handle->encoder_positions[sqc_handle->cur_appmode])
 			{
-				sqc_handle->osc.transpose = (sqc_handle->encoder_positions[sqc_handle->cur_appmode]-1) / 2;
+				sqc_handle->osc.transpose = (sqc_handle->encoder_positions[sqc_handle->cur_appmode] - 1) / 2;
 				if (sqc_handle->osc.transpose >= 12)
 				{
 					sqc_handle->osc.transpose -= 12;

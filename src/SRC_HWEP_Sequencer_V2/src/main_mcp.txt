@@ -1,9 +1,0 @@
-#include "sequencer.h"
-#include "esp_log.h"
-#include "config.h"
-
-void app_main(void)
-{
-	sequencer_handle_t s;
-	sequencer_init(&s);
-}

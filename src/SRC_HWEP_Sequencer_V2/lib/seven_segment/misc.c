@@ -1,5 +1,4 @@
 #include "misc.h"
-#include "esp_log.h"
 
 const uint8_t SevenSegmentASCII[95] = {
 	0x00, /* (space) */
@@ -103,11 +102,7 @@ const uint8_t ascii[95] = " !\"#$%&'()*+,.-/0123456789:;<=>?@ABCDEFGHIJKLMNOPQRS
 uint8_t get_char_segment(char letter)
 {
 	for (int i = 0; i < sizeof(ascii) / sizeof(ascii[0]); i++)
-	{
 		if (ascii[i] == letter)
-		{
 			return SevenSegmentASCII[i];
-		}
-	}
 	return SevenSegmentASCII[0];
 }
