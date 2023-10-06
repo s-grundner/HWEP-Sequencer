@@ -61,7 +61,7 @@ Der Sequencer wird mit dem einem RTOS am ESP32 32-bit Microcontroller betrieben.
  
 #### 5. Taster: 
 
-> [!INFO]
+> [!Info]
 > Jeder Taster wird mittels eines MCP23S08 via SPI eingelesen.
 
  - **Pause:** pausiert den Zyklus
