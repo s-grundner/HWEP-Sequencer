@@ -4,7 +4,7 @@
 
 ![Frontpanel](/docu/assets/Frontpanel.svg)
 
-Der **Sequencer** ist ein Schulprojekt der [HTBLuVA Salzburg](http://www.htl-salzburg.ac.at/startseite.html) aus dem Fach Hardware Entwicklung und wurde von den Schülern aus der Abteilung der [Höheren Elektronik](http://www.htl-salzburg.ac.at/elektronik-technische-informatik.html), [Simon Grundner](https://github.com/s-grundner) und [Hanna Ihninger](https://github.com/h-ihninger) Entwickelt. 
+Der **Sequencer** ist ein Schulprojekt der [HTBLuVA Salzburg](http://www.htl-salzburg.ac.at/startseite.html) aus dem Fach Hardware Entwicklung und wurde von den Schülern aus der Abteilung der [Höheren Elektronik](http://www.htl-salzburg.ac.at/elektronik-technische-informatik.html), [Simon Grundner](https://github.com/s-grundner) und [Hanna Ihninger](https://github.com/h-ihninger) entwickelt. 
 
 |           Neueste Renderung der Platine         |            Assemblierter Prototyp               |
 |:-----------------------------------------------:|:-----------------------------------------------:|
@@ -61,7 +61,8 @@ Der Sequencer wird mit dem einem RTOS am ESP32 32-bit Microcontroller betrieben.
  
 #### 5. Taster: 
 
-> [!INFO] Jeder Taster wird mittels eines MCP23S08 via SPI eingelesen.
+> [!INFO]
+> Jeder Taster wird mittels eines MCP23S08 via SPI eingelesen.
 
  - **Pause:** pausiert den Zyklus
  - **Reset:** setzt den Zyklus asynchron zurück
@@ -73,7 +74,8 @@ Der Sequencer wird mit dem einem RTOS am ESP32 32-bit Microcontroller betrieben.
  
 #### 6. 4 Modi
 
-> [!INFO] Jeder Modus verändert die Anzeigen an den Status LED’s und Displays bzw. die Funktionalität verschiedener Eingaben. Nach wechseln eines Modus wird der aktuelle Modus am 7-Segment Display angezeigt, bis die Anzeige benötigt wird, um einen Parameter anzuzeigen.
+> [!INFO]
+> Jeder Modus verändert die Anzeigen an den Status LED’s und Displays bzw. die Funktionalität verschiedener Eingaben. Nach wechseln eines Modus wird der aktuelle Modus am 7-Segment Display angezeigt, bis die Anzeige benötigt wird, um einen Parameter anzuzeigen.
  
  - BPM:
    - **7-Segment Display:** zeigt die eingestellten BPM bzw. die Wellenform an
