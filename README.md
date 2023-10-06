@@ -61,7 +61,6 @@ Der Sequencer wird mit dem einem RTOS am ESP32 32-bit Microcontroller betrieben.
  
 #### 5. Taster: 
 
-> **Info**
 > Jeder Taster wird mittels eines MCP23S08 via SPI eingelesen.
 
  - **Pause:** pausiert den Zyklus
@@ -74,7 +73,6 @@ Der Sequencer wird mit dem einem RTOS am ESP32 32-bit Microcontroller betrieben.
  
 #### 6. 4 Modi
 
-> [!INFO]
 > Jeder Modus verändert die Anzeigen an den Status LED’s und Displays bzw. die Funktionalität verschiedener Eingaben. Nach wechseln eines Modus wird der aktuelle Modus am 7-Segment Display angezeigt, bis die Anzeige benötigt wird, um einen Parameter anzuzeigen.
  
  - BPM:
