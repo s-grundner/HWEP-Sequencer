@@ -32,6 +32,7 @@ static unsigned char shift_encoder_changed(sequencer_handle_t sqc_handle)
 {
 }
 
+// finite state machine
 static void fsm(void *args)
 {
 	sequencer_handle_t sqc_handle = (sequencer_handle_t)args;
