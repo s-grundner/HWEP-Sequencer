@@ -15,10 +15,22 @@
 #include "esp_log.h"
 
 #define LED_BRIGHTNESS 1.0
-
 #define CHASE_SPEED_MS (100)
 
 static const char *TAG = "sequencer_main";
+
+static void reset_at_n(sequencer_handle_t sqc_handle)
+{
+	sqc_handle->reset_at_n = (((sqc_handle->encoder_positions[APP_MODE_ENR] >> 1) % 8) + 1);
+}
+
+static unsigned char encoder_changed(sequencer_handle_t sqc_handle)
+{
+}
+
+static unsigned char shift_encoder_changed(sequencer_handle_t sqc_handle)
+{
+}
 
 static void fsm(void *args)
 {
@@ -36,21 +48,16 @@ static void fsm(void *args)
 	{
 		// store encoder value in sqc struct to save time
 		if (sqc_handle->btn_shift)
-		{
 			sqc_handle->shift_encoder_positions[sqc_handle->cur_appmode] += encoder_read(sqc_handle->encoder_handle);
-		}
 		else
-		{
 			sqc_handle->encoder_positions[sqc_handle->cur_appmode] += encoder_read(sqc_handle->encoder_handle);
-		}
 		encoder_write(sqc_handle->encoder_handle, 0);
 
 		// Main Statemachine
 		switch (sqc_handle->cur_appmode)
 		{
 		case APP_MODE_BPM:
-			// reset at n index takes effect
-			sqc_handle->reset_at_n = (((sqc_handle->encoder_positions[APP_MODE_ENR] >> 1) % 8) + 1);
+			reset_at_n(sqc_handle); // set reset index
 
 			// check if encoder data has changed
 			if (ec_changed[sqc_handle->cur_appmode] != sqc_handle->encoder_positions[sqc_handle->cur_appmode])
@@ -59,7 +66,7 @@ static void fsm(void *args)
 				ec_changed[sqc_handle->cur_appmode] = sqc_handle->encoder_positions[sqc_handle->cur_appmode];
 			}
 
-			// check if shift-encoder-data has changed
+			// check if shift-encoder-data has changed. TODO make function
 			if (shift_ec_changed[sqc_handle->cur_appmode] != sqc_handle->shift_encoder_positions[sqc_handle->cur_appmode])
 			{
 				// update wavetable
@@ -72,8 +79,7 @@ static void fsm(void *args)
 
 			break;
 		case APP_MODE_KEY:
-			// reset at n index takes effect
-			sqc_handle->reset_at_n = (((sqc_handle->encoder_positions[APP_MODE_ENR] >> 1) % 8) + 1);
+			reset_at_n(sqc_handle); // set reset index
 
 			// check if encoder data has changed
 			if (ec_changed[sqc_handle->cur_appmode] != sqc_handle->encoder_positions[sqc_handle->cur_appmode])
@@ -95,10 +101,9 @@ static void fsm(void *args)
 		case APP_MODE_ENR:
 			break;
 		case APP_MODE_TSP:
-			// reset at n index takes effect
-			sqc_handle->reset_at_n = (((sqc_handle->encoder_positions[APP_MODE_ENR] >> 1) % 8) + 1);
+			reset_at_n(sqc_handle); // set reset index
 
-			// check if encoder data has changed
+			// check if encoder data has changed. TODO make function or macro
 			if (ec_changed[sqc_handle->cur_appmode] != sqc_handle->encoder_positions[sqc_handle->cur_appmode])
 			{
 				sqc_handle->osc.transpose = (sqc_handle->encoder_positions[sqc_handle->cur_appmode] - 1) / 2;
