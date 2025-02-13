@@ -4,8 +4,6 @@
 
 ![Frontpanel](/docu/assets/Frontpanel.svg)
 
-Der **Sequencer** ist ein Schulprojekt der [HTBLuVA Salzburg](http://www.htl-salzburg.ac.at/startseite.html) aus dem Fach Hardware Entwicklung und wurde von den Schülern aus der Abteilung der [Höheren Elektronik](http://www.htl-salzburg.ac.at/elektronik-technische-informatik.html), [Simon Grundner](https://github.com/s-grundner) und [Hanna Ihninger](https://github.com/h-ihninger) entwickelt. 
-
 |           Neueste Renderung der Platine         |            Assemblierter Prototyp               |
 |:-----------------------------------------------:|:-----------------------------------------------:|
 |<img src="/docu/assets/render.png" alt="render" width="700"/>|<img src="/docu/assets/prot.jpg" alt="prototype" width="700"/>|
@@ -13,7 +11,7 @@ Der **Sequencer** ist ein Schulprojekt der [HTBLuVA Salzburg](http://www.htl-sal
 
 ## Projektstatus
 
-Alle Angeführten Features sind implementiert. CAD dateien e.g. Gehäuse sind noch nicht im Projekt inkludiert.
+MIDI Erweiterung in Arbeit. CAD dateien e.g. Gehäuse sind noch nicht im Projekt inkludiert.
 Um die Diagramme in der Dokumentation gut erkennen zu können, empfiehlt sich, das Dark-Mode-Theme von GitHub zu Verwenden.
 
 ## Repository Struktur
